@@ -12,7 +12,7 @@ const vtGroup = () =>
 export const defaultSpreadOptions: SpreadEffectOptions = {
 	duration: '1.5s',
 	easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-	radius: '150vmax',
+	radius: '200vmax',
 };
 
 export const spreadEffect: EffectDefinition = {
