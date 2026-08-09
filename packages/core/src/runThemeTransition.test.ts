@@ -175,6 +175,51 @@ describe('runThemeTransition', () => {
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-radius');
 	});
 
+	it('computes an exact pixel radius for the spread effect instead of using the raw CSS value', async () => {
+		vi.useFakeTimers();
+
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
+
+		const finished = Promise.resolve();
+		const startViewTransition = vi.fn((update: () => Promise<void>) => {
+			update();
+			return { ready: Promise.resolve(), finished, skipTransition: vi.fn() };
+		});
+
+		vi.stubGlobal('document', {
+			documentElement: root,
+			startViewTransition,
+		});
+		vi.stubGlobal('window', {
+			matchMedia: () => ({ matches: false }),
+			innerWidth: 200,
+			innerHeight: 200,
+		});
+
+		const callback = vi.fn();
+		const setAnimating = vi.fn();
+		const definition = createDefinition(() => 500);
+
+		const promise = runThemeTransition(
+			{ ...definition, name: 'spread' },
+			{ x: 100, y: 100 },
+			{ duration: '2s', easing: 'linear', radius: '150vmax' } as never,
+			callback,
+			setAnimating,
+		);
+
+		await vi.advanceTimersByTimeAsync(500);
+		await promise;
+
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-radius',
+			'150px',
+		);
+	});
+
 	it('runs the callback directly when the effect is none, even with view transitions supported and no reduced motion', async () => {
 		const root = {
 			dataset: {} as { themeEffect?: string },
