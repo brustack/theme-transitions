@@ -1,5 +1,11 @@
 # @brustack/theme-transitions-core
 
+## 2.2.11
+
+### Patch Changes
+
+- 7d730f7: Give the spread effect's computed radius a 20% proportional safety margin instead of a small fixed one. Corner-to-corner clicks need a much larger radius than center clicks, so a fixed pixel margin wasn't enough to absorb viewport-measurement discrepancies on some mobile browsers, leaving a visible gap when clicking near a screen corner.
+
 ## 2.2.10
 
 ### Patch Changes
