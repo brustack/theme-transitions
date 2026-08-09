@@ -25,6 +25,8 @@ jobs:
           echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN is set: $([ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ] && echo yes || echo no)"
       - run: npm install
       - run: npm run build
+      - name: Diagnose direct npm publish (dry run, no changesets involved)
+        run: npm publish --workspace=packages/core --dry-run
       - name: Create Release Pull Request
         id: changesets
         uses: changesets/action@v1
