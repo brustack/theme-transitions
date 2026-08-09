@@ -42,4 +42,13 @@ describe('estimateSpreadSkipMs', () => {
 		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
 		expect(estimateSpreadSkipMs(origin, { ...options, radius: 'garbage' })).toBe(521);
 	});
+
+	it('uses window.visualViewport dimensions when available, staying in sync with the rendered origin', () => {
+		vi.stubGlobal('window', {
+			innerWidth: 1000,
+			innerHeight: 1000,
+			visualViewport: { width: 200, height: 200 },
+		});
+		expect(estimateSpreadSkipMs(origin, options)).toBe(521);
+	});
 });

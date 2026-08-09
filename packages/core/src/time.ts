@@ -1,4 +1,5 @@
 import type { SpreadEffectOptions, ThemeOrigin } from './types';
+import { getViewportSize } from './viewport';
 
 const CSS_DURATION_PATTERN = /^\d+(\.\d+)?(ms|s)$/;
 
@@ -30,15 +31,16 @@ export const estimateSpreadSkipMs = (
 		return durationMs;
 	}
 
+	const { width, height } = getViewportSize();
+
 	const coverDistance = Math.hypot(
-		Math.max(origin.x, window.innerWidth - origin.x),
-		Math.max(origin.y, window.innerHeight - origin.y),
+		Math.max(origin.x, width - origin.x),
+		Math.max(origin.y, height - origin.y),
 	);
 
 	const match = options.radius.match(/^([\d.]+)vmax$/);
 	const vmaxValue = Number.parseFloat(match?.[1] ?? '150');
-	const vmaxPx
-		= (Math.max(window.innerWidth, window.innerHeight) / 100) * vmaxValue;
+	const vmaxPx = (Math.max(width, height) / 100) * vmaxValue;
 
 	const ratio = Math.min(1, coverDistance / vmaxPx);
 
