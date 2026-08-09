@@ -1,7 +1,7 @@
 {
 	"name": "nuxt-demo",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"type": "module",
 	"scripts": {
 		"dev": "nuxt dev",
@@ -9,8 +9,8 @@
 		"typecheck": "nuxt typecheck"
 	},
 	"dependencies": {
-		"@brustack/theme-transitions-core": "^2.0.0",
-		"@brustack/nuxt-theme-transitions": "^2.0.0",
+		"@brustack/theme-transitions-core": "^3.0.0",
+		"@brustack/nuxt-theme-transitions": "^2.1.2",
 		"vue": "^3.5.40"
 	},
 	"devDependencies": {

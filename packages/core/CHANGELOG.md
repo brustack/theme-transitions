@@ -1,5 +1,11 @@
 # @brustack/theme-transitions-core
 
+## 3.0.0
+
+### Major Changes
+
+- 2b009b6: Remove `estimateSpreadSkipMs`. It was an internal timing estimate for the spread effect's now-removed early-skip optimization and hasn't been used by the library itself for several releases.
+
 ## 2.2.14
 
 ### Patch Changes

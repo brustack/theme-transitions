@@ -1,6 +1,6 @@
 {
 	"name": "@brustack/alpine-theme-transitions",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Alpine.js plugin for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
@@ -28,7 +28,7 @@
 		"alpinejs": "^3.0.0"
 	},
 	"dependencies": {
-		"@brustack/theme-transitions-core": "^2.2.1"
+		"@brustack/theme-transitions-core": "^3.0.0"
 	},
 	"devDependencies": {
 		"@types/alpinejs": "^3.13.11",

@@ -1,5 +1,13 @@
 # next-demo
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [2b009b6]
+  - @brustack/theme-transitions-core@3.0.0
+  - @brustack/next-theme-transitions@1.1.2
+
 ## 0.0.1
 
 ### Patch Changes
