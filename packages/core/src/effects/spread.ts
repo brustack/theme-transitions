@@ -1,5 +1,7 @@
 import type { EffectDefinition, SpreadEffectOptions } from '../types';
-import { estimateSpreadSkipMs, parseCssDuration } from '../time';
+import { parseCssDuration } from '../time';
+
+const SKIP_SAFETY_BUFFER_MS = 150;
 
 const vtSelector = (layer: 'old' | 'new') =>
 	`html[data-theme-effect="spread"]::view-transition-${layer}(root)`;
@@ -49,11 +51,9 @@ export const spreadEffect: EffectDefinition = {
       }
     `;
 	},
-	getSkipAfterMs: (options, origin) => {
+	getSkipAfterMs: (options) => {
 		const spreadOptions = options as SpreadEffectOptions;
 
-		return origin
-			? estimateSpreadSkipMs(origin, spreadOptions)
-			: parseCssDuration(spreadOptions.duration);
+		return parseCssDuration(spreadOptions.duration) + SKIP_SAFETY_BUFFER_MS;
 	},
 };

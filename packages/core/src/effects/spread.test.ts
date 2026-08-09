@@ -18,13 +18,8 @@ describe('spreadEffect', () => {
 		expect(css).toContain('theme-spread-reveal');
 	});
 
-	it('falls back to the raw duration when no origin is given', () => {
-		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(1500);
-	});
-
-	it('estimates the skip time from the origin when one is given', () => {
-		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
-		const result = spreadEffect.getSkipAfterMs(defaultSpreadOptions, { x: 100, y: 100 });
-		expect(result).toBe(680);
+	it('returns the full duration plus a safety buffer regardless of origin', () => {
+		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(1650);
+		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, { x: 100, y: 100 })).toBe(1650);
 	});
 });
