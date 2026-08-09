@@ -1,5 +1,11 @@
 # @brustack/theme-transitions-core
 
+## 2.2.8
+
+### Patch Changes
+
+- 675650c: Revert the spread effect's default radius back to 150vmax. It was widened to 200vmax while chasing an unrelated bug (the real cause was the early-skip cutoff, since removed); with that cutoff gone, an oversized radius makes the visible reveal finish before the configured duration elapses, wasting animation time off-screen.
+
 ## 2.2.7
 
 ### Patch Changes
