@@ -26,7 +26,7 @@ export { originFromElement, originFromEvent } from './origin';
 
 export { resolveOptions } from './options';
 
-export { estimateSpreadSkipMs, isValidCssDuration, parseCssDuration } from './time';
+export { isValidCssDuration, parseCssDuration } from './time';
 
 export {
 	buildThemeTransitionCss,

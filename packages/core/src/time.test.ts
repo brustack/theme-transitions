@@ -1,10 +1,5 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { estimateSpreadSkipMs, parseCssDuration } from './time';
-import type { SpreadEffectOptions, ThemeOrigin } from './types';
-
-afterEach(() => {
-	vi.unstubAllGlobals();
-});
+import { describe, expect, it } from 'vitest';
+import { parseCssDuration } from './time';
 
 describe('parseCssDuration', () => {
 	it('parses millisecond durations', () => {
@@ -17,52 +12,5 @@ describe('parseCssDuration', () => {
 
 	it('returns 0 for unparsable input', () => {
 		expect(parseCssDuration('not-a-duration')).toBe(0);
-	});
-});
-
-describe('estimateSpreadSkipMs', () => {
-	const options: SpreadEffectOptions = {
-		duration: '1000ms',
-		easing: 'linear',
-		radius: '150vmax',
-	};
-	const origin: ThemeOrigin = { x: 100, y: 100 };
-
-	it('returns the raw duration when window is unavailable', () => {
-		vi.stubGlobal('window', undefined);
-		expect(estimateSpreadSkipMs(origin, options)).toBe(1000);
-	});
-
-	it('scales the duration by the cover-distance-to-radius ratio', () => {
-		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
-		expect(estimateSpreadSkipMs(origin, options)).toBe(621);
-	});
-
-	it('falls back to a 150vmax default when radius has no numeric match', () => {
-		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
-		expect(estimateSpreadSkipMs(origin, { ...options, radius: 'garbage' })).toBe(621);
-	});
-
-	it('never skips before the full duration when innerWidth/innerHeight and visualViewport disagree sharply', () => {
-		vi.stubGlobal('window', {
-			innerWidth: 1000,
-			innerHeight: 1000,
-			visualViewport: { width: 200, height: 200 },
-		});
-		expect(estimateSpreadSkipMs(origin, options)).toBe(1150);
-	});
-
-	it('biases the estimate later (never earlier) when visualViewport is slightly smaller than innerWidth/innerHeight', () => {
-		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
-		const withoutVisualViewport = estimateSpreadSkipMs(origin, options);
-
-		vi.stubGlobal('window', {
-			innerWidth: 200,
-			innerHeight: 200,
-			visualViewport: { width: 200, height: 150 },
-		});
-		const withSmallerVisualViewport = estimateSpreadSkipMs(origin, options);
-
-		expect(withSmallerVisualViewport).toBeGreaterThanOrEqual(withoutVisualViewport);
 	});
 });
