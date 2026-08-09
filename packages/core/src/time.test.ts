@@ -43,12 +43,26 @@ describe('estimateSpreadSkipMs', () => {
 		expect(estimateSpreadSkipMs(origin, { ...options, radius: 'garbage' })).toBe(521);
 	});
 
-	it('uses window.visualViewport dimensions when available, staying in sync with the rendered origin', () => {
+	it('never skips before the full duration when innerWidth/innerHeight and visualViewport disagree sharply', () => {
 		vi.stubGlobal('window', {
 			innerWidth: 1000,
 			innerHeight: 1000,
 			visualViewport: { width: 200, height: 200 },
 		});
-		expect(estimateSpreadSkipMs(origin, options)).toBe(521);
+		expect(estimateSpreadSkipMs(origin, options)).toBe(1050);
+	});
+
+	it('biases the estimate later (never earlier) when visualViewport is slightly smaller than innerWidth/innerHeight', () => {
+		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
+		const withoutVisualViewport = estimateSpreadSkipMs(origin, options);
+
+		vi.stubGlobal('window', {
+			innerWidth: 200,
+			innerHeight: 200,
+			visualViewport: { width: 200, height: 150 },
+		});
+		const withSmallerVisualViewport = estimateSpreadSkipMs(origin, options);
+
+		expect(withSmallerVisualViewport).toBeGreaterThanOrEqual(withoutVisualViewport);
 	});
 });
