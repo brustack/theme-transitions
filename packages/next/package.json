@@ -23,7 +23,8 @@
 		"directory": "packages/next"
 	},
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"provenance": true
 	},
 	"peerDependencies": {
 		"next": ">=15.5.23",

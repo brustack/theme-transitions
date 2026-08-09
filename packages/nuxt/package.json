@@ -24,7 +24,8 @@
 		"directory": "packages/nuxt"
 	},
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"provenance": true
 	},
 	"peerDependencies": {
 		"nuxt": ">=3.21.11"
