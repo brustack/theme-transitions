@@ -206,6 +206,90 @@ describe('runThemeTransition', () => {
 		expect(setAnimating).toHaveBeenNthCalledWith(2, false);
 	});
 
+	it('waits for the visual viewport to stop resizing (e.g. a closing keyboard) before starting', async () => {
+		vi.useFakeTimers();
+
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
+		vi.stubGlobal('document', {
+			documentElement: root,
+			startViewTransition: vi.fn(),
+		});
+
+		let resizeListener: (() => void) | undefined;
+		const visualViewport = {
+			height: 400,
+			addEventListener: vi.fn((_event: string, listener: () => void) => {
+				resizeListener = listener;
+			}),
+			removeEventListener: vi.fn(),
+		};
+
+		vi.stubGlobal('window', {
+			matchMedia: () => ({ matches: false }),
+			innerWidth: 400,
+			innerHeight: 800,
+			visualViewport,
+		});
+
+		const callback = vi.fn();
+		const setAnimating = vi.fn();
+
+		const promise = runThemeTransition(
+			{ ...createDefinition(), name: 'none' },
+			null,
+			{} as never,
+			callback,
+			setAnimating,
+		);
+
+		await vi.advanceTimersByTimeAsync(50);
+		expect(callback).not.toHaveBeenCalled();
+
+		visualViewport.height = 800;
+		resizeListener?.();
+		await vi.advanceTimersByTimeAsync(120);
+		await promise;
+
+		expect(callback).toHaveBeenCalledTimes(1);
+	});
+
+	it('does not wait when the viewport is not compressed by an open keyboard', async () => {
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
+		vi.stubGlobal('document', {
+			documentElement: root,
+			startViewTransition: vi.fn(),
+		});
+		vi.stubGlobal('window', {
+			matchMedia: () => ({ matches: false }),
+			innerWidth: 400,
+			innerHeight: 800,
+			visualViewport: {
+				height: 780,
+				addEventListener: vi.fn(),
+				removeEventListener: vi.fn(),
+			},
+		});
+
+		const callback = vi.fn();
+		const setAnimating = vi.fn();
+
+		await runThemeTransition(
+			{ ...createDefinition(), name: 'none' },
+			null,
+			{} as never,
+			callback,
+			setAnimating,
+		);
+
+		expect(callback).toHaveBeenCalledTimes(1);
+	});
+
 	it('runs the callback directly when the View Transitions API is unavailable, without reduced motion', async () => {
 		const root = {
 			dataset: {} as { themeEffect?: string },

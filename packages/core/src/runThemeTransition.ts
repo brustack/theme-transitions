@@ -1,6 +1,33 @@
 import type { EffectDefinition, EffectOptions, ThemeOrigin } from './types';
 import { toOriginPercent } from './viewport';
 
+const waitForStableViewport = (): Promise<void> => {
+	const visualViewport = window.visualViewport;
+	const keyboardLikelyOpen
+		= !!visualViewport && visualViewport.height < window.innerHeight * 0.75;
+
+	if (!visualViewport || !keyboardLikelyOpen) {
+		return Promise.resolve();
+	}
+
+	return new Promise((resolve) => {
+		let settleTimer: ReturnType<typeof setTimeout>;
+
+		const finish = () => {
+			visualViewport.removeEventListener('resize', scheduleSettle);
+			resolve();
+		};
+
+		const scheduleSettle = () => {
+			clearTimeout(settleTimer);
+			settleTimer = setTimeout(finish, 120);
+		};
+
+		visualViewport.addEventListener('resize', scheduleSettle);
+		scheduleSettle();
+	});
+};
+
 export const runThemeTransition = async (
 	definition: EffectDefinition,
 	origin: ThemeOrigin | null,
@@ -12,6 +39,8 @@ export const runThemeTransition = async (
 		await callback();
 		return;
 	}
+
+	await waitForStableViewport();
 
 	const root = document.documentElement;
 	root.dataset.themeEffect = definition.name;

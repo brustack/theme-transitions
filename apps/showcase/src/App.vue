@@ -37,48 +37,7 @@ const glowColorFor = (nextTheme: string) => {
   return "#F5A623";
 };
 
-const waitForKeyboardToClose = (): Promise<void> => {
-  const activeEl = document.activeElement;
-
-  if (
-    activeEl instanceof HTMLInputElement ||
-    activeEl instanceof HTMLTextAreaElement
-  ) {
-    activeEl.blur();
-  }
-
-  const visualViewport = window.visualViewport;
-  const keyboardLikelyOpen =
-    !!visualViewport && visualViewport.height < window.innerHeight * 0.75;
-
-  if (!visualViewport || !keyboardLikelyOpen) {
-    return Promise.resolve();
-  }
-
-  return new Promise((resolve) => {
-    let settleTimer: ReturnType<typeof setTimeout>;
-
-    const scheduleSettle = () => {
-      clearTimeout(settleTimer);
-      settleTimer = setTimeout(finish, 120);
-    };
-
-    const finish = () => {
-      visualViewport.removeEventListener("resize", scheduleSettle);
-      resolve();
-    };
-
-    visualViewport.addEventListener("resize", scheduleSettle);
-    scheduleSettle();
-  });
-};
-
-const handleSelectMode = async (
-  nextMode: ThemeName,
-  origin: ThemeOrigin | null,
-) => {
-  await waitForKeyboardToClose();
-
+const handleSelectMode = (nextMode: ThemeName, origin: ThemeOrigin | null) => {
   const nextTheme = resolveTheme(nextMode);
 
   if (nextTheme !== theme.value && origin) {
@@ -88,13 +47,10 @@ const handleSelectMode = async (
   setTheme(nextMode, { origin, ...effectOptions.value });
 };
 
-const handleBodyClick = async (event: MouseEvent) => {
-  const origin = originFromEvent(event);
-  await waitForKeyboardToClose();
-
+const handleBodyClick = (event: MouseEvent) => {
   const nextTheme = theme.value === "light" ? "dark" : "light";
-  fireGlow(origin.x, origin.y, glowColorFor(nextTheme));
-  toggleTheme({ origin, ...effectOptions.value });
+  fireGlow(event.clientX, event.clientY, glowColorFor(nextTheme));
+  toggleTheme({ origin: originFromEvent(event), ...effectOptions.value });
 };
 </script>
 
