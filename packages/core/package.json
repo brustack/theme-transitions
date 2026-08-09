@@ -31,8 +31,7 @@
 		"directory": "packages/core"
 	},
 	"publishConfig": {
-		"access": "public",
-		"provenance": true
+		"access": "public"
 	},
 	"peerDependencies": {
 		"vite": "^8.0.0"

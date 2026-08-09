@@ -22,8 +22,7 @@
 		"directory": "packages/alpine"
 	},
 	"publishConfig": {
-		"access": "public",
-		"provenance": true
+		"access": "public"
 	},
 	"peerDependencies": {
 		"alpinejs": "^3.0.0"
