@@ -1,6 +1,6 @@
 {
 	"name": "@brustack/theme-transitions-core",
-	"version": "2.2.3",
+	"version": "2.2.4",
 	"description": "Framework-agnostic core for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
