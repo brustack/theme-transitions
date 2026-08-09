@@ -18,8 +18,8 @@ describe('spreadEffect', () => {
 		expect(css).toContain('theme-spread-reveal');
 	});
 
-	it('returns the full duration plus a safety buffer regardless of origin', () => {
-		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(1650);
-		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, { x: 100, y: 100 })).toBe(1650);
+	it('returns the full duration plus a generous safety buffer regardless of origin', () => {
+		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(11500);
+		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, { x: 100, y: 100 })).toBe(11500);
 	});
 });

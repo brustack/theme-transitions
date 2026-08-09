@@ -1,7 +1,7 @@
 import type { EffectDefinition, SpreadEffectOptions } from '../types';
 import { parseCssDuration } from '../time';
 
-const SKIP_SAFETY_BUFFER_MS = 150;
+const SKIP_SAFETY_BUFFER_MS = 10000;
 
 const vtSelector = (layer: 'old' | 'new') =>
 	`html[data-theme-effect="spread"]::view-transition-${layer}(root)`;
