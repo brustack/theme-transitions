@@ -1,7 +1,7 @@
 {
 	"name": "@brustack/alpine-theme-transitions",
 	"version": "1.0.0",
-	"description": "Alpine.js plugin for animated dark/light theme transitions using the View Transitions API",
+	"description": "Alpine.js plugin for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
 	"type": "module",
@@ -55,6 +55,13 @@
 		"spread",
 		"fade",
 		"transition",
-		"animation"
+		"animation",
+		"custom-themes",
+		"cdn",
+		"zero-build",
+		"laravel",
+		"blade",
+		"rails",
+		"django"
 	]
 }

@@ -1,7 +1,7 @@
 {
 	"name": "@brustack/react-theme-transitions",
 	"version": "2.1.0",
-	"description": "React hook for animated dark/light theme transitions using the View Transitions API",
+	"description": "React hook for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
 	"type": "module",
@@ -64,6 +64,7 @@
 		"spread",
 		"fade",
 		"transition",
-		"animation"
+		"animation",
+		"custom-themes"
 	]
 }

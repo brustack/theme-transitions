@@ -1,7 +1,7 @@
 {
 	"name": "@brustack/vue-theme-transitions",
 	"version": "2.1.0",
-	"description": "Vue 3 composable for animated dark/light theme transitions using the View Transitions API",
+	"description": "Vue 3 composable for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
 	"type": "module",
@@ -54,6 +54,7 @@
 		"spread",
 		"fade",
 		"transition",
-		"animation"
+		"animation",
+		"custom-themes"
 	]
 }

@@ -1,7 +1,7 @@
 {
 	"name": "@brustack/next-theme-transitions",
 	"version": "1.1.0",
-	"description": "Next.js hook and anti-flash script component for animated dark/light theme transitions using the View Transitions API",
+	"description": "Next.js hook and anti-flash script component for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
 	"type": "module",
@@ -64,6 +64,7 @@
 		"spread",
 		"fade",
 		"transition",
-		"animation"
+		"animation",
+		"custom-themes"
 	]
 }

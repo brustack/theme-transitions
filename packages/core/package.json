@@ -1,7 +1,7 @@
 {
 	"name": "@brustack/theme-transitions-core",
 	"version": "2.2.0",
-	"description": "Framework-agnostic core for animated dark/light theme transitions using the View Transitions API",
+	"description": "Framework-agnostic core for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
 	"type": "module",
@@ -61,6 +61,8 @@
 		"spread",
 		"fade",
 		"transition",
-		"animation"
+		"animation",
+		"custom-themes",
+		"vanilla-js"
 	]
 }
