@@ -1,6 +1,6 @@
 {
 	"name": "@brustack/react-theme-transitions",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "React hook for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
@@ -35,7 +35,7 @@
 		}
 	},
 	"dependencies": {
-		"@brustack/theme-transitions-core": "^2.1.0"
+		"@brustack/theme-transitions-core": "^2.2.1"
 	},
 	"devDependencies": {
 		"@testing-library/react": "^16.3.2",

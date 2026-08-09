@@ -1,5 +1,11 @@
 # @brustack/theme-transitions-core
 
+## 2.2.1
+
+### Patch Changes
+
+- Refresh package descriptions and keywords for better npm discoverability (drop outdated "dark/light" wording, add `custom-themes`, and for the Alpine adapter add `laravel`, `blade`, `rails`, `django`, `cdn`, `zero-build`). No functional changes.
+
 ## 2.2.0
 
 ### Minor Changes

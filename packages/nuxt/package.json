@@ -1,6 +1,6 @@
 {
 	"name": "@brustack/nuxt-theme-transitions",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "Animated theme transitions for Nuxt using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
@@ -30,7 +30,7 @@
 		"nuxt": ">=3.21.11"
 	},
 	"dependencies": {
-		"@brustack/theme-transitions-core": "^2.1.0",
+		"@brustack/theme-transitions-core": "^2.2.1",
 		"@nuxt/kit": "^4.0.0"
 	},
 	"devDependencies": {

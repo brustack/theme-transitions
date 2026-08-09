@@ -1,6 +1,6 @@
 {
 	"name": "@brustack/vue-theme-transitions",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "Vue 3 composable for animated theme transitions using the View Transitions API",
 	"author": "Bruno Neckel",
 	"license": "MIT",
@@ -28,7 +28,7 @@
 		"vue": "^3.5.0"
 	},
 	"dependencies": {
-		"@brustack/theme-transitions-core": "^2.1.0"
+		"@brustack/theme-transitions-core": "^2.2.1"
 	},
 	"devDependencies": {
 		"@vue/test-utils": "^2.4.11",
