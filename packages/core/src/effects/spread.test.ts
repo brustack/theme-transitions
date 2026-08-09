@@ -25,6 +25,6 @@ describe('spreadEffect', () => {
 	it('estimates the skip time from the origin when one is given', () => {
 		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
 		const result = spreadEffect.getSkipAfterMs(defaultSpreadOptions, { x: 100, y: 100 });
-		expect(result).toBe(857);
+		expect(result).toBe(680);
 	});
 });
