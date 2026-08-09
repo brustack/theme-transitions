@@ -24,6 +24,12 @@ describe('spreadEffect', () => {
 		expect(css).toContain('theme-spread-reveal');
 	});
 
+	it('builds CSS with a compositor hint on the revealed layer', () => {
+		const css = spreadEffect.buildCss(defaultSpreadOptions);
+		expect(css).toContain('will-change: clip-path');
+		expect(css).toContain('contain: paint');
+	});
+
 	it('returns the full duration plus a generous safety buffer regardless of origin', () => {
 		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(11500);
 		expect(

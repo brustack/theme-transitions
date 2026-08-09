@@ -38,6 +38,8 @@ export const spreadEffect: EffectDefinition = {
         animation-duration: var(--theme-duration, ${duration});
         animation-timing-function: linear;
         animation-fill-mode: both;
+        will-change: clip-path;
+        contain: paint;
       }
 
       @keyframes theme-spread-reveal {
