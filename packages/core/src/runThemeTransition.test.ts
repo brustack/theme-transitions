@@ -35,7 +35,10 @@ describe('runThemeTransition', () => {
 	});
 
 	it('runs the callback directly when reduced motion is preferred, without a view transition', async () => {
-		const root = { dataset: {} as { themeEffect?: string }, style: { setProperty: vi.fn(), removeProperty: vi.fn() } };
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
 		vi.stubGlobal('document', {
 			documentElement: root,
 			startViewTransition: vi.fn(),
@@ -84,6 +87,8 @@ describe('runThemeTransition', () => {
 		});
 		vi.stubGlobal('window', {
 			matchMedia: () => ({ matches: false }),
+			innerWidth: 100,
+			innerHeight: 200,
 		});
 
 		const callback = vi.fn();
@@ -102,8 +107,14 @@ describe('runThemeTransition', () => {
 		await promise;
 
 		expect(root.dataset.themeEffect).toBeUndefined();
-		expect(root.style.setProperty).toHaveBeenCalledWith('--theme-origin-x', '10px');
-		expect(root.style.setProperty).toHaveBeenCalledWith('--theme-origin-y', '20px');
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-origin-x',
+			'10%',
+		);
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-origin-y',
+			'10%',
+		);
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-origin-x');
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-origin-y');
 		expect(skipTransition).toHaveBeenCalledTimes(1);
@@ -147,16 +158,28 @@ describe('runThemeTransition', () => {
 		await vi.advanceTimersByTimeAsync(500);
 		await promise;
 
-		expect(root.style.setProperty).toHaveBeenCalledWith('--theme-duration', '2s');
-		expect(root.style.setProperty).toHaveBeenCalledWith('--theme-easing', 'linear');
-		expect(root.style.setProperty).toHaveBeenCalledWith('--theme-radius', '50vmax');
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-duration',
+			'2s',
+		);
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-easing',
+			'linear',
+		);
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-radius',
+			'50vmax',
+		);
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-duration');
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-easing');
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-radius');
 	});
 
 	it('runs the callback directly when the effect is none, even with view transitions supported and no reduced motion', async () => {
-		const root = { dataset: {} as { themeEffect?: string }, style: { setProperty: vi.fn(), removeProperty: vi.fn() } };
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
 		const startViewTransition = vi.fn();
 		vi.stubGlobal('document', {
 			documentElement: root,
@@ -184,7 +207,10 @@ describe('runThemeTransition', () => {
 	});
 
 	it('runs the callback directly when the View Transitions API is unavailable, without reduced motion', async () => {
-		const root = { dataset: {} as { themeEffect?: string }, style: { setProperty: vi.fn(), removeProperty: vi.fn() } };
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
 		vi.stubGlobal('document', {
 			documentElement: root,
 			startViewTransition: undefined,

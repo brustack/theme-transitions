@@ -1,4 +1,5 @@
 import type { EffectDefinition, EffectOptions, ThemeOrigin } from './types';
+import { toOriginPercent } from './viewport';
 
 export const runThemeTransition = async (
 	definition: EffectDefinition,
@@ -16,8 +17,9 @@ export const runThemeTransition = async (
 	root.dataset.themeEffect = definition.name;
 
 	if (origin) {
-		root.style.setProperty('--theme-origin-x', `${origin.x}px`);
-		root.style.setProperty('--theme-origin-y', `${origin.y}px`);
+		const { x, y } = toOriginPercent(origin);
+		root.style.setProperty('--theme-origin-x', x);
+		root.style.setProperty('--theme-origin-y', y);
 	}
 
 	if ('duration' in effectOptions) {
@@ -45,7 +47,11 @@ export const runThemeTransition = async (
 		'(prefers-reduced-motion: reduce)',
 	).matches;
 
-	if (definition.name === 'none' || !document.startViewTransition || prefersReducedMotion) {
+	if (
+		definition.name === 'none'
+		|| !document.startViewTransition
+		|| prefersReducedMotion
+	) {
 		setAnimating(true);
 
 		try {
