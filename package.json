@@ -8,7 +8,7 @@
 		"apps/*"
 	],
 	"scripts": {
-		"build": "npm run build --workspaces",
+		"build": "npm run build --workspace=packages/core && npm run build --workspaces",
 		"pretest": "npm run build --workspace=packages/core",
 		"test": "vitest run",
 		"lint": "eslint .",
