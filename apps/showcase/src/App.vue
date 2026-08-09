@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useThemeTransition } from "@brustack/vue-theme-transitions";
-import {
-  originFromEvent,
-  resolveTheme,
-} from "@brustack/theme-transitions-core";
+import { resolveTheme } from "@brustack/theme-transitions-core";
 import type { ThemeName, ThemeOrigin } from "@brustack/theme-transitions-core";
 import TopBar from "./components/TopBar.vue";
 import Hero from "./components/Hero.vue";
@@ -37,7 +34,46 @@ const glowColorFor = (nextTheme: string) => {
   return "#F5A623";
 };
 
-const handleSelectMode = (nextMode: ThemeName, origin: ThemeOrigin | null) => {
+const blurActiveFieldAndWait = (): Promise<void> => {
+  const activeEl = document.activeElement;
+
+  if (
+    !(activeEl instanceof HTMLInputElement) &&
+    !(activeEl instanceof HTMLTextAreaElement)
+  ) {
+    return Promise.resolve();
+  }
+
+  activeEl.blur();
+
+  const visualViewport = window.visualViewport;
+
+  if (!visualViewport) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      visualViewport.removeEventListener("resize", settle);
+      clearTimeout(timer);
+      resolve();
+    };
+
+    visualViewport.addEventListener("resize", settle);
+    const timer = setTimeout(settle, 300);
+  });
+};
+
+const handleSelectMode = async (
+  nextMode: ThemeName,
+  origin: ThemeOrigin | null,
+) => {
+  await blurActiveFieldAndWait();
+
   const nextTheme = resolveTheme(nextMode);
 
   if (nextTheme !== theme.value && origin) {
@@ -47,10 +83,13 @@ const handleSelectMode = (nextMode: ThemeName, origin: ThemeOrigin | null) => {
   setTheme(nextMode, { origin, ...effectOptions.value });
 };
 
-const handleBodyClick = (event: MouseEvent) => {
+const handleBodyClick = async (event: MouseEvent) => {
+  const { clientX, clientY } = event;
+  await blurActiveFieldAndWait();
+
   const nextTheme = theme.value === "light" ? "dark" : "light";
-  fireGlow(event.clientX, event.clientY, glowColorFor(nextTheme));
-  toggleTheme({ origin: originFromEvent(event), ...effectOptions.value });
+  fireGlow(clientX, clientY, glowColorFor(nextTheme));
+  toggleTheme({ origin: { x: clientX, y: clientY }, ...effectOptions.value });
 };
 </script>
 
