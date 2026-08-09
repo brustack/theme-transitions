@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useThemeTransition } from "@brustack/vue-theme-transitions";
-import { resolveTheme } from "@brustack/theme-transitions-core";
+import {
+  originFromEvent,
+  resolveTheme,
+} from "@brustack/theme-transitions-core";
 import type { ThemeName, ThemeOrigin } from "@brustack/theme-transitions-core";
 import TopBar from "./components/TopBar.vue";
 import Hero from "./components/Hero.vue";
@@ -34,37 +37,39 @@ const glowColorFor = (nextTheme: string) => {
   return "#F5A623";
 };
 
-const blurActiveFieldAndWait = (): Promise<void> => {
+const waitForKeyboardToClose = (): Promise<void> => {
   const activeEl = document.activeElement;
 
   if (
-    !(activeEl instanceof HTMLInputElement) &&
-    !(activeEl instanceof HTMLTextAreaElement)
+    activeEl instanceof HTMLInputElement ||
+    activeEl instanceof HTMLTextAreaElement
   ) {
-    return Promise.resolve();
+    activeEl.blur();
   }
 
-  activeEl.blur();
-
   const visualViewport = window.visualViewport;
+  const keyboardLikelyOpen =
+    !!visualViewport && visualViewport.height < window.innerHeight * 0.75;
 
-  if (!visualViewport) {
+  if (!visualViewport || !keyboardLikelyOpen) {
     return Promise.resolve();
   }
 
   return new Promise((resolve) => {
-    let settled = false;
+    let settleTimer: ReturnType<typeof setTimeout>;
 
-    const settle = () => {
-      if (settled) return;
-      settled = true;
-      visualViewport.removeEventListener("resize", settle);
-      clearTimeout(timer);
+    const scheduleSettle = () => {
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(finish, 120);
+    };
+
+    const finish = () => {
+      visualViewport.removeEventListener("resize", scheduleSettle);
       resolve();
     };
 
-    visualViewport.addEventListener("resize", settle);
-    const timer = setTimeout(settle, 300);
+    visualViewport.addEventListener("resize", scheduleSettle);
+    scheduleSettle();
   });
 };
 
@@ -72,7 +77,7 @@ const handleSelectMode = async (
   nextMode: ThemeName,
   origin: ThemeOrigin | null,
 ) => {
-  await blurActiveFieldAndWait();
+  await waitForKeyboardToClose();
 
   const nextTheme = resolveTheme(nextMode);
 
@@ -84,12 +89,12 @@ const handleSelectMode = async (
 };
 
 const handleBodyClick = async (event: MouseEvent) => {
-  const { clientX, clientY } = event;
-  await blurActiveFieldAndWait();
+  const origin = originFromEvent(event);
+  await waitForKeyboardToClose();
 
   const nextTheme = theme.value === "light" ? "dark" : "light";
-  fireGlow(clientX, clientY, glowColorFor(nextTheme));
-  toggleTheme({ origin: { x: clientX, y: clientY }, ...effectOptions.value });
+  fireGlow(origin.x, origin.y, glowColorFor(nextTheme));
+  toggleTheme({ origin, ...effectOptions.value });
 };
 </script>
 
