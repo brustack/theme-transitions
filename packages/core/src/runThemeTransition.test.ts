@@ -216,7 +216,7 @@ describe('runThemeTransition', () => {
 
 		expect(root.style.setProperty).toHaveBeenCalledWith(
 			'--theme-radius',
-			'150px',
+			'178px',
 		);
 	});
 

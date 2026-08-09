@@ -48,7 +48,7 @@ describe('resolveSpreadRadiusPx', () => {
 	it('computes the distance to the farthest corner, plus a safety margin', () => {
 		vi.stubGlobal('window', { innerWidth: 300, innerHeight: 400 });
 
-		expect(resolveSpreadRadiusPx({ x: 0, y: 0 })).toBe('508px');
+		expect(resolveSpreadRadiusPx({ x: 0, y: 0 })).toBe('608px');
 	});
 
 	it('uses the larger of innerWidth/innerHeight and visualViewport, unlike toOriginPercent', () => {
@@ -58,7 +58,7 @@ describe('resolveSpreadRadiusPx', () => {
 			visualViewport: { width: 100, height: 100 },
 		});
 
-		expect(resolveSpreadRadiusPx({ x: 50, y: 50 })).toBe('221px');
+		expect(resolveSpreadRadiusPx({ x: 50, y: 50 })).toBe('263px');
 	});
 
 	it('returns null when window is unavailable', () => {

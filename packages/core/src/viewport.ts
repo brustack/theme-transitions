@@ -34,6 +34,7 @@ export const toOriginPercent = (
 	};
 };
 
+const RADIUS_SAFETY_MARGIN_RATIO = 0.2;
 const RADIUS_SAFETY_MARGIN_PX = 8;
 
 export const resolveSpreadRadiusPx = (origin: ThemeOrigin): string | null => {
@@ -54,5 +55,8 @@ export const resolveSpreadRadiusPx = (origin: ThemeOrigin): string | null => {
 		Math.max(origin.y, height - origin.y),
 	);
 
-	return `${Math.ceil(distance) + RADIUS_SAFETY_MARGIN_PX}px`;
+	return `${
+		Math.ceil(distance * (1 + RADIUS_SAFETY_MARGIN_RATIO))
+		+ RADIUS_SAFETY_MARGIN_PX
+	}px`;
 };
