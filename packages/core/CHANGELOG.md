@@ -1,5 +1,11 @@
 # @brustack/theme-transitions-core
 
+## 2.2.12
+
+### Patch Changes
+
+- 7835745: Revert the spread effect's radius margin back to a small fixed value. The 20% proportional margin made things worse on a real device (a case that worked at the screen center regressed after the increase), suggesting large clip-path radii are themselves costly to render on some mobile browsers rather than the radius being insufficiently sized.
+
 ## 2.2.11
 
 ### Patch Changes
