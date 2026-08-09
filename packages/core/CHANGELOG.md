@@ -1,5 +1,11 @@
 # @brustack/theme-transitions-core
 
+## 2.2.9
+
+### Patch Changes
+
+- 35a0662: Restore the spread effect's default radius to 200vmax. Reverting it to 150vmax was premature: that value was never cleanly tested without the early-skip cutoff masking whether it actually covered the screen, and on mobile it doesn't.
+
 ## 2.2.8
 
 ### Patch Changes
