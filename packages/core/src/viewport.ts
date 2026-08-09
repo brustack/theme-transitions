@@ -1,11 +1,5 @@
 import type { ThemeOrigin } from './types';
 
-/**
- * The viewport size used for both the rendered origin (below) and the
- * spread effect's skip-timing estimate (time.ts). They must agree, or the
- * animation's early-skip cutoff drifts out of sync with what's actually
- * on screen and the transition appears to jump.
- */
 export const getViewportSize = (): { width: number; height: number } => {
 	const visualViewport = typeof window !== 'undefined' ? window.visualViewport : undefined;
 
@@ -15,16 +9,6 @@ export const getViewportSize = (): { width: number; height: number } => {
 	};
 };
 
-/**
- * Converts a viewport-relative origin (from clientX/clientY) into a
- * percentage of the visible viewport. On mobile browsers the layout
- * viewport used by clientX/clientY can drift from what's actually
- * rendered (e.g. Chrome Android's collapsing address bar), while
- * window.visualViewport tracks what's really on screen. Percentages
- * resolve against the transition's own rendered box, so they stay
- * accurate even if that box's size doesn't exactly match innerWidth/
- * innerHeight at capture time.
- */
 export const toOriginPercent = (origin: ThemeOrigin): { x: string; y: string } => {
 	const { width, height } = getViewportSize();
 

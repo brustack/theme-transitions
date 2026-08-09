@@ -18,7 +18,7 @@ export const parseCssDuration = (duration: string): number => {
 	return parseFloat(trimmed) || 0;
 };
 
-const SKIP_BUFFER_MS = 50;
+const SKIP_BUFFER_MS = 150;
 
 /**
  * The CSS `vmax` unit that drives the circle's actual rendered radius is

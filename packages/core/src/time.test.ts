@@ -35,12 +35,12 @@ describe('estimateSpreadSkipMs', () => {
 
 	it('scales the duration by the cover-distance-to-radius ratio', () => {
 		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
-		expect(estimateSpreadSkipMs(origin, options)).toBe(521);
+		expect(estimateSpreadSkipMs(origin, options)).toBe(621);
 	});
 
 	it('falls back to a 150vmax default when radius has no numeric match', () => {
 		vi.stubGlobal('window', { innerWidth: 200, innerHeight: 200 });
-		expect(estimateSpreadSkipMs(origin, { ...options, radius: 'garbage' })).toBe(521);
+		expect(estimateSpreadSkipMs(origin, { ...options, radius: 'garbage' })).toBe(621);
 	});
 
 	it('never skips before the full duration when innerWidth/innerHeight and visualViewport disagree sharply', () => {
@@ -49,7 +49,7 @@ describe('estimateSpreadSkipMs', () => {
 			innerHeight: 1000,
 			visualViewport: { width: 200, height: 200 },
 		});
-		expect(estimateSpreadSkipMs(origin, options)).toBe(1050);
+		expect(estimateSpreadSkipMs(origin, options)).toBe(1150);
 	});
 
 	it('biases the estimate later (never earlier) when visualViewport is slightly smaller than innerWidth/innerHeight', () => {
