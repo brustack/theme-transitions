@@ -10,7 +10,7 @@ const vtGroup = () =>
 	`html[data-theme-effect="spread"]::view-transition-group(root)`;
 
 export const defaultSpreadOptions: SpreadEffectOptions = {
-	duration: '1.5s',
+	duration: '1s',
 	easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
 	radius: '200vmax',
 };

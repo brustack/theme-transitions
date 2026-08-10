@@ -111,12 +111,12 @@ module.exports = {
 
 | Variant | `duration` | `easing` |
 |---|:---:|:---:|
-| `spread` | `'1.5s'` | ❌ |
+| `spread` | `'1s'` | ❌ |
 | `fade` (default) | `'400ms'` | `'ease'` |
 | `none` | ❌ | ❌ |
 
 ```ts
-useThemeTransition({ variant: 'spread', duration: '1.5s' })
+useThemeTransition({ variant: 'spread', duration: '1s' })
 ```
 
 The first call in the app sets the shared default. Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`setTheme` to override just that one call.
@@ -158,7 +158,7 @@ export default defineConfig({
 Optionally, pass the same options as above so every `useThemeTransition()` call in the app picks them up without repeating them:
 
 ```ts
-plugins: [themeTransitions({ variant: 'spread', duration: '1.5s' })],
+plugins: [themeTransitions({ variant: 'spread', duration: '1s' })],
 ```
 
 ## Other bundlers

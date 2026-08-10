@@ -18,7 +18,7 @@ const { theme, mode, toggleTheme, setTheme } = useThemeTransition({
 
 const effectOptions = ref<EffectOptions>({
   variant: "spread",
-  duration: "1.5s",
+  duration: "1s",
 });
 
 const glow = ref({ x: 0, y: 0, color: "", firing: false });

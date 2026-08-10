@@ -106,12 +106,12 @@ module.exports = {
 
 | Variant | `duration` | `easing` |
 |---|:---:|:---:|
-| `spread` | `'1.5s'` | ❌ |
+| `spread` | `'1s'` | ❌ |
 | `fade` (default) | `'400ms'` | `'ease'` |
 | `none` | ❌ | ❌ |
 
 ```ts
-getController({ variant: 'spread', duration: '1.5s' })
+getController({ variant: 'spread', duration: '1s' })
 ```
 
 The first call in a process sets the shared default; `createController(options)` creates an independent instance instead. `toggleTheme`/`setTheme` accept a `TransitionOptions` object (same shape, plus `origin`, required for `spread`, derive it with `originFromEvent(event)` or `originFromElement(el)`) to override just that one call.
@@ -155,7 +155,7 @@ export default defineConfig({
 Optionally, pass default effect options so every `getController()` call in the app picks them up without repeating them:
 
 ```ts
-plugins: [themeTransitions({ variant: 'spread', duration: '1.5s' })],
+plugins: [themeTransitions({ variant: 'spread', duration: '1s' })],
 ```
 
 ## Other bundlers

@@ -43,12 +43,12 @@
 					},
 					get isModified() {
 						if (this.variant === 'none') return false;
-						const defaults = this.variant === 'fade' ? { duration: '400ms', easing: 'ease' } : { duration: '1.5s' };
+						const defaults = this.variant === 'fade' ? { duration: '400ms', easing: 'ease' } : { duration: '1s' };
 						if (this.duration !== defaults.duration) return true;
 						return this.variant === 'fade' && this.easing !== defaults.easing;
 					},
 					resetToDefaults() {
-						const defaults = this.variant === 'fade' ? { duration: '400ms' } : { duration: '1.5s' };
+						const defaults = this.variant === 'fade' ? { duration: '400ms' } : { duration: '1s' };
 						this.duration = defaults.duration;
 						this.easing = 'ease';
 					},

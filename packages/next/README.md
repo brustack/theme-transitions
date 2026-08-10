@@ -184,7 +184,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 | Variant | `duration` | `easing` |
 |---|:---:|:---:|
-| `spread` | `'1.5s'` | ❌ |
+| `spread` | `'1s'` | ❌ |
 | `fade` (default) | `'400ms'` | `'ease'` |
 | `none` | ❌ | ❌ |
 
@@ -192,12 +192,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 // app/layout.tsx
-<ThemeScript variant="spread" duration="1.5s" />
+<ThemeScript variant="spread" duration="1s" />
 ```
 
 ```tsx
 // app/components/theme-toggle.tsx
-useThemeTransition({ variant: 'spread', duration: '1.5s' })
+useThemeTransition({ variant: 'spread', duration: '1s' })
 ```
 
 Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`setTheme` to override just that one call.

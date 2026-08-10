@@ -135,12 +135,12 @@ module.exports = {
 
 | Variant | `duration` | `easing` |
 |---|:---:|:---:|
-| `spread` | `'1.5s'` | ❌ |
+| `spread` | `'1s'` | ❌ |
 | `fade` (default) | `'400ms'` | `'ease'` |
 | `none` | ❌ | ❌ |
 
 ```html
-<div x-data="themeTransition({ variant: 'spread', duration: '1.5s' })">
+<div x-data="themeTransition({ variant: 'spread', duration: '1s' })">
 ```
 
 The first component to initialize on the page sets the shared default. Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`setTheme` to override just that one call.

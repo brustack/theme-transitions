@@ -115,7 +115,7 @@ module.exports = {
 
 | Variant | `duration` | `easing` |
 |---|:---:|:---:|
-| `spread` | `'1.5s'` | ❌ |
+| `spread` | `'1s'` | ❌ |
 | `fade` (default) | `'400ms'` | `'ease'` |
 | `none` | ❌ | ❌ |
 
@@ -125,7 +125,7 @@ export default defineNuxtConfig({
   modules: ['@brustack/nuxt-theme-transitions'],
   themeTransition: {
     variant: 'spread',
-    duration: '1.5s',
+    duration: '1s',
   },
 })
 ```
