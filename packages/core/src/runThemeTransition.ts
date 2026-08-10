@@ -1,5 +1,6 @@
 import type { EffectDefinition, EffectOptions, ThemeOrigin } from './types';
-import { resolveSpreadRadiusPx, toOriginPercent } from './viewport';
+import { SPREAD_RADIUS_PERCENT } from './effects/spread';
+import { toOriginPercent } from './viewport';
 
 const waitForStableViewport = (): Promise<void> => {
 	const visualViewport = window.visualViewport;
@@ -60,14 +61,11 @@ export const runThemeTransition = async (
 	}
 
 	if ('radius' in effectOptions) {
-		const exactRadius
+		const radius
 			= definition.name === 'spread' && origin
-				? resolveSpreadRadiusPx(origin)
-				: null;
-		root.style.setProperty(
-			'--theme-radius',
-			exactRadius ?? effectOptions.radius,
-		);
+				? SPREAD_RADIUS_PERCENT
+				: effectOptions.radius;
+		root.style.setProperty('--theme-radius', radius);
 	}
 
 	const cleanup = () => {

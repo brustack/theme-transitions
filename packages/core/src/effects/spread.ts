@@ -15,6 +15,8 @@ export const defaultSpreadOptions: SpreadEffectOptions = {
 	radius: '200vmax',
 };
 
+export const SPREAD_RADIUS_PERCENT = '150%';
+
 export const spreadEffect: EffectDefinition = {
 	name: 'spread',
 	requiresOrigin: true,

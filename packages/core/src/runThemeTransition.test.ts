@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { SPREAD_RADIUS_PERCENT } from './effects/spread';
 import { runThemeTransition } from './runThemeTransition';
 import type { EffectDefinition } from './types';
 
@@ -175,7 +176,7 @@ describe('runThemeTransition', () => {
 		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-radius');
 	});
 
-	it('computes an exact pixel radius for the spread effect instead of using the raw CSS value', async () => {
+	it('uses the fixed spread radius percentage instead of the raw CSS value, when an origin is given', async () => {
 		vi.useFakeTimers();
 
 		const root = {
@@ -195,8 +196,6 @@ describe('runThemeTransition', () => {
 		});
 		vi.stubGlobal('window', {
 			matchMedia: () => ({ matches: false }),
-			innerWidth: 200,
-			innerHeight: 200,
 		});
 
 		const callback = vi.fn();
@@ -216,7 +215,50 @@ describe('runThemeTransition', () => {
 
 		expect(root.style.setProperty).toHaveBeenCalledWith(
 			'--theme-radius',
-			'150px',
+			SPREAD_RADIUS_PERCENT,
+		);
+	});
+
+	it('falls back to the raw CSS radius value for the spread effect when no origin is given', async () => {
+		vi.useFakeTimers();
+
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
+
+		const finished = Promise.resolve();
+		const startViewTransition = vi.fn((update: () => Promise<void>) => {
+			update();
+			return { ready: Promise.resolve(), finished, skipTransition: vi.fn() };
+		});
+
+		vi.stubGlobal('document', {
+			documentElement: root,
+			startViewTransition,
+		});
+		vi.stubGlobal('window', {
+			matchMedia: () => ({ matches: false }),
+		});
+
+		const callback = vi.fn();
+		const setAnimating = vi.fn();
+		const definition = createDefinition(() => 500);
+
+		const promise = runThemeTransition(
+			{ ...definition, name: 'spread' },
+			null,
+			{ duration: '2s', easing: 'linear', radius: '150vmax' } as never,
+			callback,
+			setAnimating,
+		);
+
+		await vi.advanceTimersByTimeAsync(500);
+		await promise;
+
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-radius',
+			'150vmax',
 		);
 	});
 

@@ -33,26 +33,3 @@ export const toOriginPercent = (
 		y: `${((origin.y - offsetY) / height) * 100}%`,
 	};
 };
-
-const RADIUS_SAFETY_MARGIN_PX = 8;
-
-export const resolveSpreadRadiusPx = (origin: ThemeOrigin): string | null => {
-	if (typeof window === 'undefined') {
-		return null;
-	}
-
-	const visualViewport = window.visualViewport;
-	const width = Math.max(window.innerWidth, visualViewport?.width ?? 0);
-	const height = Math.max(window.innerHeight, visualViewport?.height ?? 0);
-
-	if (!width || !height) {
-		return null;
-	}
-
-	const distance = Math.hypot(
-		Math.max(origin.x, width - origin.x),
-		Math.max(origin.y, height - origin.y),
-	);
-
-	return `${Math.ceil(distance) + RADIUS_SAFETY_MARGIN_PX}px`;
-};
