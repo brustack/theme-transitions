@@ -5,7 +5,7 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/react-theme-transitions?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/react-theme-transitions)
 [![license](https://img.shields.io/npm/l/@brustack/react-theme-transitions.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/react/LICENSE)
 
-React hook for animated dark/light theme transitions using the View Transitions API.
+React hook for animated theme transitions using the View Transitions API.
 
 - ✅ Multiple effects to choose from
 - ✅ Zero flash of the wrong theme on load

@@ -5,7 +5,7 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/vue-theme-transitions?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/vue-theme-transitions)
 [![license](https://img.shields.io/npm/l/@brustack/vue-theme-transitions.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/vue/LICENSE)
 
-Vue composable for animated dark/light theme transitions using the View Transitions API.
+Vue composable for animated theme transitions using the View Transitions API.
 
 - ✅ Multiple effects to choose from
 - ✅ Zero flash of the wrong theme on load

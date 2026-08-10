@@ -5,7 +5,7 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/next-theme-transitions?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/next-theme-transitions)
 [![license](https://img.shields.io/npm/l/@brustack/next-theme-transitions.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/next/LICENSE)
 
-Next.js App Router hook and anti-flash script component for animated dark/light theme transitions using the View Transitions API.
+Next.js App Router hook and anti-flash script component for animated theme transitions using the View Transitions API.
 
 - ✅ Multiple effects to choose from
 - ✅ Zero flash of the wrong theme on load via a Server Component script

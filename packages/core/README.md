@@ -5,7 +5,7 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/theme-transitions-core?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/theme-transitions-core)
 [![license](https://img.shields.io/npm/l/@brustack/theme-transitions-core.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/core/LICENSE)
 
-Framework-agnostic core for animated dark/light theme transitions using the View Transitions API.
+Framework-agnostic core for animated theme transitions using the View Transitions API.
 
 - ✅ Multiple effects to choose from
 - ✅ Zero flash of the wrong theme on load

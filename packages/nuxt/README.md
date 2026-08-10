@@ -5,7 +5,7 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/nuxt-theme-transitions?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/nuxt-theme-transitions)
 [![license](https://img.shields.io/npm/l/@brustack/nuxt-theme-transitions.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/nuxt/LICENSE)
 
-Nuxt module for animated dark/light theme transitions using the View Transitions API.
+Nuxt module for animated theme transitions using the View Transitions API.
 
 - ✅ Multiple effects to choose from
 - ✅ Zero flash of the wrong theme on load

@@ -5,7 +5,7 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/alpine-theme-transitions?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/alpine-theme-transitions)
 [![license](https://img.shields.io/npm/l/@brustack/alpine-theme-transitions.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/alpine/LICENSE)
 
-Alpine.js plugin for animated dark/light theme transitions using the View Transitions API.
+Alpine.js plugin for animated theme transitions using the View Transitions API.
 
 - ✅ Multiple effects to choose from
 - ✅ Zero flash of the wrong theme on load
