@@ -37,5 +37,5 @@ export {
 
 export { runThemeTransition } from './runThemeTransition';
 
-export { createController, getController } from './controller';
+export { createController, getController, resetController } from './controller';
 export type { ThemeController, ThemeState } from './controller';

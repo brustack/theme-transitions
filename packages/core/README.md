@@ -132,6 +132,7 @@ getController({ themes: ['sepia', 'sunset'] })
 |---|---|
 | `getController(options?)` | Returns the shared controller singleton |
 | `createController(options?)` | Returns an independent, non-singleton controller |
+| `resetController()` | Clears the shared singleton so the next `getController()` call creates a fresh one. Mainly useful between tests. |
 | `controller.toggleTheme(options?)` | Switch between light and dark |
 | `controller.setTheme(mode, options?)` | Set `light`, `dark`, `system`, or a custom theme name |
 | `controller.getState()` | Returns `{ theme, mode, isAnimating, themes }` |

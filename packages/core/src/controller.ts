@@ -170,3 +170,7 @@ export const getController = (options?: ThemeOptions): ThemeController => {
 	sharedController ??= createController(options);
 	return sharedController;
 };
+
+export const resetController = (): void => {
+	sharedController = undefined;
+};
