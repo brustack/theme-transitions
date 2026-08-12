@@ -8,6 +8,7 @@ import type {
 import { defaultFadeOptions, fadeEffect } from './fade';
 import { defaultNoneOptions, noneEffect } from './none';
 import { defaultSpreadOptions, spreadEffect } from './spread';
+import { defaultWipeOptions, wipeEffect } from './wipe';
 
 export type {
 	EffectDefinition,
@@ -17,21 +18,32 @@ export type {
 	ThemeEffect,
 	ThemeEffects,
 	ThemeOptions,
+	WipeEffectOptions,
 } from '../types';
 
 export const DEFAULT_VARIANT: ThemeEffect = 'fade';
 
-export const EFFECT_OVERRIDE_KEYS: Record<ThemeEffect, ('duration' | 'easing' | 'radius')[]> = {
+export const EFFECT_OVERRIDE_KEYS: Record<
+	ThemeEffect,
+	('duration' | 'easing' | 'radius' | 'direction')[]
+> = {
 	spread: ['duration'],
 	fade: ['duration', 'easing'],
+	wipe: ['duration', 'easing', 'direction'],
 	none: [],
 };
 
-const themeEffects = [spreadEffect, fadeEffect, noneEffect] as EffectDefinition[];
+const themeEffects = [
+	spreadEffect,
+	fadeEffect,
+	wipeEffect,
+	noneEffect,
+] as EffectDefinition[];
 
 export const defaultThemeEffects: ThemeEffects = {
 	spread: defaultSpreadOptions,
 	fade: defaultFadeOptions,
+	wipe: defaultWipeOptions,
 	none: defaultNoneOptions,
 };
 
@@ -47,7 +59,7 @@ export const getEffectOrThrow = (name: ThemeEffect): EffectDefinition => {
 
 export const pickOverrides = (
 	options: EffectOverrides | undefined,
-	keys: ('duration' | 'easing' | 'radius')[],
+	keys: ('duration' | 'easing' | 'radius' | 'direction')[],
 ): Record<string, string> => {
 	const overrides: Record<string, string> = {};
 
@@ -67,11 +79,21 @@ export const resolveThemeEffects = (options?: ThemeOptions): ThemeEffects => {
 	return {
 		spread: {
 			...defaultSpreadOptions,
-			...(variant === 'spread' ? pickOverrides(options, EFFECT_OVERRIDE_KEYS.spread) : {}),
+			...(variant === 'spread'
+				? pickOverrides(options, EFFECT_OVERRIDE_KEYS.spread)
+				: {}),
 		},
 		fade: {
 			...defaultFadeOptions,
-			...(variant === 'fade' ? pickOverrides(options, EFFECT_OVERRIDE_KEYS.fade) : {}),
+			...(variant === 'fade'
+				? pickOverrides(options, EFFECT_OVERRIDE_KEYS.fade)
+				: {}),
+		},
+		wipe: {
+			...defaultWipeOptions,
+			...(variant === 'wipe'
+				? pickOverrides(options, EFFECT_OVERRIDE_KEYS.wipe)
+				: {}),
 		},
 		none: defaultNoneOptions,
 	};

@@ -1,4 +1,4 @@
-export type ThemeEffect = 'spread' | 'fade' | 'none';
+export type ThemeEffect = 'spread' | 'fade' | 'wipe' | 'none';
 
 export type ThemeOrigin = {
 	x: number;
@@ -14,6 +14,7 @@ export interface EffectOverrides {
 	duration?: string;
 	easing?: string;
 	radius?: string;
+	direction?: 'left' | 'right' | 'up' | 'down';
 }
 
 export interface TransitionOptions extends EffectOverrides {
@@ -31,16 +32,24 @@ export interface FadeEffectOptions {
 	easing: string;
 }
 
+export interface WipeEffectOptions {
+	duration: string;
+	easing: string;
+	direction: 'left' | 'right' | 'up' | 'down';
+}
+
 export type NoneEffectOptions = Record<string, never>;
 
 export type EffectOptions
 	= | SpreadEffectOptions
 		| FadeEffectOptions
+		| WipeEffectOptions
 		| NoneEffectOptions;
 
 export interface ThemeEffects {
 	spread: SpreadEffectOptions;
 	fade: FadeEffectOptions;
+	wipe: WipeEffectOptions;
 	none: NoneEffectOptions;
 }
 

@@ -9,6 +9,7 @@ export type {
 	ThemeOptions,
 	ThemeOrigin,
 	TransitionOptions,
+	WipeEffectOptions,
 } from './types';
 
 export {
