@@ -1,5 +1,16 @@
 # @brustack/nuxt-theme-transitions
 
+## 2.2.0
+
+### Minor Changes
+
+- 291b9ec: Widen the `@nuxt/kit` peer dependency range to also accept Nuxt 3 (`^3.21.11 || ^4.0.0`), not just Nuxt 4. Fix `theme`/`mode` state being typed as a bare `string` instead of `ThemeName`. Add `sideEffects: false` for better tree-shaking. The composable's SSR-safe initial state is now derived directly from `createController()` instead of a hand-duplicated set of literals.
+
+### Patch Changes
+
+- Updated dependencies [291b9ec]
+  - @brustack/theme-transitions-core@3.1.0
+
 ## 2.1.2
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @brustack/vue-theme-transitions
 
+## 2.1.3
+
+### Patch Changes
+
+- 291b9ec: Add `sideEffects: false` for better tree-shaking.
+- Updated dependencies [291b9ec]
+  - @brustack/theme-transitions-core@3.1.0
+
 ## 2.1.2
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @brustack/next-theme-transitions
 
+## 1.1.3
+
+### Patch Changes
+
+- 291b9ec: `useThemeTransition` is now built on `@brustack/react-theme-transitions`'s `createThemeTransitionHook` instead of a duplicated copy of the same logic. This package now depends on `@brustack/react-theme-transitions`; no change to this package's own public API.
+- Updated dependencies [291b9ec]
+- Updated dependencies [291b9ec]
+  - @brustack/theme-transitions-core@3.1.0
+  - @brustack/react-theme-transitions@2.2.0
+
 ## 1.1.2
 
 ### Patch Changes

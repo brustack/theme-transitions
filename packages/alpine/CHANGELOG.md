@@ -1,5 +1,13 @@
 # @brustack/alpine-theme-transitions
 
+## 1.0.3
+
+### Patch Changes
+
+- 291b9ec: Fix `toggleTheme`/`setTheme` refetching the controller via `getController()` on every call instead of reusing the instance captured in `init()`. Add `sideEffects: false` for better tree-shaking.
+- Updated dependencies [291b9ec]
+  - @brustack/theme-transitions-core@3.1.0
+
 ## 1.0.2
 
 ### Patch Changes
