@@ -41,11 +41,11 @@ export interface ThemeEffects {
 	none: NoneEffectOptions;
 }
 
-export interface EffectDefinition {
+export interface EffectDefinition<T extends EffectOptions = EffectOptions> {
 	name: ThemeEffect;
 	requiresOrigin: boolean;
-	buildCss: (options: EffectOptions) => string;
-	getSkipAfterMs: (options: EffectOptions, origin: ThemeOrigin | null) => number;
+	buildCss: (options: T) => string;
+	getSkipAfterMs: (options: T, origin: ThemeOrigin | null) => number;
 }
 
 export interface ThemeOptions extends EffectOverrides {

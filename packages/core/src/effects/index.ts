@@ -27,7 +27,7 @@ export const EFFECT_OVERRIDE_KEYS: Record<ThemeEffect, ('duration' | 'easing' | 
 	none: [],
 };
 
-const themeEffects: EffectDefinition[] = [spreadEffect, fadeEffect, noneEffect];
+const themeEffects = [spreadEffect, fadeEffect, noneEffect] as EffectDefinition[];
 
 export const defaultThemeEffects: ThemeEffects = {
 	spread: defaultSpreadOptions,
