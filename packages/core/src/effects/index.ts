@@ -21,7 +21,6 @@ export type {
 
 export const DEFAULT_VARIANT: ThemeEffect = 'fade';
 
-/** Which TransitionOptions/ThemeOptions keys each variant accepts as a per-call override. */
 export const EFFECT_OVERRIDE_KEYS: Record<ThemeEffect, ('duration' | 'easing' | 'radius')[]> = {
 	spread: ['duration'],
 	fade: ['duration', 'easing'],
