@@ -5,7 +5,13 @@ import type {
 	ThemeOptions,
 	TransitionOptions,
 } from './types';
-import { getEffectOrThrow, resolveThemeEffects } from './effects';
+import {
+	DEFAULT_VARIANT,
+	EFFECT_OVERRIDE_KEYS,
+	getEffectOrThrow,
+	pickOverrides,
+	resolveThemeEffects,
+} from './effects';
 import {
 	applyThemeClass,
 	readStoredPreference,
@@ -47,28 +53,16 @@ const resolveEffectOptions = (
 	base: EffectOptions,
 	callOptions: TransitionOptions,
 ): EffectOptions => {
-	if (variant === 'none') {
-		return base;
-	}
-
-	if (variant === 'spread') {
-		return {
-			...base,
-			...(callOptions.duration ? { duration: callOptions.duration } : {}),
-		} as EffectOptions;
-	}
-
 	return {
 		...base,
-		...(callOptions.duration ? { duration: callOptions.duration } : {}),
-		...(callOptions.easing ? { easing: callOptions.easing } : {}),
+		...pickOverrides(callOptions, EFFECT_OVERRIDE_KEYS[variant]),
 	} as EffectOptions;
 };
 
 export const createController = (options?: ThemeOptions): ThemeController => {
 	const mergedOptions: ThemeOptions = { ...readPluginConfig(), ...options };
 	const effects = resolveThemeEffects(mergedOptions);
-	const configVariant = mergedOptions.variant ?? 'fade';
+	const configVariant = mergedOptions.variant ?? DEFAULT_VARIANT;
 	const themes = [...new Set(['light', 'dark', 'system', ...(mergedOptions.themes ?? [])])];
 
 	const storedPreference = readStoredPreference();

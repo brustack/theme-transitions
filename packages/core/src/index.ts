@@ -30,10 +30,9 @@ export { isValidCssDuration, parseCssDuration } from './time';
 
 export {
 	buildThemeTransitionCss,
+	DEFAULT_VARIANT,
 	defaultThemeEffects,
-	getEffectOrThrow,
 	resolveThemeEffects,
-	themeEffects,
 } from './effects';
 
 export { runThemeTransition } from './runThemeTransition';

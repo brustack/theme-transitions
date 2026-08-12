@@ -19,7 +19,8 @@
 			"types": "./dist/vite-plugin.d.mts",
 			"import": "./dist/vite-plugin.mjs"
 		},
-		"./style.css": "./style.css"
+		"./style.css": "./style.css",
+		"./theme-init.js": "./dist/theme-init.js"
 	},
 	"files": [
 		"dist",

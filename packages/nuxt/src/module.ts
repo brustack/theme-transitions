@@ -9,6 +9,7 @@ import {
 import {
 	buildColorModeInitScript,
 	buildThemeTransitionCss,
+	DEFAULT_VARIANT,
 	resolveThemeEffects,
 } from '@brustack/theme-transitions-core';
 import type { ThemeOptions } from '@brustack/theme-transitions-core';
@@ -24,11 +25,11 @@ export default defineNuxtModule<ThemeOptions>({
 		configKey: 'themeTransition',
 	},
 	defaults: {
-		variant: 'fade',
+		variant: DEFAULT_VARIANT,
 	},
 	setup(options, nuxt) {
 		const resolver = createResolver(import.meta.url);
-		const variant = options.variant ?? 'fade';
+		const variant = options.variant ?? DEFAULT_VARIANT;
 		const resolvedOptions = { ...options, variant };
 		const effects = resolveThemeEffects(resolvedOptions);
 

@@ -9,7 +9,7 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 
 export type ThemeName = ThemeMode | (string & {});
 
-interface EffectOverrides {
+export interface EffectOverrides {
 	variant?: ThemeEffect;
 	duration?: string;
 	easing?: string;
