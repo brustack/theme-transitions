@@ -11,8 +11,8 @@ export type { ThemeName, ThemeOrigin, TransitionOptions } from '@brustack/theme-
 export const useThemeTransition = () => {
 	const moduleOptions = useRuntimeConfig().public.themeTransition;
 
-	const theme = useState<string>('theme-transition-color', () => 'light');
-	const mode = useState<string>('theme-transition-mode', () => 'system');
+	const theme = useState<ThemeName>('theme-transition-color', () => 'light');
+	const mode = useState<ThemeName>('theme-transition-mode', () => 'system');
 	const isAnimating = useState('theme-transition-animating', () => false);
 	const themes = useState<string[]>('theme-transition-themes', () => ['light', 'dark', 'system']);
 
