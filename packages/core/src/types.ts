@@ -33,7 +33,10 @@ export interface FadeEffectOptions {
 
 export type NoneEffectOptions = Record<string, never>;
 
-export type EffectOptions = SpreadEffectOptions | FadeEffectOptions | NoneEffectOptions;
+export type EffectOptions
+	= | SpreadEffectOptions
+		| FadeEffectOptions
+		| NoneEffectOptions;
 
 export interface ThemeEffects {
 	spread: SpreadEffectOptions;

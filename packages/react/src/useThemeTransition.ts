@@ -1,6 +1,9 @@
 import { useCallback, useSyncExternalStore } from 'react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
-import { getController, resolveOptions } from '@brustack/theme-transitions-core';
+import {
+	getController,
+	resolveOptions,
+} from '@brustack/theme-transitions-core';
 import type {
 	ThemeName,
 	ThemeOptions,
@@ -8,11 +11,15 @@ import type {
 	TransitionOptions,
 } from '@brustack/theme-transitions-core';
 
-export const createThemeTransitionHook = (getServerSnapshot?: () => ThemeState) =>
-	(opts?: ThemeOptions) => {
+export const createThemeTransitionHook
+	= (getServerSnapshot?: () => ThemeState) => (opts?: ThemeOptions) => {
 		const controller = getController(opts);
 
-		const state = useSyncExternalStore(controller.subscribe, controller.getState, getServerSnapshot);
+		const state = useSyncExternalStore(
+			controller.subscribe,
+			controller.getState,
+			getServerSnapshot,
+		);
 
 		const toggleTheme = useCallback(
 			(eventOrOpts?: ReactMouseEvent | TransitionOptions) =>

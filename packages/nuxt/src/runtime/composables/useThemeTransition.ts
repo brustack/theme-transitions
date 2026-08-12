@@ -1,6 +1,10 @@
 import { onMounted, onUnmounted, useRuntimeConfig, useState } from '#imports';
 import { computed } from 'vue';
-import { createController, getController, resolveOptions } from '@brustack/theme-transitions-core';
+import {
+	createController,
+	getController,
+	resolveOptions,
+} from '@brustack/theme-transitions-core';
 import type {
 	ThemeController,
 	ThemeName,
@@ -8,12 +12,18 @@ import type {
 	TransitionOptions,
 } from '@brustack/theme-transitions-core';
 
-export type { ThemeName, ThemeOrigin, TransitionOptions } from '@brustack/theme-transitions-core';
+export type {
+	ThemeName,
+	ThemeOrigin,
+	TransitionOptions,
+} from '@brustack/theme-transitions-core';
 
 export const useThemeTransition = () => {
 	const moduleOptions = useRuntimeConfig().public.themeTransition;
 
-	const state = useState<ThemeState>('theme-transition-state', () => createController(moduleOptions).getState());
+	const state = useState<ThemeState>('theme-transition-state', () =>
+		createController(moduleOptions).getState(),
+	);
 
 	let controller: ThemeController | undefined;
 
@@ -41,7 +51,10 @@ export const useThemeTransition = () => {
 		await requireController().toggleTheme(resolveOptions(eventOrOpts));
 	};
 
-	const setTheme = async (mode: ThemeName, eventOrOpts?: MouseEvent | TransitionOptions) => {
+	const setTheme = async (
+		mode: ThemeName,
+		eventOrOpts?: MouseEvent | TransitionOptions,
+	) => {
 		await requireController().setTheme(mode, resolveOptions(eventOrOpts));
 	};
 

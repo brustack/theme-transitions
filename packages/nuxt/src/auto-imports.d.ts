@@ -1,4 +1,7 @@
-import type { useRuntimeConfig as _useRuntimeConfig, useState as _useState } from 'nuxt/app';
+import type {
+	useRuntimeConfig as _useRuntimeConfig,
+	useState as _useState,
+} from 'nuxt/app';
 import type { onMounted as _onMounted, onUnmounted as _onUnmounted } from 'vue';
 
 export declare const useState: typeof _useState;

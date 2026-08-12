@@ -63,7 +63,9 @@ export const createController = (options?: ThemeOptions): ThemeController => {
 	const mergedOptions: ThemeOptions = { ...readPluginConfig(), ...options };
 	const effects = resolveThemeEffects(mergedOptions);
 	const configVariant = mergedOptions.variant ?? DEFAULT_VARIANT;
-	const themes = [...new Set(['light', 'dark', 'system', ...(mergedOptions.themes ?? [])])];
+	const themes = [
+		...new Set(['light', 'dark', 'system', ...(mergedOptions.themes ?? [])]),
+	];
 
 	const storedPreference = readStoredPreference();
 

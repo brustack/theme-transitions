@@ -9,4 +9,6 @@ const SERVER_SNAPSHOT = {
 	themes: ['light', 'dark', 'system'],
 };
 
-export const useThemeTransition = createThemeTransitionHook(() => SERVER_SNAPSHOT);
+export const useThemeTransition = createThemeTransitionHook(
+	() => SERVER_SNAPSHOT,
+);
