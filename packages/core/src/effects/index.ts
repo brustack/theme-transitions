@@ -1,5 +1,6 @@
 import type {
 	EffectDefinition,
+	EffectOverrides,
 	ThemeEffect,
 	ThemeEffects,
 	ThemeOptions,
@@ -18,7 +19,15 @@ export type {
 	ThemeOptions,
 } from '../types';
 
-export const themeEffects: EffectDefinition[] = [spreadEffect, fadeEffect, noneEffect];
+export const DEFAULT_VARIANT: ThemeEffect = 'fade';
+
+export const EFFECT_OVERRIDE_KEYS: Record<ThemeEffect, ('duration' | 'easing' | 'radius')[]> = {
+	spread: ['duration'],
+	fade: ['duration', 'easing'],
+	none: [],
+};
+
+const themeEffects = [spreadEffect, fadeEffect, noneEffect] as EffectDefinition[];
 
 export const defaultThemeEffects: ThemeEffects = {
 	spread: defaultSpreadOptions,
@@ -36,8 +45,8 @@ export const getEffectOrThrow = (name: ThemeEffect): EffectDefinition => {
 	return effect;
 };
 
-const pickOverrides = (
-	options: ThemeOptions | undefined,
+export const pickOverrides = (
+	options: EffectOverrides | undefined,
 	keys: ('duration' | 'easing' | 'radius')[],
 ): Record<string, string> => {
 	const overrides: Record<string, string> = {};
@@ -53,16 +62,16 @@ const pickOverrides = (
 };
 
 export const resolveThemeEffects = (options?: ThemeOptions): ThemeEffects => {
-	const variant = options?.variant ?? 'fade';
+	const variant = options?.variant ?? DEFAULT_VARIANT;
 
 	return {
 		spread: {
 			...defaultSpreadOptions,
-			...(variant === 'spread' ? pickOverrides(options, ['duration']) : {}),
+			...(variant === 'spread' ? pickOverrides(options, EFFECT_OVERRIDE_KEYS.spread) : {}),
 		},
 		fade: {
 			...defaultFadeOptions,
-			...(variant === 'fade' ? pickOverrides(options, ['duration', 'easing']) : {}),
+			...(variant === 'fade' ? pickOverrides(options, EFFECT_OVERRIDE_KEYS.fade) : {}),
 		},
 		none: defaultNoneOptions,
 	};

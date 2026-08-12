@@ -2,7 +2,6 @@
 
 [![made by brustack](https://img.shields.io/badge/MADE%20BY%20brustack-000000.svg?style=for-the-badge&labelColor=000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMjYuNzcgMjI2Ljc3Ij48cG9seWdvbiBmaWxsPSIjRjRGMkVEIiBwb2ludHM9IjE1My43MyA4My4zOSAxNTMuNzMgMTUzLjczIDgzLjM5IDE1My43MyA4My4zOSAyMTMuNzMgMjEzLjczIDIxMy43MyAyMTMuNzMgODMuMzkgMTUzLjczIDgzLjM5Ii8%2BPHJlY3QgZmlsbD0iI0Y0RjJFRCIgeD0iODMuMzkiIHk9IjEzLjA0IiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiLz48cmVjdCBmaWxsPSIjRjRGMkVEIiB4PSIxMy4wNCIgeT0iODMuMzkiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIvPjxyZWN0IGZpbGw9IiNGNEYyRUQiIHg9IjgzLjM5IiB5PSI4My4zOSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIi8%2BPC9zdmc%2BCg%3D%3D)](https://github.com/brustack)
 [![npm version](https://img.shields.io/npm/v/@brustack/theme-transitions-core.svg?style=for-the-badge&labelColor=000000)](https://www.npmjs.com/package/@brustack/theme-transitions-core)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/@brustack/theme-transitions-core?style=for-the-badge&labelColor=000000)](https://bundlephobia.com/package/@brustack/theme-transitions-core)
 [![license](https://img.shields.io/npm/l/@brustack/theme-transitions-core.svg?style=for-the-badge&labelColor=000000)](https://github.com/brustack/theme-transitions/blob/main/packages/core/LICENSE)
 
 Framework-agnostic core for animated theme transitions using the View Transitions API.
@@ -132,12 +131,31 @@ getController({ themes: ['sepia', 'sunset'] })
 |---|---|
 | `getController(options?)` | Returns the shared controller singleton |
 | `createController(options?)` | Returns an independent, non-singleton controller |
+| `resetController()` | Clears the shared singleton so the next `getController()` call creates a fresh one. Mainly useful between tests. |
 | `controller.toggleTheme(options?)` | Switch between light and dark |
 | `controller.setTheme(mode, options?)` | Set `light`, `dark`, `system`, or a custom theme name |
 | `controller.getState()` | Returns `{ theme, mode, isAnimating, themes }` |
 | `controller.subscribe(listener)` | Runs `listener` on every state change, returns an unsubscribe function |
 | `originFromEvent(event)` | Click position for spread |
 | `originFromElement(el)` | Element center for spread |
+
+## Advanced
+
+Lower-level exports the six official adapters are themselves built on. Reach for these if you're building a custom framework integration or wrapping the controller yourself.
+
+| | |
+|---|---|
+| `resolveOptions(eventOrOpts)` | Normalizes a `MouseEvent` or `TransitionOptions` into `TransitionOptions`, deriving `origin` from the event. What every adapter's `toggleTheme`/`setTheme` calls under the hood. |
+| `resolveThemeEffects(options?)` | Merges variant overrides into a full per-effect option set (`{ spread, fade, none }`). |
+| `defaultThemeEffects` | The built-in default option set for every effect. |
+| `DEFAULT_VARIANT` | The default transition variant (`'fade'`). |
+| `buildThemeTransitionCss(effects?)` | Generates the `::view-transition-*` CSS for a given effect set. What the Vite plugin and Nuxt module inject. |
+| `buildConfigInitScript(options)` | Generates the script that sets `window.__themeConfig`, so every `getController()` call in the app picks up the same default effect options without repeating them. Prepend it to `buildColorModeInitScript()`'s output for non-Vite bundlers, see Other bundlers below. |
+| `applyThemeClass(value, previous?)` | Swaps the theme class on `<html>`. |
+| `getSystemTheme()` | Reads the OS `prefers-color-scheme`. |
+| `resolveTheme(preference)` | Resolves `'system'` to `'light'`/`'dark'`, passes any other value through unchanged. |
+| `readStoredPreference()` / `writeStoredPreference(preference)` | Read/write the persisted theme preference. |
+| `isValidCssDuration(duration)` / `parseCssDuration(duration)` | Validate/parse a CSS duration string like `'400ms'`. |
 
 ## Vite plugin
 

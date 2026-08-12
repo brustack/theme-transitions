@@ -4,7 +4,12 @@ import { mount } from '@vue/test-utils';
 
 const controllerMock = vi.hoisted(() => {
 	const listeners = new Set<() => void>();
-	let state: { theme: string; mode: string; isAnimating: boolean; themes: string[] } = {
+	let state: {
+		theme: string;
+		mode: string;
+		isAnimating: boolean;
+		themes: string[];
+	} = {
 		theme: 'light',
 		mode: 'light',
 		isAnimating: false,
@@ -33,7 +38,9 @@ const controllerMock = vi.hoisted(() => {
 const getControllerMock = vi.hoisted(() => vi.fn(() => controllerMock));
 
 vi.mock('@brustack/theme-transitions-core', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('@brustack/theme-transitions-core')>();
+	const actual = await importOriginal<
+    typeof import('@brustack/theme-transitions-core')
+	>();
 
 	return {
 		...actual,
@@ -69,13 +76,22 @@ const withSetup = <T>(setupFn: () => T) => {
 
 beforeEach(() => {
 	controllerMock.clearListeners();
-	controllerMock.setState({ theme: 'light', mode: 'light', isAnimating: false, themes: ['light', 'dark', 'system'] });
+	controllerMock.setState({
+		theme: 'light',
+		mode: 'light',
+		isAnimating: false,
+		themes: ['light', 'dark', 'system'],
+	});
 	vi.clearAllMocks();
 });
 
 describe('useThemeTransition', () => {
 	it('reflects the controller\'s current state once mounted', () => {
-		controllerMock.setState({ theme: 'dark', mode: 'system', isAnimating: true });
+		controllerMock.setState({
+			theme: 'dark',
+			mode: 'system',
+			isAnimating: true,
+		});
 		const { result } = withSetup(() => useThemeTransition());
 
 		expect(result.theme.value).toBe('dark');

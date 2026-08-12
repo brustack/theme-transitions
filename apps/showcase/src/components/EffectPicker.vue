@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 import {
   defaultThemeEffects,
   isValidCssDuration,
@@ -7,6 +7,7 @@ import {
 import type { ThemeEffect } from "@brustack/theme-transitions-core";
 import IconRotateCcw from "./icons/IconRotateCcw.vue";
 import IconSettings from "./icons/IconSettings.vue";
+import { useClickOutside } from "../composables/useClickOutside";
 
 export interface EffectOptions {
   variant: ThemeEffect;
@@ -17,6 +18,12 @@ export interface EffectOptions {
 const options = defineModel<EffectOptions>({ required: true });
 
 const isOpen = ref(false);
+const rootEl = useTemplateRef<HTMLElement>("rootEl");
+
+useClickOutside(rootEl, () => {
+  isOpen.value = false;
+});
+
 const variants: ThemeEffect[] = ["spread", "fade", "none"];
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
 
@@ -72,40 +79,22 @@ watch(
 </script>
 
 <template>
-  <div class="control-group">
-    <span class="control-label">Effect</span>
-    <div class="effect-row">
-      <div
-        class="pill-group desktop-only-variant"
-        role="group"
-        aria-label="Transition variant"
-      >
-        <button
-          v-for="option in variants"
-          :key="option"
-          type="button"
-          :aria-pressed="variant === option"
-          @click="variant = option"
-        >
-          {{ option }}
-        </button>
-      </div>
-      <button
-        type="button"
-        class="gear-btn"
-        :aria-expanded="isOpen"
-        aria-controls="settings-panel"
-        aria-label="Effect settings"
-        @click="isOpen = !isOpen"
-      >
-        <IconSettings :size="15" aria-hidden="true" />
-        <span v-if="isModified" class="modified-dot" aria-hidden="true" />
-      </button>
-    </div>
+  <div ref="rootEl" class="control-group">
+    <button
+      type="button"
+      class="gear-btn"
+      :aria-expanded="isOpen"
+      aria-controls="settings-panel"
+      aria-label="Effect settings"
+      @click="isOpen = !isOpen"
+    >
+      <IconSettings :size="20" aria-hidden="true" />
+      <span v-if="isModified" class="modified-dot" aria-hidden="true" />
+    </button>
 
     <div id="settings-panel" class="settings-panel" :class="{ open: isOpen }">
       <div class="settings-inner">
-        <div class="field-block mobile-only-variant">
+        <div class="field-block">
           <span class="field-label">Effect</span>
           <div class="pill-group" role="group" aria-label="Transition variant">
             <button
@@ -170,22 +159,6 @@ watch(
   position: relative;
 }
 
-.control-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.625rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  opacity: 0.7;
-  padding-right: 0.35rem;
-}
-
-.effect-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
 .pill-group {
   display: inline-flex;
   gap: 0.25rem;
@@ -196,7 +169,7 @@ watch(
 }
 
 .pill-group button {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   border: none;
@@ -215,7 +188,7 @@ watch(
 
 .pill-group button:focus-visible,
 .gear-btn:focus-visible {
-  outline: 2px solid var(--accent-incoming);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -224,20 +197,17 @@ watch(
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--surface);
-  color: var(--text-muted);
+  border: none;
+  background: none;
+  color: var(--text);
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  padding: 0;
+  transition: color 0.15s;
 }
 
 .gear-btn:hover,
 .gear-btn[aria-expanded="true"] {
-  color: var(--text);
-  border-color: var(--text-muted);
+  color: var(--accent);
 }
 
 .modified-dot {
@@ -247,7 +217,7 @@ watch(
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: var(--accent-incoming);
+  background: var(--accent-alt);
   border: 2px solid var(--bg);
 }
 
@@ -287,7 +257,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
@@ -316,9 +286,9 @@ watch(
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  color: var(--accent-incoming);
+  color: var(--accent);
   background: none;
   border: none;
   padding: 0;
@@ -327,7 +297,7 @@ watch(
 
 .none-note {
   margin: 0;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
@@ -339,23 +309,17 @@ watch(
 }
 
 .field-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
-.mobile-only-variant {
-  display: none;
-}
-
 @media (max-width: 68.75rem) {
-  .control-label,
-  .desktop-only-variant {
-    display: none;
-  }
-
-  .mobile-only-variant {
-    display: flex;
+  .settings-panel {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 2rem);
   }
 }
 </style>

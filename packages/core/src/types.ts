@@ -9,7 +9,7 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 
 export type ThemeName = ThemeMode | (string & {});
 
-interface EffectOverrides {
+export interface EffectOverrides {
 	variant?: ThemeEffect;
 	duration?: string;
 	easing?: string;
@@ -33,7 +33,10 @@ export interface FadeEffectOptions {
 
 export type NoneEffectOptions = Record<string, never>;
 
-export type EffectOptions = SpreadEffectOptions | FadeEffectOptions | NoneEffectOptions;
+export type EffectOptions
+	= | SpreadEffectOptions
+		| FadeEffectOptions
+		| NoneEffectOptions;
 
 export interface ThemeEffects {
 	spread: SpreadEffectOptions;
@@ -41,11 +44,11 @@ export interface ThemeEffects {
 	none: NoneEffectOptions;
 }
 
-export interface EffectDefinition {
+export interface EffectDefinition<T extends EffectOptions = EffectOptions> {
 	name: ThemeEffect;
 	requiresOrigin: boolean;
-	buildCss: (options: EffectOptions) => string;
-	getSkipAfterMs: (options: EffectOptions, origin: ThemeOrigin | null) => number;
+	buildCss: (options: T) => string;
+	getSkipAfterMs: (options: T, origin: ThemeOrigin | null) => number;
 }
 
 export interface ThemeOptions extends EffectOverrides {

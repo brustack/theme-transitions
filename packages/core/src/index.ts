@@ -30,13 +30,12 @@ export { isValidCssDuration, parseCssDuration } from './time';
 
 export {
 	buildThemeTransitionCss,
+	DEFAULT_VARIANT,
 	defaultThemeEffects,
-	getEffectOrThrow,
 	resolveThemeEffects,
-	themeEffects,
 } from './effects';
 
 export { runThemeTransition } from './runThemeTransition';
 
-export { createController, getController } from './controller';
+export { createController, getController, resetController } from './controller';
 export type { ThemeController, ThemeState } from './controller';

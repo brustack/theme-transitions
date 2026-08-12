@@ -1,20 +1,29 @@
 import { onMounted, onUnmounted, useRuntimeConfig, useState } from '#imports';
-import { getController, resolveOptions } from '@brustack/theme-transitions-core';
+import { computed } from 'vue';
+import {
+	createController,
+	getController,
+	resolveOptions,
+} from '@brustack/theme-transitions-core';
 import type {
 	ThemeController,
 	ThemeName,
+	ThemeState,
 	TransitionOptions,
 } from '@brustack/theme-transitions-core';
 
-export type { ThemeName, ThemeOrigin, TransitionOptions } from '@brustack/theme-transitions-core';
+export type {
+	ThemeName,
+	ThemeOrigin,
+	TransitionOptions,
+} from '@brustack/theme-transitions-core';
 
 export const useThemeTransition = () => {
 	const moduleOptions = useRuntimeConfig().public.themeTransition;
 
-	const theme = useState<string>('theme-transition-color', () => 'light');
-	const mode = useState<string>('theme-transition-mode', () => 'system');
-	const isAnimating = useState('theme-transition-animating', () => false);
-	const themes = useState<string[]>('theme-transition-themes', () => ['light', 'dark', 'system']);
+	const state = useState<ThemeState>('theme-transition-state', () =>
+		createController(moduleOptions).getState(),
+	);
 
 	let controller: ThemeController | undefined;
 
@@ -30,17 +39,11 @@ export const useThemeTransition = () => {
 
 	onMounted(() => {
 		controller = getController(moduleOptions);
+		state.value = controller.getState();
 
-		const sync = () => {
-			const state = controller!.getState();
-			theme.value = state.theme;
-			mode.value = state.mode;
-			isAnimating.value = state.isAnimating;
-			themes.value = state.themes;
-		};
-
-		sync();
-		const unsubscribe = controller.subscribe(sync);
+		const unsubscribe = controller.subscribe(() => {
+			state.value = controller!.getState();
+		});
 		onUnmounted(unsubscribe);
 	});
 
@@ -48,15 +51,18 @@ export const useThemeTransition = () => {
 		await requireController().toggleTheme(resolveOptions(eventOrOpts));
 	};
 
-	const setTheme = async (mode: ThemeName, eventOrOpts?: MouseEvent | TransitionOptions) => {
+	const setTheme = async (
+		mode: ThemeName,
+		eventOrOpts?: MouseEvent | TransitionOptions,
+	) => {
 		await requireController().setTheme(mode, resolveOptions(eventOrOpts));
 	};
 
 	return {
-		theme,
-		mode,
-		isAnimating,
-		themes,
+		theme: computed(() => state.value.theme),
+		mode: computed(() => state.value.mode),
+		isAnimating: computed(() => state.value.isAnimating),
+		themes: computed(() => state.value.themes),
 		toggleTheme,
 		setTheme,
 	};

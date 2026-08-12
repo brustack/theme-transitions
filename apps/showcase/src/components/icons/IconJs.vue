@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
     <rect width="24" height="24" rx="4" fill="#F7DF1E" />
     <path
       fill="#000"

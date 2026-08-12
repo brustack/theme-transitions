@@ -17,11 +17,11 @@ export const defaultSpreadOptions: SpreadEffectOptions = {
 
 export const SPREAD_RADIUS_PERCENT = '150%';
 
-export const spreadEffect: EffectDefinition = {
+export const spreadEffect: EffectDefinition<SpreadEffectOptions> = {
 	name: 'spread',
 	requiresOrigin: true,
 	buildCss: (options) => {
-		const { duration, easing, radius } = options as SpreadEffectOptions;
+		const { duration, easing, radius } = options;
 
 		return `
       ${vtGroup()} {
@@ -55,9 +55,6 @@ export const spreadEffect: EffectDefinition = {
       }
     `;
 	},
-	getSkipAfterMs: (options) => {
-		const spreadOptions = options as SpreadEffectOptions;
-
-		return parseCssDuration(spreadOptions.duration) + SKIP_SAFETY_BUFFER_MS;
-	},
+	getSkipAfterMs: options =>
+		parseCssDuration(options.duration) + SKIP_SAFETY_BUFFER_MS,
 };

@@ -3,7 +3,12 @@ import { act, renderHook } from '@testing-library/react';
 
 const controllerMock = vi.hoisted(() => {
 	const listeners = new Set<() => void>();
-	let state: { theme: string; mode: string; isAnimating: boolean; themes: string[] } = {
+	let state: {
+		theme: string;
+		mode: string;
+		isAnimating: boolean;
+		themes: string[];
+	} = {
 		theme: 'light',
 		mode: 'light',
 		isAnimating: false,
@@ -32,7 +37,9 @@ const controllerMock = vi.hoisted(() => {
 const getControllerMock = vi.hoisted(() => vi.fn(() => controllerMock));
 
 vi.mock('@brustack/theme-transitions-core', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('@brustack/theme-transitions-core')>();
+	const actual = await importOriginal<
+    typeof import('@brustack/theme-transitions-core')
+	>();
 
 	return {
 		...actual,
@@ -44,7 +51,12 @@ import { useThemeTransition } from './useThemeTransition';
 
 beforeEach(() => {
 	controllerMock.clearListeners();
-	controllerMock.setState({ theme: 'light', mode: 'light', isAnimating: false, themes: ['light', 'dark', 'system'] });
+	controllerMock.setState({
+		theme: 'light',
+		mode: 'light',
+		isAnimating: false,
+		themes: ['light', 'dark', 'system'],
+	});
 	vi.clearAllMocks();
 });
 
@@ -107,7 +119,9 @@ describe('useThemeTransition', () => {
 			await result.current.toggleTheme(syntheticEvent as never);
 		});
 
-		expect(controllerMock.toggleTheme).toHaveBeenCalledWith({ origin: { x: 10, y: 20 } });
+		expect(controllerMock.toggleTheme).toHaveBeenCalledWith({
+			origin: { x: 10, y: 20 },
+		});
 	});
 
 	it('converts a plain event-like object into an origin when calling setTheme', async () => {
@@ -118,7 +132,9 @@ describe('useThemeTransition', () => {
 			await result.current.setTheme('dark', syntheticEvent as never);
 		});
 
-		expect(controllerMock.setTheme).toHaveBeenCalledWith('dark', { origin: { x: 30, y: 40 } });
+		expect(controllerMock.setTheme).toHaveBeenCalledWith('dark', {
+			origin: { x: 30, y: 40 },
+		});
 	});
 
 	it('passes opts through to getController', () => {

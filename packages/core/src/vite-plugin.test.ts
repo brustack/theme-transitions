@@ -28,7 +28,9 @@ describe('themeTransitions', () => {
 		expect(transform()).toEqual([
 			{
 				tag: 'script',
-				children: `${buildConfigInitScript({ variant: 'spread' })}\n${buildColorModeInitScript()}`,
+				children: `${buildConfigInitScript({
+					variant: 'spread',
+				})}\n${buildColorModeInitScript()}`,
 				injectTo: 'head-prepend',
 			},
 		]);

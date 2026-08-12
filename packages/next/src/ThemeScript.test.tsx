@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
-import { buildColorModeInitScript, buildConfigInitScript } from '@brustack/theme-transitions-core';
+import {
+	buildColorModeInitScript,
+	buildConfigInitScript,
+} from '@brustack/theme-transitions-core';
 import { ThemeScript } from './ThemeScript';
 
 describe('ThemeScript', () => {
@@ -12,9 +15,14 @@ describe('ThemeScript', () => {
 	});
 
 	it('renders the config script before the anti-flash script when options are given', () => {
-		const { container } = render(<ThemeScript variant="spread" duration="1.5s" />);
+		const { container } = render(
+			<ThemeScript variant="spread" duration="1.5s" />,
+		);
 		const script = container.querySelector('script');
-		const expected = `${buildConfigInitScript({ variant: 'spread', duration: '1.5s' })}\n${buildColorModeInitScript()}`;
+		const expected = `${buildConfigInitScript({
+			variant: 'spread',
+			duration: '1.5s',
+		})}\n${buildColorModeInitScript()}`;
 
 		expect(script?.innerHTML).toBe(expected);
 	});

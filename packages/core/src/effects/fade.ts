@@ -12,11 +12,11 @@ export const defaultFadeOptions: FadeEffectOptions = {
 	easing: 'ease',
 };
 
-export const fadeEffect: EffectDefinition = {
+export const fadeEffect: EffectDefinition<FadeEffectOptions> = {
 	name: 'fade',
 	requiresOrigin: false,
 	buildCss: (options) => {
-		const { duration, easing } = options as FadeEffectOptions;
+		const { duration, easing } = options;
 
 		return `
       ${vtGroup()} {
@@ -51,6 +51,5 @@ export const fadeEffect: EffectDefinition = {
       }
     `;
 	},
-	getSkipAfterMs: options =>
-		parseCssDuration((options as FadeEffectOptions).duration),
+	getSkipAfterMs: options => parseCssDuration(options.duration),
 };

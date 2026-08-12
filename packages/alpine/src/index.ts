@@ -3,6 +3,7 @@ import {
 	resolveOptions,
 } from '@brustack/theme-transitions-core';
 import type {
+	ThemeController,
 	ThemeName,
 	ThemeOptions,
 	TransitionOptions,
@@ -22,10 +23,12 @@ export default function themeTransition(Alpine: AlpineLike) {
 		isAnimating: false,
 		themes: ['light', 'dark', 'system'] as string[],
 
+		_controller: null as ThemeController | null,
 		_unsubscribe: null as (() => void) | null,
 
 		init() {
 			const controller = getController(options);
+			this._controller = controller;
 
 			const sync = () => {
 				const state = controller.getState();
@@ -44,11 +47,11 @@ export default function themeTransition(Alpine: AlpineLike) {
 		},
 
 		toggleTheme(eventOrOptions?: MouseEvent | TransitionOptions) {
-			getController().toggleTheme(resolveOptions(eventOrOptions));
+			this._controller?.toggleTheme(resolveOptions(eventOrOptions));
 		},
 
 		setTheme(mode: ThemeName, eventOrOptions?: MouseEvent | TransitionOptions) {
-			getController().setTheme(mode, resolveOptions(eventOrOptions));
+			this._controller?.setTheme(mode, resolveOptions(eventOrOptions));
 		},
 	}));
 }

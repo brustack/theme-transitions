@@ -38,7 +38,7 @@ vi.mock('./runThemeTransition', () => ({
 	),
 }));
 
-import { createController, getController } from './controller';
+import { createController, getController, resetController } from './controller';
 import { defaultSpreadOptions } from './effects/spread';
 import { runThemeTransition } from './runThemeTransition';
 
@@ -302,6 +302,12 @@ describe('getController', () => {
 
 	it('returns a different instance from createController', () => {
 		expect(createController()).not.toBe(getController());
+	});
+
+	it('returns a fresh instance after resetController', () => {
+		const before = getController();
+		resetController();
+		expect(getController()).not.toBe(before);
 	});
 });
 

@@ -1,0 +1,166 @@
+.docs {
+  border-top: 1px solid var(--border);
+  padding: 5rem 1.5rem 5.5rem;
+  background: linear-gradient(var(--section-fade) 0%, var(--bg) 25%);
+}
+
+.docs-lede {
+  max-width: 40rem;
+  margin: 0 auto 4rem;
+  text-align: center;
+  scroll-margin-top: 6.5rem;
+}
+
+.docs-lede .eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+  display: block;
+}
+
+.docs-lede h2 {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: 0 0 0.85rem;
+  text-wrap: balance;
+}
+
+.docs-lede p {
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.docs-shell {
+  max-width: 55.5rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 12.5rem minmax(0, 40rem);
+  gap: 3rem;
+  align-items: start;
+}
+
+.docs-content {
+  min-width: 0;
+}
+
+.doc-section {
+  margin-bottom: 4.5rem;
+  scroll-margin-top: 6.5rem;
+}
+
+.doc-section:last-child {
+  margin-bottom: 0;
+}
+
+.doc-section-head {
+  margin-bottom: 1.25rem;
+}
+
+.doc-index {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.doc-section-head h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.doc-section-head p {
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 38rem;
+}
+
+.code-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.pkg-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.pkg-badges a {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.pkg-badges a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table.spec {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+table.spec th,
+table.spec td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+table.spec th {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+table.spec td:first-child code,
+table.spec th:first-child {
+  white-space: nowrap;
+}
+
+table.spec code {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 68.75rem) {
+  .docs-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 44rem) {
+  .docs {
+    padding: 3.5rem 1.25rem 4rem;
+  }
+}
