@@ -8,12 +8,14 @@ import {
 import type { ThemeName, ThemeOrigin } from "@brustack/theme-transitions-core";
 import TopBar from "./components/TopBar.vue";
 import Hero from "./components/Hero.vue";
+import FeaturesGrid from "./components/FeaturesGrid.vue";
+import Docs from "./components/docs-section/Docs.vue";
 import AppFooter from "./components/AppFooter.vue";
 import type { EffectOptions } from "./components/EffectPicker.vue";
 
 const { theme, mode, toggleTheme, setTheme } = useThemeTransition({
   variant: "spread",
-  themes: ["sepia"],
+  themes: ["nord"],
 });
 
 const effectOptions = ref<EffectOptions>({
@@ -31,31 +33,24 @@ const fireGlow = (x: number, y: number, color: string) => {
   });
 };
 
-const glowColorFor = (nextTheme: string) => {
-  if (nextTheme === "dark") return "#7C6CF0";
-  if (nextTheme === "sepia") return "#B5651D";
-  return "#F5A623";
-};
-
 const handleSelectMode = (nextMode: ThemeName, origin: ThemeOrigin | null) => {
   const nextTheme = resolveTheme(nextMode);
 
   if (nextTheme !== theme.value && origin) {
-    fireGlow(origin.x, origin.y, glowColorFor(nextTheme));
+    fireGlow(origin.x, origin.y, "var(--accent)");
   }
 
   setTheme(nextMode, { origin, ...effectOptions.value });
 };
 
 const handleBodyClick = (event: MouseEvent) => {
-  const nextTheme = theme.value === "light" ? "dark" : "light";
-  fireGlow(event.clientX, event.clientY, glowColorFor(nextTheme));
+  fireGlow(event.clientX, event.clientY, "var(--accent)");
   toggleTheme({ origin: originFromEvent(event), ...effectOptions.value });
 };
 </script>
 
 <template>
-  <div class="page" @click="handleBodyClick">
+  <div id="top" class="page" @click="handleBodyClick">
     <div
       class="glow"
       :class="{ firing: glow.firing }"
@@ -73,6 +68,8 @@ const handleBodyClick = (event: MouseEvent) => {
       @select-mode="handleSelectMode"
     />
     <Hero />
+    <FeaturesGrid />
+    <Docs />
     <AppFooter />
   </div>
 </template>
@@ -82,9 +79,8 @@ const handleBodyClick = (event: MouseEvent) => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  cursor: pointer;
   user-select: none;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .glow {

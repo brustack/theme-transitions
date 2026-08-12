@@ -21,7 +21,8 @@
       <rect x="13.04" y="83.39" width="60" height="60" />
       <rect x="83.39" y="83.39" width="60" height="60" />
     </svg>
-    <strong>BruStack</strong><span class="sep">/</span>theme-transitions
+    <strong>BruStack</strong>
+    <span class="version-badge">v3.0.0</span>
   </a>
 </template>
 
@@ -30,7 +31,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 0.8125rem;
   color: var(--text-muted);
   text-decoration: none;
@@ -38,18 +39,22 @@
 }
 
 .logo-mark {
-  color: var(--text);
+  color: var(--logo-color);
   flex-shrink: 0;
 }
 
 .wordmark strong {
-  color: var(--text);
+  color: var(--inverse-bg);
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
-.wordmark .sep {
-  opacity: 0.5;
-  padding: 0 0.05rem;
+.version-badge {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
 }
 </style>
