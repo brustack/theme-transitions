@@ -1,6 +1,6 @@
 'use client';
 
-import { createUseThemeTransitionHook } from '@brustack/react-theme-transitions';
+import { createThemeTransitionHook } from '@brustack/react-theme-transitions';
 
 const SERVER_SNAPSHOT = {
 	theme: 'light' as const,
@@ -9,4 +9,4 @@ const SERVER_SNAPSHOT = {
 	themes: ['light', 'dark', 'system'],
 };
 
-export const useThemeTransition = createUseThemeTransitionHook(() => SERVER_SNAPSHOT);
+export const useThemeTransition = createThemeTransitionHook(() => SERVER_SNAPSHOT);

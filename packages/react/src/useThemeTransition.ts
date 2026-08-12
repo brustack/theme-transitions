@@ -8,7 +8,7 @@ import type {
 	TransitionOptions,
 } from '@brustack/theme-transitions-core';
 
-export const createUseThemeTransitionHook = (getServerSnapshot?: () => ThemeState) =>
+export const createThemeTransitionHook = (getServerSnapshot?: () => ThemeState) =>
 	(opts?: ThemeOptions) => {
 		const controller = getController(opts);
 
@@ -36,4 +36,4 @@ export const createUseThemeTransitionHook = (getServerSnapshot?: () => ThemeStat
 		};
 	};
 
-export const useThemeTransition = createUseThemeTransitionHook();
+export const useThemeTransition = createThemeTransitionHook();
