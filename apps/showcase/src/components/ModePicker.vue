@@ -153,7 +153,7 @@ const handleSelect = (option: ThemeName, event: MouseEvent) => {
 }
 
 .pill-group button {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   border: none;
@@ -179,7 +179,7 @@ const handleSelect = (option: ThemeName, event: MouseEvent) => {
 }
 
 .status-line {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   color: var(--text-muted);
   opacity: 0.75;

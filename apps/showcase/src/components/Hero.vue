@@ -57,8 +57,7 @@ main {
 }
 
 .eyebrow {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -99,8 +98,7 @@ h1 em {
   padding: 0.8rem 1.85rem;
   background: var(--accent);
   color: var(--bg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 600;
   text-decoration: none;

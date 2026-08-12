@@ -37,7 +37,7 @@ import IconInfo from "./icons/IconInfo.vue";
 }
 
 .callout :deep(code) {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.8em;
 }
 </style>

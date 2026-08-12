@@ -97,7 +97,7 @@ const features: Feature[] = [
 }
 
 .features-lede h2 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 900;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   letter-spacing: -0.01em;

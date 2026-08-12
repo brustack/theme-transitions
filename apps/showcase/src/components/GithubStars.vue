@@ -54,7 +54,7 @@ onMounted(async () => {
 }
 
 .star-count {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;

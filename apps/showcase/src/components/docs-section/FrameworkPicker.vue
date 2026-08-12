@@ -47,7 +47,7 @@ const ICONS: Record<Framework, unknown> = {
 }
 
 .control-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -70,7 +70,7 @@ const ICONS: Record<Framework, unknown> = {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.01em;

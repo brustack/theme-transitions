@@ -169,7 +169,7 @@ watch(
 }
 
 .pill-group button {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   border: none;
@@ -257,7 +257,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
@@ -286,7 +286,7 @@ watch(
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   color: var(--accent);
   background: none;
@@ -297,7 +297,7 @@ watch(
 
 .none-note {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
@@ -309,7 +309,7 @@ watch(
 }
 
 .field-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }

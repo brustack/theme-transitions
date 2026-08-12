@@ -153,7 +153,7 @@ const packages = [
   gap: 0.55rem;
   text-decoration: none;
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -213,7 +213,7 @@ const packages = [
 }
 
 .footer-col-title {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -255,7 +255,7 @@ const packages = [
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }

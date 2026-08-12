@@ -57,8 +57,7 @@ const copy = async () => {
 }
 
 .code-file span {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   color: var(--text-muted);
   letter-spacing: 0.01em;
@@ -93,8 +92,7 @@ const copy = async () => {
 }
 
 .copied-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.625rem;
 }
 
