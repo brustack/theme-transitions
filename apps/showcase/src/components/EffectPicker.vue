@@ -4,7 +4,10 @@ import {
   defaultThemeEffects,
   isValidCssDuration,
 } from "@brustack/theme-transitions-core";
-import type { ThemeEffect } from "@brustack/theme-transitions-core";
+import type {
+  ThemeEffect,
+  WipeEffectOptions,
+} from "@brustack/theme-transitions-core";
 import IconRotateCcw from "./icons/IconRotateCcw.vue";
 import IconSettings from "./icons/IconSettings.vue";
 import { useClickOutside } from "../composables/useClickOutside";
@@ -13,6 +16,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
+  direction?: WipeEffectOptions["direction"];
 }
 
 const options = defineModel<EffectOptions>({ required: true });
@@ -24,12 +28,21 @@ useClickOutside(rootEl, () => {
   isOpen.value = false;
 });
 
-const variants: ThemeEffect[] = ["spread", "fade", "none"];
+const variants: ThemeEffect[] = ["spread", "fade", "wipe", "none"];
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
+const directions: WipeEffectOptions["direction"][] = [
+  "left",
+  "right",
+  "up",
+  "down",
+];
 
 const variant = ref(options.value.variant);
 const duration = ref(options.value.duration);
 const easingPreset = ref(defaultThemeEffects.fade.easing);
+const direction = ref<WipeEffectOptions["direction"]>(
+  defaultThemeEffects.wipe.direction,
+);
 
 const durationError = computed(() => {
   if (variant.value === "none") return "";
@@ -50,9 +63,12 @@ const applyVariantDefaults = () => {
   const defaults =
     variant.value === "fade"
       ? defaultThemeEffects.fade
+      : variant.value === "wipe"
+      ? defaultThemeEffects.wipe
       : defaultThemeEffects.spread;
   duration.value = defaults.duration;
   easingPreset.value = defaultThemeEffects.fade.easing;
+  direction.value = defaultThemeEffects.wipe.direction;
 };
 
 const resetToDefaults = () => {
@@ -63,7 +79,7 @@ const resetToDefaults = () => {
 watch(variant, applyVariantDefaults);
 
 watch(
-  [variant, duration, easingPreset],
+  [variant, duration, easingPreset, direction],
   () => {
     options.value =
       variant.value === "fade"
@@ -71,6 +87,12 @@ watch(
             variant: variant.value,
             duration: duration.value,
             easing: easingPreset.value,
+          }
+        : variant.value === "wipe"
+        ? {
+            variant: variant.value,
+            duration: duration.value,
+            direction: direction.value,
           }
         : { variant: variant.value, duration: duration.value };
   },
@@ -109,6 +131,20 @@ watch(
           </div>
         </div>
         <template v-if="variant !== 'none'">
+          <div v-if="variant === 'wipe'" class="field-block">
+            <span class="field-label">Direction</span>
+            <div class="pill-group" role="group" aria-label="Wipe direction">
+              <button
+                v-for="d in directions"
+                :key="d"
+                type="button"
+                :aria-pressed="direction === d"
+                @click="direction = d"
+              >
+                {{ d }}
+              </button>
+            </div>
+          </div>
           <label>
             <span>Duration</span>
             <input
