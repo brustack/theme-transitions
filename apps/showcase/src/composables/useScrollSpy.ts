@@ -22,7 +22,10 @@ export function useScrollSpy(sectionIds: string[], fallbackSelector?: string) {
 
 		if (!current && fallbackSelector) {
 			const fallbackEl = document.querySelector(fallbackSelector);
-			if (fallbackEl && fallbackEl.getBoundingClientRect().bottom <= referenceY) {
+			if (
+				fallbackEl
+				&& fallbackEl.getBoundingClientRect().bottom <= referenceY
+			) {
 				current = document.getElementById(sectionIds[0]);
 			}
 		}

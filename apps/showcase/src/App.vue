@@ -79,6 +79,7 @@ const handleBodyClick = (event: MouseEvent) => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  cursor: pointer;
   user-select: none;
   overflow-x: clip;
 }
