@@ -39,7 +39,12 @@ defineProps<{ html: string }>();
 }
 
 .callout :deep(code) {
-  font-family: var(--font-sans);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.8em;
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
 }
 </style>
