@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import IconInfo from "./icons/IconInfo.vue";
+
+defineProps<{ html: string }>();
 </script>
 
 <template>
   <div class="callout">
     <IconInfo :size="16" class="callout-icon" />
-    <p><slot /></p>
+    <p v-html="html" />
   </div>
 </template>
 

@@ -3,12 +3,8 @@ import { ref } from "vue";
 import "./docs.css";
 import FrameworkPicker from "./FrameworkPicker.vue";
 import DocsSidebar from "./DocsSidebar.vue";
-import InstallSection from "./InstallSection.vue";
-import UsageSection from "./UsageSection.vue";
-import StylingSection from "./StylingSection.vue";
-import ConfigurationSection from "./ConfigurationSection.vue";
-import ApiSection from "./ApiSection.vue";
-import BundlerSection from "./BundlerSection.vue";
+import DocsSection from "./DocsSection.vue";
+import { DOCS_SECTIONS } from "./docsContent";
 import type { Framework } from "./snippets";
 
 const framework = ref<Framework>("Vue");
@@ -31,12 +27,12 @@ const framework = ref<Framework>("Vue");
       <DocsSidebar />
 
       <div class="docs-content">
-        <InstallSection :framework="framework" />
-        <UsageSection :framework="framework" />
-        <StylingSection :framework="framework" />
-        <ConfigurationSection />
-        <ApiSection />
-        <BundlerSection />
+        <DocsSection
+          v-for="section in DOCS_SECTIONS"
+          :key="section.id"
+          :section="section"
+          :framework="framework"
+        />
       </div>
     </div>
   </div>
