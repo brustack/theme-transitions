@@ -139,6 +139,24 @@ getController({ themes: ['sepia', 'sunset'] })
 | `originFromEvent(event)` | Click position for spread |
 | `originFromElement(el)` | Element center for spread |
 
+## Advanced
+
+Lower-level exports the six official adapters are themselves built on. Reach for these if you're building a custom framework integration or wrapping the controller yourself.
+
+| | |
+|---|---|
+| `resolveOptions(eventOrOpts)` | Normalizes a `MouseEvent` or `TransitionOptions` into `TransitionOptions`, deriving `origin` from the event. What every adapter's `toggleTheme`/`setTheme` calls under the hood. |
+| `resolveThemeEffects(options?)` | Merges variant overrides into a full per-effect option set (`{ spread, fade, none }`). |
+| `defaultThemeEffects` | The built-in default option set for every effect. |
+| `DEFAULT_VARIANT` | The default transition variant (`'fade'`). |
+| `buildThemeTransitionCss(effects?)` | Generates the `::view-transition-*` CSS for a given effect set. What the Vite plugin and Nuxt module inject. |
+| `buildConfigInitScript(options)` | Generates the script that sets `window.__themeConfig`, so every `getController()` call in the app picks up the same default effect options without repeating them. Prepend it to `buildColorModeInitScript()`'s output for non-Vite bundlers, see Other bundlers below. |
+| `applyThemeClass(value, previous?)` | Swaps the theme class on `<html>`. |
+| `getSystemTheme()` | Reads the OS `prefers-color-scheme`. |
+| `resolveTheme(preference)` | Resolves `'system'` to `'light'`/`'dark'`, passes any other value through unchanged. |
+| `readStoredPreference()` / `writeStoredPreference(preference)` | Read/write the persisted theme preference. |
+| `isValidCssDuration(duration)` / `parseCssDuration(duration)` | Validate/parse a CSS duration string like `'400ms'`. |
+
 ## Vite plugin
 
 Register the anti-flash init script in `vite.config.ts`:
