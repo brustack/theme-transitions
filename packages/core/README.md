@@ -103,11 +103,12 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant | `duration` | `easing` | `direction` |
+|---|:---:|:---:|:---:|
+| `spread` | `'1s'` | ❌ | ❌ |
+| `fade` (default) | `'400ms'` | `'ease'` | ❌ |
+| `wipe` | `'500ms'` | ❌ | `'left'` |
+| `none` | ❌ | ❌ | ❌ |
 
 ```ts
 getController({ variant: 'spread', duration: '1s' })
@@ -146,7 +147,7 @@ Lower-level exports the six official adapters are themselves built on. Reach for
 | | |
 |---|---|
 | `resolveOptions(eventOrOpts)` | Normalizes a `MouseEvent` or `TransitionOptions` into `TransitionOptions`, deriving `origin` from the event. What every adapter's `toggleTheme`/`setTheme` calls under the hood. |
-| `resolveThemeEffects(options?)` | Merges variant overrides into a full per-effect option set (`{ spread, fade, none }`). |
+| `resolveThemeEffects(options?)` | Merges variant overrides into a full per-effect option set (`{ spread, fade, wipe, none }`). |
 | `defaultThemeEffects` | The built-in default option set for every effect. |
 | `DEFAULT_VARIANT` | The default transition variant (`'fade'`). |
 | `buildThemeTransitionCss(effects?)` | Generates the `::view-transition-*` CSS for a given effect set. What the Vite plugin and Nuxt module inject. |

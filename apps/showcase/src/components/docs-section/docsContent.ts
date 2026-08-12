@@ -189,15 +189,17 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 		blocks: () => [
 			{
 				kind: 'table',
-				headers: ['Variant', 'duration', 'easing'],
+				headers: ['Variant', 'duration', 'easing', 'direction'],
 				rows: [
-					['<code>spread</code>', '<code>\'1s\'</code>', 'n/a'],
+					['<code>spread</code>', '<code>\'1s\'</code>', 'n/a', 'n/a'],
 					[
 						'<code>fade</code> <span class="muted">(default)</span>',
 						'<code>\'400ms\'</code>',
 						'<code>\'ease\'</code>',
+						'n/a',
 					],
-					['<code>none</code>', 'n/a', 'n/a'],
+					['<code>wipe</code>', '<code>\'500ms\'</code>', 'n/a', '<code>\'left\'</code>'],
+					['<code>none</code>', 'n/a', 'n/a', 'n/a'],
 				],
 			},
 			{ kind: 'subhead', text: 'Custom themes' },
