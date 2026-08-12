@@ -1,5 +1,16 @@
 # @brustack/react-theme-transitions
 
+## 2.2.0
+
+### Minor Changes
+
+- 291b9ec: Export `createThemeTransitionHook`, the factory this package's own `useThemeTransition` is built on. `@brustack/next-theme-transitions` now depends on this package and reuses the factory instead of duplicating the hook's logic.
+
+### Patch Changes
+
+- Updated dependencies [291b9ec]
+  - @brustack/theme-transitions-core@3.1.0
+
 ## 2.1.2
 
 ### Patch Changes
