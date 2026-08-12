@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, useTemplateRef, watch } from "vue";
 import {
   defaultThemeEffects,
   isValidCssDuration,
@@ -18,7 +18,7 @@ export interface EffectOptions {
 const options = defineModel<EffectOptions>({ required: true });
 
 const isOpen = ref(false);
-const rootEl = ref<HTMLElement | null>(null);
+const rootEl = useTemplateRef<HTMLElement>("rootEl");
 
 useClickOutside(rootEl, () => {
   isOpen.value = false;
@@ -322,5 +322,4 @@ watch(
     max-width: calc(100vw - 2rem);
   }
 }
-
 </style>

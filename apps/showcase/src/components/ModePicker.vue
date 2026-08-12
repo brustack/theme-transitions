@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, useTemplateRef } from "vue";
 import { originFromElement } from "@brustack/theme-transitions-core";
-import type {
-  ThemeName,
-  ThemeOrigin,
-} from "@brustack/theme-transitions-core";
+import type { ThemeName, ThemeOrigin } from "@brustack/theme-transitions-core";
 import IconSun from "./icons/IconSun.vue";
 import IconMoon from "./icons/IconMoon.vue";
 import IconMonitor from "./icons/IconMonitor.vue";
@@ -31,18 +28,14 @@ const icons: Record<string, unknown> = {
 
 const currentIcon = computed(() => icons[props.mode] ?? IconMonitor);
 const isOpen = ref(false);
-const rootEl = ref<HTMLElement | null>(null);
+const rootEl = useTemplateRef<HTMLElement>("rootEl");
 
 useClickOutside(rootEl, () => {
   isOpen.value = false;
 });
 
 const handleSelect = (option: ThemeName, event: MouseEvent) => {
-  emit(
-    "select",
-    option,
-    originFromElement(event.currentTarget as HTMLElement),
-  );
+  emit("select", option, originFromElement(event.currentTarget as HTMLElement));
   isOpen.value = false;
 };
 </script>
@@ -121,9 +114,7 @@ const handleSelect = (option: ThemeName, event: MouseEvent) => {
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
-  transition:
-    grid-template-rows 0.2s ease,
-    opacity 0.2s ease;
+  transition: grid-template-rows 0.2s ease, opacity 0.2s ease;
   pointer-events: none;
 }
 
@@ -163,9 +154,7 @@ const handleSelect = (option: ThemeName, event: MouseEvent) => {
   border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
-  transition:
-    background-color 0.15s,
-    color 0.15s;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 .pill-group button[aria-pressed="true"] {

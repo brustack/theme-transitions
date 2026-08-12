@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
-import type {
-  ThemeName,
-  ThemeOrigin,
-} from "@brustack/theme-transitions-core";
+import { onMounted, onUnmounted, useTemplateRef } from "vue";
+import type { ThemeName, ThemeOrigin } from "@brustack/theme-transitions-core";
 import Wordmark from "./Wordmark.vue";
 import GithubStars from "./GithubStars.vue";
 import ModePicker from "./ModePicker.vue";
@@ -22,7 +19,7 @@ defineEmits<{
   selectMode: [mode: ThemeName, origin: ThemeOrigin | null];
 }>();
 
-const topbarBar = ref<HTMLElement | null>(null);
+const topbarBar = useTemplateRef<HTMLElement>("topbarBar");
 let resizeObserver: ResizeObserver | undefined;
 
 onMounted(() => {
