@@ -1,1 +1,1 @@
-export { useThemeTransition } from './useThemeTransition';
+export { createUseThemeTransitionHook, useThemeTransition } from './useThemeTransition';
