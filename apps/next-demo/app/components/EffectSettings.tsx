@@ -50,6 +50,11 @@ const defaultsFor = (variant: ThemeEffect) =>
     ? defaultThemeEffects.flip
     : defaultThemeEffects.spread;
 
+const directionDefaultFor = (variant: ThemeEffect) =>
+  variant === "flip"
+    ? defaultThemeEffects.flip.direction
+    : defaultThemeEffects.wipe.direction;
+
 export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [variant, setVariant] = useState<ThemeEffect>("fade");
@@ -74,16 +79,10 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
     const defaults = defaultsFor(variant);
 
     if (duration !== defaults.duration) return true;
-    if (variant === "wipe") {
+    if (variant === "wipe" || variant === "flip") {
       return (
         easingPreset !== defaults.easing ||
-        direction !== defaultThemeEffects.wipe.direction
-      );
-    }
-    if (variant === "flip") {
-      return (
-        easingPreset !== defaults.easing ||
-        direction !== defaultThemeEffects.flip.direction
+        direction !== directionDefaultFor(variant)
       );
     }
 
@@ -95,11 +94,7 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
 
     setDuration(defaults.duration);
     setEasingPreset(defaults.easing);
-    setDirection(
-      variant === "flip"
-        ? defaultThemeEffects.flip.direction
-        : defaultThemeEffects.wipe.direction,
-    );
+    setDirection(directionDefaultFor(variant));
   };
 
   const selectVariant = (next: ThemeEffect) => {
@@ -108,11 +103,7 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
     setVariant(next);
     setDuration(defaults.duration);
     setEasingPreset(defaults.easing);
-    setDirection(
-      next === "flip"
-        ? defaultThemeEffects.flip.direction
-        : defaultThemeEffects.wipe.direction,
-    );
+    setDirection(directionDefaultFor(next));
   };
 
   useEffect(() => {

@@ -27,6 +27,11 @@ const defaultsFor = (variant: ThemeEffect) =>
     ? defaultThemeEffects.flip
     : defaultThemeEffects.spread;
 
+const directionDefaultFor = (variant: ThemeEffect) =>
+  variant === "flip"
+    ? defaultThemeEffects.flip.direction
+    : defaultThemeEffects.wipe.direction;
+
 @Component({
   selector: "app-effect-settings",
   standalone: true,
@@ -81,16 +86,10 @@ export class EffectSettingsComponent {
     const defaults = defaultsFor(this.variant());
 
     if (this.duration() !== defaults.duration) return true;
-    if (this.variant() === "wipe") {
+    if (this.variant() === "wipe" || this.variant() === "flip") {
       return (
         this.easingPreset() !== defaults.easing ||
-        this.direction() !== defaultThemeEffects.wipe.direction
-      );
-    }
-    if (this.variant() === "flip") {
-      return (
-        this.easingPreset() !== defaults.easing ||
-        this.direction() !== defaultThemeEffects.flip.direction
+        this.direction() !== directionDefaultFor(this.variant())
       );
     }
 
@@ -110,11 +109,7 @@ export class EffectSettingsComponent {
 
     this.duration.set(defaults.duration);
     this.easingPreset.set(defaults.easing);
-    this.direction.set(
-      this.variant() === "flip"
-        ? defaultThemeEffects.flip.direction
-        : defaultThemeEffects.wipe.direction,
-    );
+    this.direction.set(directionDefaultFor(this.variant()));
     this.emitChange();
   }
 
@@ -124,11 +119,7 @@ export class EffectSettingsComponent {
     this.variant.set(next);
     this.duration.set(defaults.duration);
     this.easingPreset.set(defaults.easing);
-    this.direction.set(
-      next === "flip"
-        ? defaultThemeEffects.flip.direction
-        : defaultThemeEffects.wipe.direction,
-    );
+    this.direction.set(directionDefaultFor(next));
     this.emitChange();
   }
 

@@ -70,6 +70,11 @@ const isModified = computed(() => {
   return duration.value !== defaults.duration;
 });
 
+const directionDefaultFor = (v: ThemeEffect) =>
+  v === "flip"
+    ? defaultThemeEffects.flip.direction
+    : defaultThemeEffects.wipe.direction;
+
 const applyVariantDefaults = () => {
   const defaults =
     variant.value === "fade"
@@ -81,15 +86,10 @@ const applyVariantDefaults = () => {
       : defaultThemeEffects.spread;
   duration.value = defaults.duration;
   easingPreset.value =
-    variant.value === "wipe"
-      ? defaultThemeEffects.wipe.easing
-      : variant.value === "flip"
-      ? defaultThemeEffects.flip.easing
+    variant.value === "wipe" || variant.value === "flip"
+      ? defaults.easing
       : defaultThemeEffects.fade.easing;
-  direction.value =
-    variant.value === "flip"
-      ? defaultThemeEffects.flip.direction
-      : defaultThemeEffects.wipe.direction;
+  direction.value = directionDefaultFor(variant.value);
 };
 
 const resetToDefaults = () => {

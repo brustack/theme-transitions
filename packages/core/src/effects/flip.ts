@@ -1,14 +1,8 @@
 import type { EffectDefinition, FlipEffectOptions } from '../types';
-import { parseCssDuration } from '../time';
+import { getSkipAfterMsFromDuration } from '../time';
+import { createEffectSelectors } from './selectors';
 
-const vtSelector = (layer: 'old' | 'new') =>
-	`html[data-theme-effect="flip"]::view-transition-${layer}(root)`;
-
-const vtGroup = () =>
-	`html[data-theme-effect="flip"]::view-transition-group(root)`;
-
-const vtImagePair = () =>
-	`html[data-theme-effect="flip"]::view-transition-image-pair(root)`;
+const { vtSelector, vtGroup, vtImagePair } = createEffectSelectors('flip');
 
 export const defaultFlipOptions: FlipEffectOptions = {
 	duration: '700ms',
@@ -86,5 +80,5 @@ export const flipEffect: EffectDefinition<FlipEffectOptions> = {
 		)}
     `;
 	},
-	getSkipAfterMs: options => parseCssDuration(options.duration),
+	getSkipAfterMs: getSkipAfterMsFromDuration,
 };

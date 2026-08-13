@@ -58,6 +58,11 @@ const defaultsFor = (v: ThemeEffect) =>
     ? defaultThemeEffects.flip
     : defaultThemeEffects.spread;
 
+const directionDefaultFor = (v: ThemeEffect) =>
+  v === "flip"
+    ? defaultThemeEffects.flip.direction
+    : defaultThemeEffects.wipe.direction;
+
 const durationError = computed(() => {
   if (variant.value === "none") return "";
   return isValidCssDuration(duration.value)
@@ -71,16 +76,10 @@ const isModified = computed(() => {
   const defaults = defaultsFor(variant.value);
 
   if (duration.value !== defaults.duration) return true;
-  if (variant.value === "wipe") {
+  if (variant.value === "wipe" || variant.value === "flip") {
     return (
       easingPreset.value !== defaults.easing ||
-      direction.value !== defaultThemeEffects.wipe.direction
-    );
-  }
-  if (variant.value === "flip") {
-    return (
-      easingPreset.value !== defaults.easing ||
-      direction.value !== defaultThemeEffects.flip.direction
+      direction.value !== directionDefaultFor(variant.value)
     );
   }
 
@@ -92,10 +91,7 @@ const resetToDefaults = () => {
 
   duration.value = defaults.duration;
   easingPreset.value = defaults.easing;
-  direction.value =
-    variant.value === "flip"
-      ? defaultThemeEffects.flip.direction
-      : defaultThemeEffects.wipe.direction;
+  direction.value = directionDefaultFor(variant.value);
 };
 
 watch(variant, resetToDefaults);

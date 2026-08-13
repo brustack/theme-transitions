@@ -1,11 +1,8 @@
 import type { EffectDefinition, SpreadEffectOptions } from '../types';
-import { parseCssDuration } from '../time';
+import { getSkipAfterMsFromDuration } from '../time';
+import { createEffectSelectors } from './selectors';
 
-const vtSelector = (layer: 'old' | 'new') =>
-	`html[data-theme-effect="spread"]::view-transition-${layer}(root)`;
-
-const vtGroup = () =>
-	`html[data-theme-effect="spread"]::view-transition-group(root)`;
+const { vtSelector, vtGroup } = createEffectSelectors('spread');
 
 export const defaultSpreadOptions: SpreadEffectOptions = {
 	duration: '1s',
@@ -53,5 +50,5 @@ export const spreadEffect: EffectDefinition<SpreadEffectOptions> = {
       }
     `;
 	},
-	getSkipAfterMs: options => parseCssDuration(options.duration),
+	getSkipAfterMs: getSkipAfterMsFromDuration,
 };

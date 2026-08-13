@@ -1,11 +1,8 @@
 import type { EffectDefinition, WipeEffectOptions } from '../types';
-import { parseCssDuration } from '../time';
+import { getSkipAfterMsFromDuration } from '../time';
+import { createEffectSelectors } from './selectors';
 
-const vtSelector = (layer: 'old' | 'new') =>
-	`html[data-theme-effect="wipe"]::view-transition-${layer}(root)`;
-
-const vtGroup = () =>
-	`html[data-theme-effect="wipe"]::view-transition-group(root)`;
+const { vtSelector, vtGroup } = createEffectSelectors('wipe');
 
 export const defaultWipeOptions: WipeEffectOptions = {
 	duration: '1s',
@@ -104,5 +101,5 @@ export const wipeEffect: EffectDefinition<WipeEffectOptions> = {
 		)}
     `;
 	},
-	getSkipAfterMs: options => parseCssDuration(options.duration),
+	getSkipAfterMs: getSkipAfterMsFromDuration,
 };

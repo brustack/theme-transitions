@@ -16,3 +16,7 @@ export const parseCssDuration = (duration: string): number => {
 
 	return parseFloat(trimmed) || 0;
 };
+
+export const getSkipAfterMsFromDuration = (options: {
+	duration: string;
+}): number => parseCssDuration(options.duration);

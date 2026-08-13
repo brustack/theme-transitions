@@ -1,11 +1,8 @@
 import type { EffectDefinition, FadeEffectOptions } from '../types';
-import { parseCssDuration } from '../time';
+import { getSkipAfterMsFromDuration } from '../time';
+import { createEffectSelectors } from './selectors';
 
-const vtSelector = (layer: 'old' | 'new') =>
-	`html[data-theme-effect="fade"]::view-transition-${layer}(root)`;
-
-const vtGroup = () =>
-	`html[data-theme-effect="fade"]::view-transition-group(root)`;
+const { vtSelector, vtGroup } = createEffectSelectors('fade');
 
 export const defaultFadeOptions: FadeEffectOptions = {
 	duration: '400ms',
@@ -51,5 +48,5 @@ export const fadeEffect: EffectDefinition<FadeEffectOptions> = {
       }
     `;
 	},
-	getSkipAfterMs: options => parseCssDuration(options.duration),
+	getSkipAfterMs: getSkipAfterMsFromDuration,
 };
