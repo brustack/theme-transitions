@@ -69,10 +69,22 @@ export const runThemeTransition = async (
 	}
 
 	if ('direction' in effectOptions) {
-		root.style.setProperty(
-			'--theme-wipe-direction',
-			`theme-wipe-reveal-${effectOptions.direction}`,
-		);
+		if (definition.name === 'wipe') {
+			root.style.setProperty(
+				'--theme-wipe-direction',
+				`theme-wipe-reveal-${effectOptions.direction}`,
+			);
+		}
+		else if (definition.name === 'flip') {
+			root.style.setProperty(
+				'--theme-flip-out-name',
+				`theme-flip-out-${effectOptions.direction}`,
+			);
+			root.style.setProperty(
+				'--theme-flip-in-name',
+				`theme-flip-in-${effectOptions.direction}`,
+			);
+		}
 	}
 
 	const cleanup = () => {
@@ -83,6 +95,8 @@ export const runThemeTransition = async (
 		root.style.removeProperty('--theme-easing');
 		root.style.removeProperty('--theme-radius');
 		root.style.removeProperty('--theme-wipe-direction');
+		root.style.removeProperty('--theme-flip-out-name');
+		root.style.removeProperty('--theme-flip-in-name');
 	};
 
 	const prefersReducedMotion = window.matchMedia(

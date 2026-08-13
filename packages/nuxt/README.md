@@ -34,8 +34,8 @@ yarn add @brustack/nuxt-theme-transitions
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@brustack/nuxt-theme-transitions'],
-})
+  modules: ["@brustack/nuxt-theme-transitions"],
+});
 ```
 
 Prefer to see it running first?
@@ -51,7 +51,7 @@ npm run dev:nuxt-demo
 
 ```vue
 <script setup lang="ts">
-const { theme, isAnimating, toggleTheme } = useThemeTransition()
+const { theme, isAnimating, toggleTheme } = useThemeTransition();
 </script>
 
 <template>
@@ -98,12 +98,12 @@ Set `darkMode: 'class'` in your Tailwind config (see Install above), then map yo
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        text: 'var(--text)',
+        bg: "var(--bg)",
+        text: "var(--text)",
       },
     },
   },
@@ -112,21 +112,23 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant          | `duration` |    `easing`     |  `direction`   |
+| ---------------- | :--------: | :-------------: | :------------: |
+| `spread`         |   `'1s'`   |       ❌        |       ❌       |
+| `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
+| `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
+| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `none`           |     ❌     |       ❌        |       ❌       |
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@brustack/nuxt-theme-transitions'],
+  modules: ["@brustack/nuxt-theme-transitions"],
   themeTransition: {
-    variant: 'spread',
-    duration: '1s',
+    variant: "spread",
+    duration: "1s",
   },
-})
+});
 ```
 
 Restart the dev server after changing `themeTransition`.
@@ -140,27 +142,27 @@ Register extra theme names beyond `light`/`dark`/`system` via `themeTransition.t
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@brustack/nuxt-theme-transitions'],
+  modules: ["@brustack/nuxt-theme-transitions"],
   themeTransition: {
-    themes: ['sepia', 'sunset'],
+    themes: ["sepia", "sunset"],
   },
-})
+});
 ```
 
 `setTheme('sepia')` then applies a `sepia` class the same way `light`/`dark` do (see Styling above). `themes` always includes `['light', 'dark', 'system', ...your custom names]` once mounted, useful for building a theme switcher. `toggleTheme()` is unaffected, it always flips between `light` and `dark`.
 
 ## API
 
-| | |
-|---|---|
-| `toggleTheme(eventOrOptions?)` | Switch between light and dark |
-| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name |
-| `theme` | Current resolved theme: `'light'`, `'dark'`, or a custom theme name |
-| `mode` | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
-| `isAnimating` | `true` while a transition is running |
-| `themes` | All registered theme names: `['light', 'dark', 'system', ...custom]` (built-ins only before mount) |
-| `originFromEvent(event)` | Click position for spread |
-| `originFromElement(el)` | Element center for spread |
+|                                   |                                                                                                    |
+| --------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `toggleTheme(eventOrOptions?)`    | Switch between light and dark                                                                      |
+| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name                                              |
+| `theme`                           | Current resolved theme: `'light'`, `'dark'`, or a custom theme name                                |
+| `mode`                            | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name                        |
+| `isAnimating`                     | `true` while a transition is running                                                               |
+| `themes`                          | All registered theme names: `['light', 'dark', 'system', ...custom]` (built-ins only before mount) |
+| `originFromEvent(event)`          | Click position for spread                                                                          |
+| `originFromElement(el)`           | Element center for spread                                                                          |
 
 ## Notes
 

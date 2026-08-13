@@ -103,12 +103,13 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant          | `duration` |   `easing`   | `direction` |
-| ---------------- | :--------: | :----------: | :---------: |
-| `spread`         |   `'1s'`   |      ❌      |     ❌      |
-| `fade` (default) | `'400ms'`  |   `'ease'`   |     ❌      |
-| `wipe`           |   `'1s'`   | `'ease-out'` |  `'left'`   |
-| `none`           |     ❌     |      ❌      |     ❌      |
+| Variant          | `duration` |    `easing`     |  `direction`   |
+| ---------------- | :--------: | :-------------: | :------------: |
+| `spread`         |   `'1s'`   |       ❌        |       ❌       |
+| `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
+| `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
+| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `none`           |     ❌     |       ❌        |       ❌       |
 
 ```ts
 getController({ variant: "spread", duration: "1s" });
@@ -123,6 +124,13 @@ The first call in a process sets the shared default; `createController(options)`
 | `'left'` / `'right'` / `'up'` / `'down'`                              | that edge                       |
 | `'center-x'` / `'center-y'`                                           | center, growing along that axis |
 | `'diagonal-tl'` / `'diagonal-tr'` / `'diagonal-bl'` / `'diagonal-br'` | that corner                     |
+
+### Flip direction
+
+| Value                    | Rotates around                             |
+| ------------------------ | ------------------------------------------ |
+| `'horizontal'` (default) | the Y axis, like a page turning left/right |
+| `'vertical'`             | the X axis, like a page turning top/bottom |
 
 ### Custom themes
 

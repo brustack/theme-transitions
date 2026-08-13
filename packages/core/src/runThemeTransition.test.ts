@@ -217,7 +217,66 @@ describe('runThemeTransition', () => {
 			'--theme-wipe-direction',
 			'theme-wipe-reveal-right',
 		);
-		expect(root.style.removeProperty).toHaveBeenCalledWith('--theme-wipe-direction');
+		expect(root.style.removeProperty).toHaveBeenCalledWith(
+			'--theme-wipe-direction',
+		);
+	});
+
+	it('sets and cleans up both flip direction custom properties from the effect options', async () => {
+		vi.useFakeTimers();
+
+		const root = {
+			dataset: {} as { themeEffect?: string },
+			style: { setProperty: vi.fn(), removeProperty: vi.fn() },
+		};
+
+		const finished = Promise.resolve();
+		const startViewTransition = vi.fn((update: () => Promise<void>) => {
+			update();
+			return { ready: Promise.resolve(), finished, skipTransition: vi.fn() };
+		});
+
+		vi.stubGlobal('document', {
+			documentElement: root,
+			startViewTransition,
+		});
+		vi.stubGlobal('window', {
+			matchMedia: () => ({ matches: false }),
+		});
+
+		const callback = vi.fn();
+		const setAnimating = vi.fn();
+		const definition = createDefinition(() => 500);
+
+		const promise = runThemeTransition(
+			{ ...definition, name: 'flip' },
+			null,
+			{
+				duration: '700ms',
+				easing: 'ease-in-out',
+				direction: 'vertical',
+			} as never,
+			callback,
+			setAnimating,
+		);
+
+		await vi.advanceTimersByTimeAsync(500);
+		await promise;
+
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-flip-out-name',
+			'theme-flip-out-vertical',
+		);
+		expect(root.style.setProperty).toHaveBeenCalledWith(
+			'--theme-flip-in-name',
+			'theme-flip-in-vertical',
+		);
+		expect(root.style.removeProperty).toHaveBeenCalledWith(
+			'--theme-flip-out-name',
+		);
+		expect(root.style.removeProperty).toHaveBeenCalledWith(
+			'--theme-flip-in-name',
+		);
 	});
 
 	it('uses the fixed spread radius percentage instead of the raw CSS value, when an origin is given', async () => {

@@ -17,6 +17,10 @@ describe('getEffectOrThrow', () => {
 		expect(getEffectOrThrow('wipe').name).toBe('wipe');
 	});
 
+	it('returns the flip effect definition', () => {
+		expect(getEffectOrThrow('flip').name).toBe('flip');
+	});
+
 	it('throws for an unknown variant', () => {
 		expect(() => getEffectOrThrow('unknown' as never)).toThrow(
 			'Unknown theme transition variant: unknown',
@@ -68,6 +72,21 @@ describe('resolveThemeEffects', () => {
 		expect(result.spread).toEqual(defaultThemeEffects.spread);
 	});
 
+	it('merges duration/easing/direction overrides for the selected flip variant', () => {
+		const result = resolveThemeEffects({
+			variant: 'flip',
+			duration: '2s',
+			easing: 'linear',
+			direction: 'vertical',
+		});
+		expect(result.flip).toEqual({
+			duration: '2s',
+			easing: 'linear',
+			direction: 'vertical',
+		});
+		expect(result.spread).toEqual(defaultThemeEffects.spread);
+	});
+
 	it('ignores overrides for the variant that is not selected', () => {
 		const result = resolveThemeEffects({ variant: 'fade', radius: '999vmax' });
 		expect(result.spread).toEqual(defaultThemeEffects.spread);
@@ -86,6 +105,7 @@ describe('buildThemeTransitionCss', () => {
 		expect(css).toContain('theme-fade-in');
 		expect(css).toContain('theme-spread-reveal');
 		expect(css).toContain('theme-wipe-reveal-left');
+		expect(css).toContain('theme-flip-out');
 		expect(css).toContain('prefers-reduced-motion: reduce');
 	});
 });

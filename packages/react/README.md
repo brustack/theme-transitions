@@ -44,8 +44,8 @@ npm run dev:react-demo
 ## Usage
 
 ```tsx
-import { useThemeTransition } from '@brustack/react-theme-transitions';
-import '@brustack/theme-transitions-core/style.css';
+import { useThemeTransition } from "@brustack/react-theme-transitions";
+import "@brustack/theme-transitions-core/style.css";
 
 export const ThemeToggle = () => {
   const { theme, isAnimating, toggleTheme } = useThemeTransition();
@@ -95,12 +95,12 @@ Set `darkMode: 'class'` in your Tailwind config (see Install above), then map yo
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        text: 'var(--text)',
+        bg: "var(--bg)",
+        text: "var(--text)",
       },
     },
   },
@@ -111,8 +111,8 @@ module.exports = {
 
 ```tsx
 // App.tsx
-import { createGlobalStyle } from 'styled-components';
-import { ThemeToggle } from './theme-toggle';
+import { createGlobalStyle } from "styled-components";
+import { ThemeToggle } from "./theme-toggle";
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -141,14 +141,16 @@ export const App = () => (
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant          | `duration` |    `easing`     |  `direction`   |
+| ---------------- | :--------: | :-------------: | :------------: |
+| `spread`         |   `'1s'`   |       ❌        |       ❌       |
+| `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
+| `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
+| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `none`           |     ❌     |       ❌        |       ❌       |
 
 ```ts
-useThemeTransition({ variant: 'spread', duration: '1s' })
+useThemeTransition({ variant: "spread", duration: "1s" });
 ```
 
 The first call in the app sets the shared default. Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`setTheme` to override just that one call.
@@ -158,30 +160,30 @@ The first call in the app sets the shared default. Pass a `MouseEvent` (as shown
 Register extra theme names beyond `light`/`dark`/`system` via `themes`:
 
 ```ts
-useThemeTransition({ themes: ['sepia', 'sunset'] })
+useThemeTransition({ themes: ["sepia", "sunset"] });
 ```
 
 `setTheme('sepia')` then applies a `sepia` class the same way `light`/`dark` do (see Styling above). The hook's `themes` array always includes `['light', 'dark', 'system', ...your custom names]`, useful for building a theme switcher. `toggleTheme()` is unaffected, it always flips between `light` and `dark`.
 
 ## API
 
-| | |
-|---|---|
-| `theme` | Current resolved theme: `'light'`, `'dark'`, or a custom theme name |
-| `mode` | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
-| `isAnimating` | `true` while a transition is running |
-| `themes` | All registered theme names: `['light', 'dark', 'system', ...custom]` |
-| `toggleTheme(eventOrOptions?)` | Switch between light and dark |
-| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name |
+|                                   |                                                                             |
+| --------------------------------- | --------------------------------------------------------------------------- |
+| `theme`                           | Current resolved theme: `'light'`, `'dark'`, or a custom theme name         |
+| `mode`                            | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
+| `isAnimating`                     | `true` while a transition is running                                        |
+| `themes`                          | All registered theme names: `['light', 'dark', 'system', ...custom]`        |
+| `toggleTheme(eventOrOptions?)`    | Switch between light and dark                                               |
+| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name                       |
 
 ## Vite plugin
 
 Register the anti-flash init script in `vite.config.ts`:
 
 ```ts
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { themeTransitions } from '@brustack/theme-transitions-core/vite';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { themeTransitions } from "@brustack/theme-transitions-core/vite";
 
 export default defineConfig({
   plugins: [react(), themeTransitions()],
@@ -201,7 +203,9 @@ Not using Vite? `themeTransitions()` is a thin wrapper around two functions the 
 With webpack and `html-webpack-plugin`:
 
 ```js
-const { buildColorModeInitScript } = require('@brustack/theme-transitions-core');
+const {
+  buildColorModeInitScript,
+} = require("@brustack/theme-transitions-core");
 
 new HtmlWebpackPlugin({
   templateParameters: { themeInitScript: buildColorModeInitScript() },
@@ -210,7 +214,9 @@ new HtmlWebpackPlugin({
 
 ```html
 <!-- in the HTML template, inside <head> -->
-<script><%= htmlWebpackPlugin.options.templateParameters.themeInitScript %></script>
+<script>
+  <%= htmlWebpackPlugin.options.templateParameters.themeInitScript %>
+</script>
 ```
 
 The script must run in `<head>`, before the page paints, regardless of where your bundle's own `<script>` tags are injected. To also set app-wide default effect options (the same thing the Vite plugin's argument does), prepend `buildConfigInitScript(options)` (which sets `window.__themeConfig`) to the same string.

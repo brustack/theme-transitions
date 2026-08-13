@@ -50,15 +50,24 @@ npm run dev:alpine-demo
 ```html
 <head>
   <script src="https://cdn.jsdelivr.net/npm/@brustack/theme-transitions-core/dist/theme-init.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@brustack/theme-transitions-core/style.css">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@brustack/theme-transitions-core/style.css"
+  />
 </head>
 <body>
   <div x-data="themeTransition()">
     <button @click="toggleTheme" x-text="theme"></button>
   </div>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/@brustack/alpine-theme-transitions/dist/alpine-theme-transitions.iife.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/@brustack/alpine-theme-transitions/dist/alpine-theme-transitions.iife.js"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"
+  ></script>
 </body>
 ```
 
@@ -67,9 +76,9 @@ Script order matters: the plugin's `<script>` tag comes before Alpine core's own
 ### npm / bundler
 
 ```js
-import Alpine from 'alpinejs';
-import themeTransition from '@brustack/alpine-theme-transitions';
-import '@brustack/theme-transitions-core/style.css';
+import Alpine from "alpinejs";
+import themeTransition from "@brustack/alpine-theme-transitions";
+import "@brustack/theme-transitions-core/style.css";
 
 Alpine.plugin(themeTransition);
 Alpine.start();
@@ -118,12 +127,12 @@ Set `darkMode: 'class'` in your Tailwind config (see Install above), then map yo
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        text: 'var(--text)',
+        bg: "var(--bg)",
+        text: "var(--text)",
       },
     },
   },
@@ -132,14 +141,16 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant          | `duration` |    `easing`     |  `direction`   |
+| ---------------- | :--------: | :-------------: | :------------: |
+| `spread`         |   `'1s'`   |       ❌        |       ❌       |
+| `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
+| `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
+| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `none`           |     ❌     |       ❌        |       ❌       |
 
 ```html
-<div x-data="themeTransition({ variant: 'spread', duration: '1s' })">
+<div x-data="themeTransition({ variant: 'spread', duration: '1s' })"></div>
 ```
 
 The first component to initialize on the page sets the shared default. Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`setTheme` to override just that one call.
@@ -149,23 +160,23 @@ The first component to initialize on the page sets the shared default. Pass a `M
 Register extra theme names beyond `light`/`dark`/`system` via `themes`:
 
 ```html
-<div x-data="themeTransition({ themes: ['sepia', 'sunset'] })">
+<div x-data="themeTransition({ themes: ['sepia', 'sunset'] })"></div>
 ```
 
 `setTheme('sepia')` then applies a `sepia` class the same way `light`/`dark` do (see Styling above). The component's `themes` property always includes `['light', 'dark', 'system', ...your custom names]`, useful for building a theme switcher. `toggleTheme()` is unaffected, it always flips between `light` and `dark`.
 
 ## API
 
-| | |
-|---|---|
-| `Alpine.plugin(themeTransition)` | Registers the `themeTransition` Alpine.data component |
+|                                      |                                                                             |
+| ------------------------------------ | --------------------------------------------------------------------------- |
+| `Alpine.plugin(themeTransition)`     | Registers the `themeTransition` Alpine.data component                       |
 | `x-data="themeTransition(options?)"` | Creates a component instance; first one on the page sets the shared default |
-| `theme` | Current resolved theme: `'light'`, `'dark'`, or a custom theme name |
-| `mode` | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
-| `isAnimating` | `true` while a transition is running |
-| `themes` | All registered theme names: `['light', 'dark', 'system', ...custom]` |
-| `toggleTheme(eventOrOptions?)` | Switch between light and dark |
-| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name |
+| `theme`                              | Current resolved theme: `'light'`, `'dark'`, or a custom theme name         |
+| `mode`                               | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
+| `isAnimating`                        | `true` while a transition is running                                        |
+| `themes`                             | All registered theme names: `['light', 'dark', 'system', ...custom]`        |
+| `toggleTheme(eventOrOptions?)`       | Switch between light and dark                                               |
+| `setTheme(mode, eventOrOptions?)`    | Set `light`, `dark`, `system`, or a custom theme name                       |
 
 ## Notes
 

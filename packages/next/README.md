@@ -49,10 +49,14 @@ Add `ThemeScript` to your root layout's `<head>`. This is what prevents a flash 
 
 ```tsx
 // app/layout.tsx
-import { ThemeScript } from '@brustack/next-theme-transitions';
-import '@brustack/theme-transitions-core/style.css';
+import { ThemeScript } from "@brustack/next-theme-transitions";
+import "@brustack/theme-transitions-core/style.css";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -68,9 +72,9 @@ Then use `useThemeTransition` from any Client Component:
 
 ```tsx
 // app/components/theme-toggle.tsx
-'use client';
+"use client";
 
-import { useThemeTransition } from '@brustack/next-theme-transitions';
+import { useThemeTransition } from "@brustack/next-theme-transitions";
 
 export const ThemeToggle = () => {
   const { theme, isAnimating, toggleTheme } = useThemeTransition();
@@ -83,7 +87,7 @@ export const ThemeToggle = () => {
 };
 ```
 
-Binding `toggleTheme` directly to `onClick` works because it accepts React's `MouseEvent` and derives the spread effect's origin from the click position automatically. The component calling the hook needs its own `'use client'` directive, same as any other interactive component in the App Router; `useThemeTransition` itself already has one, but that only makes the hook's *own* module client-safe, it doesn't make the component that calls it a Client Component.
+Binding `toggleTheme` directly to `onClick` works because it accepts React's `MouseEvent` and derives the spread effect's origin from the click position automatically. The component calling the hook needs its own `'use client'` directive, same as any other interactive component in the App Router; `useThemeTransition` itself already has one, but that only makes the hook's _own_ module client-safe, it doesn't make the component that calls it a Client Component.
 
 ## Styling
 
@@ -120,12 +124,12 @@ Set `darkMode: 'class'` in your Tailwind config (see Install above), then map yo
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        text: 'var(--text)',
+        bg: "var(--bg)",
+        text: "var(--text)",
       },
     },
   },
@@ -136,9 +140,9 @@ module.exports = {
 
 ```tsx
 // app/global-style.tsx
-'use client';
+"use client";
 
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -160,9 +164,13 @@ export const GlobalStyle = createGlobalStyle`
 
 ```tsx
 // app/layout.tsx
-import { GlobalStyle } from './global-style';
+import { GlobalStyle } from "./global-style";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -181,11 +189,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant          | `duration` |    `easing`     |  `direction`   |
+| ---------------- | :--------: | :-------------: | :------------: |
+| `spread`         |   `'1s'`   |       ❌        |       ❌       |
+| `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
+| `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
+| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `none`           |     ❌     |       ❌        |       ❌       |
 
 `ThemeScript` and `useThemeTransition` accept the same shape. Pass matching options to both to set the app-wide default (the pre-hydration script and the interactive hook must agree):
 
@@ -196,7 +206,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 // app/components/theme-toggle.tsx
-useThemeTransition({ variant: 'spread', duration: '1s' })
+useThemeTransition({ variant: "spread", duration: "1s" });
 ```
 
 Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`setTheme` to override just that one call.
@@ -206,25 +216,25 @@ Pass a `MouseEvent` (as shown in Usage) or an options object to `toggleTheme`/`s
 Register extra theme names beyond `light`/`dark`/`system` via `themes`, passed to both `ThemeScript` and `useThemeTransition`:
 
 ```tsx
-<ThemeScript themes={['sepia', 'sunset']} />
+<ThemeScript themes={["sepia", "sunset"]} />
 ```
 
 ```tsx
-useThemeTransition({ themes: ['sepia', 'sunset'] })
+useThemeTransition({ themes: ["sepia", "sunset"] });
 ```
 
 `setTheme('sepia')` then applies a `sepia` class the same way `light`/`dark` do (see Styling above). The hook's `themes` array always includes `['light', 'dark', 'system', ...your custom names]` on the client; during SSR it only reports the 3 built-ins, since custom names aren't knowable at module-load time, the real list takes over once the client hydrates. `toggleTheme()` is unaffected, it always flips between `light` and `dark`.
 
 ## API
 
-| | |
-|---|---|
-| `theme` | Current resolved theme: `'light'`, `'dark'`, or a custom theme name |
-| `mode` | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
-| `isAnimating` | `true` while a transition is running |
-| `themes` | All registered theme names: `['light', 'dark', 'system', ...custom]` (built-ins only during SSR) |
-| `toggleTheme(eventOrOptions?)` | Switch between light and dark |
-| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name |
+|                                   |                                                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `theme`                           | Current resolved theme: `'light'`, `'dark'`, or a custom theme name                              |
+| `mode`                            | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name                      |
+| `isAnimating`                     | `true` while a transition is running                                                             |
+| `themes`                          | All registered theme names: `['light', 'dark', 'system', ...custom]` (built-ins only during SSR) |
+| `toggleTheme(eventOrOptions?)`    | Switch between light and dark                                                                    |
+| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name                                            |
 
 ## Notes
 

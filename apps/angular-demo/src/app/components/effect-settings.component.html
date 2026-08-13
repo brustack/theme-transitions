@@ -36,15 +36,18 @@
           <option value="spread">spread</option>
           <option value="fade">fade</option>
           <option value="wipe">wipe</option>
+          <option value="flip">flip</option>
           <option value="none">none</option>
         </select>
       </label>
 
-      @if (variant() !== 'none') { @if (variant() === 'wipe') {
+      @if (variant() !== 'none') { @if (variant() === 'wipe' || variant() ===
+      'flip') {
       <label>
         <span class="label-text">Direction</span>
         <select [value]="direction()" (change)="onDirectionChange($event)">
-          @for (d of directions; track d) {
+          @for (d of (variant() === 'wipe' ? wipeDirections : flipDirections);
+          track d) {
           <option [value]="d">{{ d }}</option>
           }
         </select>
@@ -65,7 +68,8 @@
         }
       </label>
 
-      @if (variant() === 'fade' || variant() === 'wipe') {
+      @if (variant() === 'fade' || variant() === 'wipe' || variant() === 'flip')
+      {
       <label>
         <span class="label-text">Easing</span>
         <select [value]="easingPreset()" (change)="onEasingChange($event)">

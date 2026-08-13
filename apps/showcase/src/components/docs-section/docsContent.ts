@@ -212,7 +212,7 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 				headers: ['Variant', 'duration', 'easing', 'direction'],
 				headerTooltips: {
 					direction:
-            '<strong>Edges</strong>: left, right, up, down<br><strong>Center</strong>: center-x, center-y<br><strong>Corners</strong>: diagonal-tl, diagonal-tr, diagonal-bl, diagonal-br',
+            '<strong>Wipe edges</strong>: left, right, up, down<br><strong>Wipe center</strong>: center-x, center-y<br><strong>Wipe corners</strong>: diagonal-tl, diagonal-tr, diagonal-bl, diagonal-br<br><strong>Flip axis</strong>: horizontal, vertical',
 				},
 				rows: [
 					['<code>spread</code>', '<code>\'1s\'</code>', '-', '-'],
@@ -227,6 +227,12 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 						'<code>\'1s\'</code>',
 						'<code>\'ease-out\'</code>',
 						'<code>\'left\'</code>',
+					],
+					[
+						'<code>flip</code>',
+						'<code>\'700ms\'</code>',
+						'<code>\'ease-in-out\'</code>',
+						'<code>\'horizontal\'</code>',
 					],
 					['<code>none</code>', '-', '-', '-'],
 				],

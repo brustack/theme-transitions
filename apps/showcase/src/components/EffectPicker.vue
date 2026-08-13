@@ -5,6 +5,7 @@ import {
   isValidCssDuration,
 } from "@brustack/theme-transitions-core";
 import type {
+  FlipEffectOptions,
   ThemeEffect,
   WipeEffectOptions,
 } from "@brustack/theme-transitions-core";
@@ -16,7 +17,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
-  direction?: WipeEffectOptions["direction"];
+  direction?: WipeEffectOptions["direction"] | FlipEffectOptions["direction"];
 }
 
 const options = defineModel<EffectOptions>({ required: true });
@@ -28,9 +29,9 @@ useClickOutside(rootEl, () => {
   isOpen.value = false;
 });
 
-const variants: ThemeEffect[] = ["spread", "fade", "wipe", "none"];
+const variants: ThemeEffect[] = ["spread", "fade", "wipe", "flip", "none"];
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
-const directions: WipeEffectOptions["direction"][] = [
+const wipeDirections: WipeEffectOptions["direction"][] = [
   "left",
   "right",
   "up",
@@ -42,13 +43,17 @@ const directions: WipeEffectOptions["direction"][] = [
   "diagonal-bl",
   "diagonal-br",
 ];
+const flipDirections: FlipEffectOptions["direction"][] = [
+  "horizontal",
+  "vertical",
+];
 
 const variant = ref(options.value.variant);
 const duration = ref(options.value.duration);
 const easingPreset = ref(defaultThemeEffects.fade.easing);
-const direction = ref<WipeEffectOptions["direction"]>(
-  defaultThemeEffects.wipe.direction,
-);
+const direction = ref<
+  WipeEffectOptions["direction"] | FlipEffectOptions["direction"]
+>(defaultThemeEffects.wipe.direction);
 
 const durationError = computed(() => {
   if (variant.value === "none") return "";
@@ -71,13 +76,20 @@ const applyVariantDefaults = () => {
       ? defaultThemeEffects.fade
       : variant.value === "wipe"
       ? defaultThemeEffects.wipe
+      : variant.value === "flip"
+      ? defaultThemeEffects.flip
       : defaultThemeEffects.spread;
   duration.value = defaults.duration;
   easingPreset.value =
     variant.value === "wipe"
       ? defaultThemeEffects.wipe.easing
+      : variant.value === "flip"
+      ? defaultThemeEffects.flip.easing
       : defaultThemeEffects.fade.easing;
-  direction.value = defaultThemeEffects.wipe.direction;
+  direction.value =
+    variant.value === "flip"
+      ? defaultThemeEffects.flip.direction
+      : defaultThemeEffects.wipe.direction;
 };
 
 const resetToDefaults = () => {
@@ -97,7 +109,7 @@ watch(
             duration: duration.value,
             easing: easingPreset.value,
           }
-        : variant.value === "wipe"
+        : variant.value === "wipe" || variant.value === "flip"
         ? {
             variant: variant.value,
             duration: duration.value,
@@ -141,10 +153,16 @@ watch(
           </div>
         </div>
         <template v-if="variant !== 'none'">
-          <label v-if="variant === 'wipe'">
+          <label v-if="variant === 'wipe' || variant === 'flip'">
             <span>Direction</span>
             <select v-model="direction">
-              <option v-for="d in directions" :key="d" :value="d">
+              <option
+                v-for="d in variant === 'wipe'
+                  ? wipeDirections
+                  : flipDirections"
+                :key="d"
+                :value="d"
+              >
                 {{ d }}
               </option>
             </select>
@@ -161,7 +179,11 @@ watch(
             durationError
           }}</span>
 
-          <label v-if="variant === 'fade' || variant === 'wipe'">
+          <label
+            v-if="
+              variant === 'fade' || variant === 'wipe' || variant === 'flip'
+            "
+          >
             <span>Easing</span>
             <select v-model="easingPreset">
               <option

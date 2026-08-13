@@ -1,6 +1,7 @@
 export type {
 	EffectDefinition,
 	FadeEffectOptions,
+	FlipEffectOptions,
 	SpreadEffectOptions,
 	ThemeEffect,
 	ThemeEffects,

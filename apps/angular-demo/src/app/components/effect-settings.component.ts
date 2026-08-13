@@ -4,6 +4,7 @@ import {
   isValidCssDuration,
 } from "@brustack/theme-transitions-core";
 import type {
+  FlipEffectOptions,
   ThemeEffect,
   WipeEffectOptions,
 } from "@brustack/theme-transitions-core";
@@ -14,7 +15,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
-  direction?: WipeEffectOptions["direction"];
+  direction?: WipeEffectOptions["direction"] | FlipEffectOptions["direction"];
 }
 
 const defaultsFor = (variant: ThemeEffect) =>
@@ -22,6 +23,8 @@ const defaultsFor = (variant: ThemeEffect) =>
     ? defaultThemeEffects.fade
     : variant === "wipe"
     ? defaultThemeEffects.wipe
+    : variant === "flip"
+    ? defaultThemeEffects.flip
     : defaultThemeEffects.spread;
 
 @Component({
@@ -38,9 +41,9 @@ export class EffectSettingsComponent {
   protected readonly variant = signal<ThemeEffect>("fade");
   protected readonly duration = signal(defaultThemeEffects.fade.duration);
   protected readonly easingPreset = signal(defaultThemeEffects.fade.easing);
-  protected readonly direction = signal<WipeEffectOptions["direction"]>(
-    defaultThemeEffects.wipe.direction,
-  );
+  protected readonly direction = signal<
+    WipeEffectOptions["direction"] | FlipEffectOptions["direction"]
+  >(defaultThemeEffects.wipe.direction);
   protected readonly easingPresets = [
     "ease",
     "ease-in",
@@ -48,7 +51,7 @@ export class EffectSettingsComponent {
     "ease-in-out",
     "linear",
   ];
-  protected readonly directions: WipeEffectOptions["direction"][] = [
+  protected readonly wipeDirections: WipeEffectOptions["direction"][] = [
     "left",
     "right",
     "up",
@@ -59,6 +62,10 @@ export class EffectSettingsComponent {
     "diagonal-tr",
     "diagonal-bl",
     "diagonal-br",
+  ];
+  protected readonly flipDirections: FlipEffectOptions["direction"][] = [
+    "horizontal",
+    "vertical",
   ];
 
   protected readonly durationError = computed(() => {
@@ -80,6 +87,12 @@ export class EffectSettingsComponent {
         this.direction() !== defaultThemeEffects.wipe.direction
       );
     }
+    if (this.variant() === "flip") {
+      return (
+        this.easingPreset() !== defaults.easing ||
+        this.direction() !== defaultThemeEffects.flip.direction
+      );
+    }
 
     return this.variant() === "fade" && this.easingPreset() !== defaults.easing;
   });
@@ -96,8 +109,12 @@ export class EffectSettingsComponent {
     const defaults = defaultsFor(this.variant());
 
     this.duration.set(defaults.duration);
-    this.easingPreset.set(defaultThemeEffects.fade.easing);
-    this.direction.set(defaultThemeEffects.wipe.direction);
+    this.easingPreset.set(defaults.easing);
+    this.direction.set(
+      this.variant() === "flip"
+        ? defaultThemeEffects.flip.direction
+        : defaultThemeEffects.wipe.direction,
+    );
     this.emitChange();
   }
 
@@ -106,8 +123,12 @@ export class EffectSettingsComponent {
 
     this.variant.set(next);
     this.duration.set(defaults.duration);
-    this.easingPreset.set(defaultThemeEffects.fade.easing);
-    this.direction.set(defaultThemeEffects.wipe.direction);
+    this.easingPreset.set(defaults.easing);
+    this.direction.set(
+      next === "flip"
+        ? defaultThemeEffects.flip.direction
+        : defaultThemeEffects.wipe.direction,
+    );
     this.emitChange();
   }
 
@@ -129,8 +150,9 @@ export class EffectSettingsComponent {
 
   protected onDirectionChange(event: Event): void {
     this.direction.set(
-      (event.target as HTMLSelectElement)
-        .value as WipeEffectOptions["direction"],
+      (event.target as HTMLSelectElement).value as
+        | WipeEffectOptions["direction"]
+        | FlipEffectOptions["direction"],
     );
     this.emitChange();
   }
@@ -145,7 +167,7 @@ export class EffectSettingsComponent {
       options:
         variant === "fade"
           ? { variant, duration, easing }
-          : variant === "wipe"
+          : variant === "wipe" || variant === "flip"
           ? { variant, duration, easing, direction }
           : { variant, duration },
       valid: !this.durationError(),

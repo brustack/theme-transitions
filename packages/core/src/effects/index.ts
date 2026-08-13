@@ -6,6 +6,7 @@ import type {
 	ThemeOptions,
 } from '../types';
 import { defaultFadeOptions, fadeEffect } from './fade';
+import { defaultFlipOptions, flipEffect } from './flip';
 import { defaultNoneOptions, noneEffect } from './none';
 import { defaultSpreadOptions, spreadEffect } from './spread';
 import { defaultWipeOptions, wipeEffect } from './wipe';
@@ -13,6 +14,7 @@ import { defaultWipeOptions, wipeEffect } from './wipe';
 export type {
 	EffectDefinition,
 	FadeEffectOptions,
+	FlipEffectOptions,
 	NoneEffectOptions,
 	SpreadEffectOptions,
 	ThemeEffect,
@@ -30,6 +32,7 @@ export const EFFECT_OVERRIDE_KEYS: Record<
 	spread: ['duration'],
 	fade: ['duration', 'easing'],
 	wipe: ['duration', 'easing', 'direction'],
+	flip: ['duration', 'easing', 'direction'],
 	none: [],
 };
 
@@ -37,6 +40,7 @@ const themeEffects = [
 	spreadEffect,
 	fadeEffect,
 	wipeEffect,
+	flipEffect,
 	noneEffect,
 ] as EffectDefinition[];
 
@@ -44,6 +48,7 @@ export const defaultThemeEffects: ThemeEffects = {
 	spread: defaultSpreadOptions,
 	fade: defaultFadeOptions,
 	wipe: defaultWipeOptions,
+	flip: defaultFlipOptions,
 	none: defaultNoneOptions,
 };
 
@@ -93,6 +98,12 @@ export const resolveThemeEffects = (options?: ThemeOptions): ThemeEffects => {
 			...defaultWipeOptions,
 			...(variant === 'wipe'
 				? pickOverrides(options, EFFECT_OVERRIDE_KEYS.wipe)
+				: {}),
+		},
+		flip: {
+			...defaultFlipOptions,
+			...(variant === 'flip'
+				? pickOverrides(options, EFFECT_OVERRIDE_KEYS.flip)
 				: {}),
 		},
 		none: defaultNoneOptions,

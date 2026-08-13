@@ -5,6 +5,7 @@ import {
   isValidCssDuration,
 } from "@brustack/theme-transitions-core";
 import type {
+  FlipEffectOptions,
   ThemeEffect,
   WipeEffectOptions,
 } from "@brustack/theme-transitions-core";
@@ -15,7 +16,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
-  direction?: WipeEffectOptions["direction"];
+  direction?: WipeEffectOptions["direction"] | FlipEffectOptions["direction"];
 }
 
 const options = defineModel<EffectOptions>({ required: true });
@@ -24,7 +25,7 @@ const valid = defineModel<boolean>("valid", { required: true });
 const isOpen = ref(false);
 
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
-const directions: WipeEffectOptions["direction"][] = [
+const wipeDirections: WipeEffectOptions["direction"][] = [
   "left",
   "right",
   "up",
@@ -36,19 +37,25 @@ const directions: WipeEffectOptions["direction"][] = [
   "diagonal-bl",
   "diagonal-br",
 ];
+const flipDirections: FlipEffectOptions["direction"][] = [
+  "horizontal",
+  "vertical",
+];
 
 const variant = ref<ThemeEffect>(options.value.variant);
 const duration = ref(options.value.duration);
 const easingPreset = ref(defaultThemeEffects.fade.easing);
-const direction = ref<WipeEffectOptions["direction"]>(
-  defaultThemeEffects.wipe.direction,
-);
+const direction = ref<
+  WipeEffectOptions["direction"] | FlipEffectOptions["direction"]
+>(defaultThemeEffects.wipe.direction);
 
 const defaultsFor = (v: ThemeEffect) =>
   v === "fade"
     ? defaultThemeEffects.fade
     : v === "wipe"
     ? defaultThemeEffects.wipe
+    : v === "flip"
+    ? defaultThemeEffects.flip
     : defaultThemeEffects.spread;
 
 const durationError = computed(() => {
@@ -70,6 +77,12 @@ const isModified = computed(() => {
       direction.value !== defaultThemeEffects.wipe.direction
     );
   }
+  if (variant.value === "flip") {
+    return (
+      easingPreset.value !== defaults.easing ||
+      direction.value !== defaultThemeEffects.flip.direction
+    );
+  }
 
   return variant.value === "fade" && easingPreset.value !== defaults.easing;
 });
@@ -78,8 +91,11 @@ const resetToDefaults = () => {
   const defaults = defaultsFor(variant.value);
 
   duration.value = defaults.duration;
-  easingPreset.value = defaultThemeEffects.fade.easing;
-  direction.value = defaultThemeEffects.wipe.direction;
+  easingPreset.value = defaults.easing;
+  direction.value =
+    variant.value === "flip"
+      ? defaultThemeEffects.flip.direction
+      : defaultThemeEffects.wipe.direction;
 };
 
 watch(variant, resetToDefaults);
@@ -94,7 +110,7 @@ watch(
             duration: duration.value,
             easing: easingPreset.value,
           }
-        : variant.value === "wipe"
+        : variant.value === "wipe" || variant.value === "flip"
         ? {
             variant: variant.value,
             duration: duration.value,
@@ -156,15 +172,20 @@ watch(
               <option value="spread">spread</option>
               <option value="fade">fade</option>
               <option value="wipe">wipe</option>
+              <option value="flip">flip</option>
               <option value="none">none</option>
             </select>
           </label>
 
           <template v-if="variant !== 'none'">
-            <label v-if="variant === 'wipe'">
+            <label v-if="variant === 'wipe' || variant === 'flip'">
               <span class="label-text">Direction</span>
               <select v-model="direction">
-                <option v-for="d in directions" :key="d" :value="d">
+                <option
+                  v-for="d in variant === 'wipe' ? wipeDirections : flipDirections"
+                  :key="d"
+                  :value="d"
+                >
                   {{ d }}
                 </option>
               </select>
@@ -183,7 +204,11 @@ watch(
               }}</span>
             </label>
 
-            <label v-if="variant === 'fade' || variant === 'wipe'">
+            <label
+              v-if="
+                variant === 'fade' || variant === 'wipe' || variant === 'flip'
+              "
+            >
               <span class="label-text">Easing</span>
               <select v-model="easingPreset">
                 <option

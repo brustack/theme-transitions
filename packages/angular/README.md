@@ -44,15 +44,18 @@ npm run dev:angular-demo
 ## Usage
 
 ```ts
-import { Component, inject } from '@angular/core';
-import { ThemeTransitionService } from '@brustack/angular-theme-transitions';
-import '@brustack/theme-transitions-core/style.css';
+import { Component, inject } from "@angular/core";
+import { ThemeTransitionService } from "@brustack/angular-theme-transitions";
+import "@brustack/theme-transitions-core/style.css";
 
 @Component({
-  selector: 'app-theme-toggle',
+  selector: "app-theme-toggle",
   standalone: true,
   template: `
-    <button [disabled]="theme.isAnimating()" (click)="theme.toggleTheme($event)">
+    <button
+      [disabled]="theme.isAnimating()"
+      (click)="theme.toggleTheme($event)"
+    >
       {{ theme.theme() }}
     </button>
   `,
@@ -99,12 +102,12 @@ Set `darkMode: 'class'` in your Tailwind config (see Install above), then map yo
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        text: 'var(--text)',
+        bg: "var(--bg)",
+        text: "var(--text)",
       },
     },
   },
@@ -113,23 +116,23 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant          | `duration` |    `easing`     |  `direction`   |
+| ---------------- | :--------: | :-------------: | :------------: |
+| `spread`         |   `'1s'`   |       ❌        |       ❌       |
+| `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
+| `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
+| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `none`           |     ❌     |       ❌        |       ❌       |
 
 Register app-wide defaults with `provideThemeTransitions` in your app's root providers:
 
 ```ts
 // app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { provideThemeTransitions } from '@brustack/angular-theme-transitions';
+import { ApplicationConfig } from "@angular/core";
+import { provideThemeTransitions } from "@brustack/angular-theme-transitions";
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideThemeTransitions({ variant: 'spread', duration: '1s' }),
-  ],
+  providers: [provideThemeTransitions({ variant: "spread", duration: "1s" })],
 };
 ```
 
@@ -140,22 +143,22 @@ export const appConfig: ApplicationConfig = {
 Register extra theme names beyond `light`/`dark`/`system` via `themes`:
 
 ```ts
-provideThemeTransitions({ themes: ['sepia', 'sunset'] })
+provideThemeTransitions({ themes: ["sepia", "sunset"] });
 ```
 
 `setTheme('sepia')` then applies a `sepia` class the same way `light`/`dark` do (see Styling above). The service's `themes` signal always includes `['light', 'dark', 'system', ...your custom names]`, useful for building a theme switcher. `toggleTheme()` is unaffected, it always flips between `light` and `dark`.
 
 ## API
 
-| | |
-|---|---|
-| `provideThemeTransitions(options?)` | Registers app-wide default effect options; add once to your root providers |
-| `theme` | Current resolved theme: `'light'`, `'dark'`, or a custom theme name |
-| `mode` | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
-| `isAnimating` | `true` while a transition is running |
-| `themes` | All registered theme names: `['light', 'dark', 'system', ...custom]` |
-| `toggleTheme(eventOrOptions?)` | Switch between light and dark |
-| `setTheme(mode, eventOrOptions?)` | Set `light`, `dark`, `system`, or a custom theme name |
+|                                     |                                                                             |
+| ----------------------------------- | --------------------------------------------------------------------------- |
+| `provideThemeTransitions(options?)` | Registers app-wide default effect options; add once to your root providers  |
+| `theme`                             | Current resolved theme: `'light'`, `'dark'`, or a custom theme name         |
+| `mode`                              | Current preference: `'light'`, `'dark'`, `'system'`, or a custom theme name |
+| `isAnimating`                       | `true` while a transition is running                                        |
+| `themes`                            | All registered theme names: `['light', 'dark', 'system', ...custom]`        |
+| `toggleTheme(eventOrOptions?)`      | Switch between light and dark                                               |
+| `setTheme(mode, eventOrOptions?)`   | Set `light`, `dark`, `system`, or a custom theme name                       |
 
 ## Avoiding the flash
 

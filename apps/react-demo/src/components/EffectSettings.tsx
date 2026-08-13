@@ -4,6 +4,7 @@ import {
   isValidCssDuration,
 } from "@brustack/theme-transitions-core";
 import type {
+  FlipEffectOptions,
   ThemeEffect,
   WipeEffectOptions,
 } from "@brustack/theme-transitions-core";
@@ -15,7 +16,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
-  direction?: WipeEffectOptions["direction"];
+  direction?: WipeEffectOptions["direction"] | FlipEffectOptions["direction"];
 }
 
 export interface EffectSettingsProps {
@@ -23,7 +24,7 @@ export interface EffectSettingsProps {
 }
 
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
-const directions: WipeEffectOptions["direction"][] = [
+const wipeDirections: WipeEffectOptions["direction"][] = [
   "left",
   "right",
   "up",
@@ -35,12 +36,18 @@ const directions: WipeEffectOptions["direction"][] = [
   "diagonal-bl",
   "diagonal-br",
 ];
+const flipDirections: FlipEffectOptions["direction"][] = [
+  "horizontal",
+  "vertical",
+];
 
 const defaultsFor = (variant: ThemeEffect) =>
   variant === "fade"
     ? defaultThemeEffects.fade
     : variant === "wipe"
     ? defaultThemeEffects.wipe
+    : variant === "flip"
+    ? defaultThemeEffects.flip
     : defaultThemeEffects.spread;
 
 export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
@@ -50,9 +57,9 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
   const [easingPreset, setEasingPreset] = useState(
     defaultThemeEffects.fade.easing,
   );
-  const [direction, setDirection] = useState<WipeEffectOptions["direction"]>(
-    defaultThemeEffects.wipe.direction,
-  );
+  const [direction, setDirection] = useState<
+    WipeEffectOptions["direction"] | FlipEffectOptions["direction"]
+  >(defaultThemeEffects.wipe.direction);
 
   const durationError =
     variant === "none"
@@ -73,6 +80,12 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
         direction !== defaultThemeEffects.wipe.direction
       );
     }
+    if (variant === "flip") {
+      return (
+        easingPreset !== defaults.easing ||
+        direction !== defaultThemeEffects.flip.direction
+      );
+    }
 
     return variant === "fade" && easingPreset !== defaults.easing;
   })();
@@ -81,8 +94,12 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
     const defaults = defaultsFor(variant);
 
     setDuration(defaults.duration);
-    setEasingPreset(defaultThemeEffects.fade.easing);
-    setDirection(defaultThemeEffects.wipe.direction);
+    setEasingPreset(defaults.easing);
+    setDirection(
+      variant === "flip"
+        ? defaultThemeEffects.flip.direction
+        : defaultThemeEffects.wipe.direction,
+    );
   };
 
   const selectVariant = (next: ThemeEffect) => {
@@ -90,15 +107,19 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
 
     setVariant(next);
     setDuration(defaults.duration);
-    setEasingPreset(defaultThemeEffects.fade.easing);
-    setDirection(defaultThemeEffects.wipe.direction);
+    setEasingPreset(defaults.easing);
+    setDirection(
+      next === "flip"
+        ? defaultThemeEffects.flip.direction
+        : defaultThemeEffects.wipe.direction,
+    );
   };
 
   useEffect(() => {
     const options: EffectOptions =
       variant === "fade"
         ? { variant, duration, easing: easingPreset }
-        : variant === "wipe"
+        : variant === "wipe" || variant === "flip"
         ? { variant, duration, easing: easingPreset, direction }
         : { variant, duration };
 
@@ -151,28 +172,33 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
                 <option value="spread">spread</option>
                 <option value="fade">fade</option>
                 <option value="wipe">wipe</option>
+                <option value="flip">flip</option>
                 <option value="none">none</option>
               </select>
             </label>
 
             {variant !== "none" && (
               <>
-                {variant === "wipe" && (
+                {(variant === "wipe" || variant === "flip") && (
                   <label>
                     <span className="label-text">Direction</span>
                     <select
                       value={direction}
                       onChange={(event) =>
                         setDirection(
-                          event.target.value as WipeEffectOptions["direction"],
+                          event.target.value as
+                            | WipeEffectOptions["direction"]
+                            | FlipEffectOptions["direction"],
                         )
                       }
                     >
-                      {directions.map((d) => (
-                        <option key={d} value={d}>
-                          {d}
-                        </option>
-                      ))}
+                      {(variant === "wipe" ? wipeDirections : flipDirections).map(
+                        (d) => (
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
+                        ),
+                      )}
                     </select>
                   </label>
                 )}
@@ -191,7 +217,9 @@ export const EffectSettings = ({ onChange }: EffectSettingsProps) => {
                   )}
                 </label>
 
-                {(variant === "fade" || variant === "wipe") && (
+                {(variant === "fade" ||
+                  variant === "wipe" ||
+                  variant === "flip") && (
                   <label>
                     <span className="label-text">Easing</span>
                     <select

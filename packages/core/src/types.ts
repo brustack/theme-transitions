@@ -1,4 +1,4 @@
-export type ThemeEffect = 'spread' | 'fade' | 'wipe' | 'none';
+export type ThemeEffect = 'spread' | 'fade' | 'wipe' | 'flip' | 'none';
 
 export type ThemeOrigin = {
 	x: number;
@@ -9,13 +9,8 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 
 export type ThemeName = ThemeMode | (string & {});
 
-export interface EffectOverrides {
-	variant?: ThemeEffect;
-	duration?: string;
-	easing?: string;
-	radius?: string;
-	direction?:
-		| 'left'
+export type WipeDirection
+	= | 'left'
 		| 'right'
 		| 'up'
 		| 'down'
@@ -25,6 +20,15 @@ export interface EffectOverrides {
 		| 'diagonal-tr'
 		| 'diagonal-bl'
 		| 'diagonal-br';
+
+export type FlipDirection = 'horizontal' | 'vertical';
+
+export interface EffectOverrides {
+	variant?: ThemeEffect;
+	duration?: string;
+	easing?: string;
+	radius?: string;
+	direction?: WipeDirection | FlipDirection;
 }
 
 export interface TransitionOptions extends EffectOverrides {
@@ -45,17 +49,13 @@ export interface FadeEffectOptions {
 export interface WipeEffectOptions {
 	duration: string;
 	easing: string;
-	direction:
-		| 'left'
-		| 'right'
-		| 'up'
-		| 'down'
-		| 'center-x'
-		| 'center-y'
-		| 'diagonal-tl'
-		| 'diagonal-tr'
-		| 'diagonal-bl'
-		| 'diagonal-br';
+	direction: WipeDirection;
+}
+
+export interface FlipEffectOptions {
+	duration: string;
+	easing: string;
+	direction: FlipDirection;
 }
 
 export type NoneEffectOptions = Record<string, never>;
@@ -64,12 +64,14 @@ export type EffectOptions
 	= | SpreadEffectOptions
 		| FadeEffectOptions
 		| WipeEffectOptions
+		| FlipEffectOptions
 		| NoneEffectOptions;
 
 export interface ThemeEffects {
 	spread: SpreadEffectOptions;
 	fade: FadeEffectOptions;
 	wipe: WipeEffectOptions;
+	flip: FlipEffectOptions;
 	none: NoneEffectOptions;
 }
 
