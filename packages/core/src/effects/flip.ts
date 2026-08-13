@@ -5,7 +5,7 @@ import { createEffectSelectors } from './selectors';
 const { vtSelector, vtGroup, vtImagePair } = createEffectSelectors('flip');
 
 export const defaultFlipOptions: FlipEffectOptions = {
-	duration: '700ms',
+	duration: '500ms',
 	easing: 'ease-in-out',
 	direction: 'horizontal',
 };

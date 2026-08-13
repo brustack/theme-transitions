@@ -67,9 +67,9 @@ describe('flipEffect', () => {
 	});
 
 	it('returns the configured duration regardless of origin', () => {
-		expect(flipEffect.getSkipAfterMs(defaultFlipOptions, null)).toBe(700);
+		expect(flipEffect.getSkipAfterMs(defaultFlipOptions, null)).toBe(500);
 		expect(
 			flipEffect.getSkipAfterMs(defaultFlipOptions, { x: 100, y: 100 }),
-		).toBe(700);
+		).toBe(500);
 	});
 });

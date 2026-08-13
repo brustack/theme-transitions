@@ -117,7 +117,7 @@ module.exports = {
 | `spread`         |   `'1s'`   |       ❌        |       ❌       |
 | `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
 | `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
-| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `flip`           | `'500ms'`  | `'ease-in-out'` | `'horizontal'` |
 | `none`           |     ❌     |       ❌        |       ❌       |
 
 ```ts

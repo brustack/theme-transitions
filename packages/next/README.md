@@ -194,7 +194,7 @@ export default function RootLayout({
 | `spread`         |   `'1s'`   |       ❌        |       ❌       |
 | `fade` (default) | `'400ms'`  |    `'ease'`     |       ❌       |
 | `wipe`           |   `'1s'`   |  `'ease-out'`   |    `'left'`    |
-| `flip`           | `'700ms'`  | `'ease-in-out'` | `'horizontal'` |
+| `flip`           | `'500ms'`  | `'ease-in-out'` | `'horizontal'` |
 | `none`           |     ❌     |       ❌        |       ❌       |
 
 `ThemeScript` and `useThemeTransition` accept the same shape. Pass matching options to both to set the app-wide default (the pre-hydration script and the interactive hook must agree):

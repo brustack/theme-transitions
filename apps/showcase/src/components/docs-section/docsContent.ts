@@ -230,7 +230,7 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 					],
 					[
 						'<code>flip</code>',
-						'<code>\'700ms\'</code>',
+						'<code>\'500ms\'</code>',
 						'<code>\'ease-in-out\'</code>',
 						'<code>\'horizontal\'</code>',
 					],
