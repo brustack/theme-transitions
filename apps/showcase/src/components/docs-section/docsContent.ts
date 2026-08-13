@@ -198,7 +198,12 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 						'<code>\'ease\'</code>',
 						'n/a',
 					],
-					['<code>wipe</code>', '<code>\'500ms\'</code>', 'n/a', '<code>\'left\'</code>'],
+					[
+						'<code>wipe</code>',
+						'<code>\'500ms\'</code>',
+						'<code>\'cubic-bezier(0.4, 0, 0.2, 1)\'</code>',
+						'<code>\'left\'</code>',
+					],
 					['<code>none</code>', 'n/a', 'n/a', 'n/a'],
 				],
 			},
