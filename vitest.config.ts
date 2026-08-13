@@ -56,6 +56,16 @@ export default defineConfig({
 					environment: 'happy-dom',
 				},
 			},
+			{
+				extends: true,
+				test: {
+					name: 'angular',
+					include: ['packages/angular/src/**/*.spec.ts'],
+					exclude: ['packages/angular/src/setup.spec.ts'],
+					environment: 'happy-dom',
+					setupFiles: ['./packages/angular/src/setup.spec.ts'],
+				},
+			},
 		],
 	},
 });
