@@ -4,4 +4,7 @@ import { themeTransitions } from '@brustack/theme-transitions-core/vite';
 
 export default defineConfig({
 	plugins: [vue(), themeTransitions()],
+	build: {
+		cssMinify: 'esbuild',
+	},
 });
