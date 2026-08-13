@@ -32,6 +32,9 @@
 		"install:alpine-demo": "npm install --workspace=apps/alpine-demo --include-workspace-root",
 		"predev:alpine-demo": "npm run build --workspace=packages/core --workspace=packages/alpine",
 		"dev:alpine-demo": "npm run dev --workspace=apps/alpine-demo",
+		"install:angular-demo": "npm install --workspace=apps/angular-demo --include-workspace-root",
+		"predev:angular-demo": "npm run build --workspace=packages/core --workspace=packages/angular",
+		"dev:angular-demo": "npm run dev --workspace=apps/angular-demo",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
 		"release": "npm run build && changeset publish"

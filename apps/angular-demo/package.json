@@ -1,0 +1,27 @@
+{
+	"name": "angular-demo",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"predev": "node scripts/copy-theme-init.mjs",
+		"dev": "ng serve",
+		"prebuild": "node scripts/copy-theme-init.mjs",
+		"build": "ng build",
+		"typecheck": "tsc --noEmit -p tsconfig.app.json"
+	},
+	"dependencies": {
+		"@brustack/theme-transitions-core": "^3.0.0",
+		"@brustack/angular-theme-transitions": "^0.1.0",
+		"@angular/core": "22.1.1",
+		"@angular/common": "22.1.1",
+		"@angular/compiler": "22.1.1",
+		"@angular/platform-browser": "22.1.1"
+	},
+	"devDependencies": {
+		"@angular/build": "22.1.1",
+		"@angular/cli": "22.1.1",
+		"@angular/compiler-cli": "22.1.1",
+		"typescript": "6.0.3"
+	}
+}
