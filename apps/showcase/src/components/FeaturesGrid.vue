@@ -9,7 +9,7 @@ const features: Feature[] = [
   {
     title: "Multiple effects",
     description:
-      "Spread, fade, or none. Pick the transition that fits your app, with full control over duration and easing.",
+      "Spread, fade, wipe, or none. Pick the transition that fits your app, with full control over duration and easing.",
     icon: '<circle cx="9" cy="9" r="6"/><circle cx="15" cy="9" r="6"/><circle cx="12" cy="15" r="6"/>',
   },
   {
