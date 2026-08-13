@@ -32,6 +32,15 @@ pnpm add @brustack/angular-theme-transitions
 yarn add @brustack/angular-theme-transitions
 ```
 
+Prefer to see it running first?
+
+```sh
+git clone https://github.com/brustack/theme-transitions.git
+cd theme-transitions
+npm run install:angular-demo
+npm run dev:angular-demo
+```
+
 ## Usage
 
 ```ts
