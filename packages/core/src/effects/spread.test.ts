@@ -30,10 +30,10 @@ describe('spreadEffect', () => {
 		expect(css).toContain('contain: paint');
 	});
 
-	it('returns the full duration plus a generous safety buffer regardless of origin', () => {
-		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(11000);
+	it('returns the configured duration regardless of origin', () => {
+		expect(spreadEffect.getSkipAfterMs(defaultSpreadOptions, null)).toBe(1000);
 		expect(
 			spreadEffect.getSkipAfterMs(defaultSpreadOptions, { x: 100, y: 100 }),
-		).toBe(11000);
+		).toBe(1000);
 	});
 });

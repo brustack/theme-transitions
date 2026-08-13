@@ -222,6 +222,26 @@ describe('createController', () => {
 		);
 	});
 
+	it('merges duration/easing/direction overrides for wipe', async () => {
+		const controller = createController({ variant: 'wipe' });
+		await controller.toggleTheme({ duration: '2s', easing: 'linear', direction: 'right' });
+
+		expect(runThemeTransition).toHaveBeenCalledWith(
+			expect.anything(),
+			null,
+			{ duration: '2s', easing: 'linear', direction: 'right' },
+			expect.anything(),
+			expect.anything(),
+		);
+	});
+
+	it('ignores radius overrides for the wipe variant', async () => {
+		const controller = createController({ variant: 'wipe' });
+		await controller.toggleTheme({ duration: '2s', radius: '50vmax' });
+
+		expect(vi.mocked(runThemeTransition).mock.calls[0][2]).not.toHaveProperty('radius');
+	});
+
 	it('ignores radius overrides for the fade variant', async () => {
 		const controller = createController({ variant: 'fade' });
 		await controller.toggleTheme({ duration: '2s', radius: '50vmax' });

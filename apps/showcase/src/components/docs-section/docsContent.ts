@@ -9,7 +9,12 @@ import type { CodeBlockData, Framework } from './snippets';
 export type DocBlock
 	= | { kind: 'badges'; items: { label: string; href: string }[] }
 		| { kind: 'code'; entries: CodeBlockData[]; spaced?: boolean }
-		| { kind: 'table'; headers?: string[]; rows: string[][] }
+		| {
+			kind: 'table';
+			headers?: string[];
+			headerTooltips?: Record<string, string>;
+			rows: string[][];
+		}
 		| { kind: 'callout'; html: string }
 		| { kind: 'subhead'; text: string }
 		| { kind: 'paragraph'; html: string };
@@ -189,15 +194,26 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 		blocks: () => [
 			{
 				kind: 'table',
-				headers: ['Variant', 'duration', 'easing'],
+				headers: ['Variant', 'duration', 'easing', 'direction'],
+				headerTooltips: {
+					direction:
+            '<strong>Edges</strong>: left, right, up, down<br><strong>Center</strong>: center-x, center-y<br><strong>Corners</strong>: diagonal-tl, diagonal-tr, diagonal-bl, diagonal-br',
+				},
 				rows: [
-					['<code>spread</code>', '<code>\'1s\'</code>', 'n/a'],
+					['<code>spread</code>', '<code>\'1s\'</code>', '-', '-'],
 					[
 						'<code>fade</code> <span class="muted">(default)</span>',
 						'<code>\'400ms\'</code>',
 						'<code>\'ease\'</code>',
+						'-',
 					],
-					['<code>none</code>', 'n/a', 'n/a'],
+					[
+						'<code>wipe</code>',
+						'<code>\'1s\'</code>',
+						'<code>\'ease-out\'</code>',
+						'<code>\'left\'</code>',
+					],
+					['<code>none</code>', '-', '-', '-'],
 				],
 			},
 			{ kind: 'subhead', text: 'Custom themes' },

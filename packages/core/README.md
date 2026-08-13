@@ -35,13 +35,13 @@ yarn add @brustack/theme-transitions-core
 
 ```ts
 // main.ts (wherever your app initializes)
-import '@brustack/theme-transitions-core/style.css';
-import { getController } from '@brustack/theme-transitions-core';
+import "@brustack/theme-transitions-core/style.css";
+import { getController } from "@brustack/theme-transitions-core";
 
 const controller = getController();
-const button = document.querySelector<HTMLButtonElement>('#theme-toggle')!;
+const button = document.querySelector<HTMLButtonElement>("#theme-toggle")!;
 
-button.addEventListener('click', () => {
+button.addEventListener("click", () => {
   controller.toggleTheme();
 });
 
@@ -89,12 +89,12 @@ Set `darkMode: 'class'` in your Tailwind config (see Install above), then map yo
 ```js
 // tailwind.config.js
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        text: 'var(--text)',
+        bg: "var(--bg)",
+        text: "var(--text)",
       },
     },
   },
@@ -103,67 +103,76 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant | `duration` | `easing` |
-|---|:---:|:---:|
-| `spread` | `'1s'` | ❌ |
-| `fade` (default) | `'400ms'` | `'ease'` |
-| `none` | ❌ | ❌ |
+| Variant          | `duration` |   `easing`   | `direction` |
+| ---------------- | :--------: | :----------: | :---------: |
+| `spread`         |   `'1s'`   |      ❌      |     ❌      |
+| `fade` (default) | `'400ms'`  |   `'ease'`   |     ❌      |
+| `wipe`           |   `'1s'`   | `'ease-out'` |  `'left'`   |
+| `none`           |     ❌     |      ❌      |     ❌      |
 
 ```ts
-getController({ variant: 'spread', duration: '1s' })
+getController({ variant: "spread", duration: "1s" });
 ```
 
 The first call in a process sets the shared default; `createController(options)` creates an independent instance instead. `toggleTheme`/`setTheme` accept a `TransitionOptions` object (same shape, plus `origin`, required for `spread`, derive it with `originFromEvent(event)` or `originFromElement(el)`) to override just that one call.
+
+### Wipe directions
+
+| Value                                                                 | Enters from                     |
+| --------------------------------------------------------------------- | ------------------------------- |
+| `'left'` / `'right'` / `'up'` / `'down'`                              | that edge                       |
+| `'center-x'` / `'center-y'`                                           | center, growing along that axis |
+| `'diagonal-tl'` / `'diagonal-tr'` / `'diagonal-bl'` / `'diagonal-br'` | that corner                     |
 
 ### Custom themes
 
 Register extra theme names beyond `light`/`dark`/`system` via `themes`:
 
 ```ts
-getController({ themes: ['sepia', 'sunset'] })
+getController({ themes: ["sepia", "sunset"] });
 ```
 
 `setTheme('sepia')` then applies a `sepia` class the same way `light`/`dark` do (see Styling above). `controller.getState().themes` always includes `['light', 'dark', 'system', ...your custom names]`, useful for building a theme switcher. `toggleTheme()` is unaffected, it always flips between `light` and `dark`.
 
 ## API
 
-| | |
-|---|---|
-| `getController(options?)` | Returns the shared controller singleton |
-| `createController(options?)` | Returns an independent, non-singleton controller |
-| `resetController()` | Clears the shared singleton so the next `getController()` call creates a fresh one. Mainly useful between tests. |
-| `controller.toggleTheme(options?)` | Switch between light and dark |
-| `controller.setTheme(mode, options?)` | Set `light`, `dark`, `system`, or a custom theme name |
-| `controller.getState()` | Returns `{ theme, mode, isAnimating, themes }` |
-| `controller.subscribe(listener)` | Runs `listener` on every state change, returns an unsubscribe function |
-| `originFromEvent(event)` | Click position for spread |
-| `originFromElement(el)` | Element center for spread |
+|                                       |                                                                                                                  |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `getController(options?)`             | Returns the shared controller singleton                                                                          |
+| `createController(options?)`          | Returns an independent, non-singleton controller                                                                 |
+| `resetController()`                   | Clears the shared singleton so the next `getController()` call creates a fresh one. Mainly useful between tests. |
+| `controller.toggleTheme(options?)`    | Switch between light and dark                                                                                    |
+| `controller.setTheme(mode, options?)` | Set `light`, `dark`, `system`, or a custom theme name                                                            |
+| `controller.getState()`               | Returns `{ theme, mode, isAnimating, themes }`                                                                   |
+| `controller.subscribe(listener)`      | Runs `listener` on every state change, returns an unsubscribe function                                           |
+| `originFromEvent(event)`              | Click position for spread                                                                                        |
+| `originFromElement(el)`               | Element center for spread                                                                                        |
 
 ## Advanced
 
 Lower-level exports the six official adapters are themselves built on. Reach for these if you're building a custom framework integration or wrapping the controller yourself.
 
-| | |
-|---|---|
-| `resolveOptions(eventOrOpts)` | Normalizes a `MouseEvent` or `TransitionOptions` into `TransitionOptions`, deriving `origin` from the event. What every adapter's `toggleTheme`/`setTheme` calls under the hood. |
-| `resolveThemeEffects(options?)` | Merges variant overrides into a full per-effect option set (`{ spread, fade, none }`). |
-| `defaultThemeEffects` | The built-in default option set for every effect. |
-| `DEFAULT_VARIANT` | The default transition variant (`'fade'`). |
-| `buildThemeTransitionCss(effects?)` | Generates the `::view-transition-*` CSS for a given effect set. What the Vite plugin and Nuxt module inject. |
-| `buildConfigInitScript(options)` | Generates the script that sets `window.__themeConfig`, so every `getController()` call in the app picks up the same default effect options without repeating them. Prepend it to `buildColorModeInitScript()`'s output for non-Vite bundlers, see Other bundlers below. |
-| `applyThemeClass(value, previous?)` | Swaps the theme class on `<html>`. |
-| `getSystemTheme()` | Reads the OS `prefers-color-scheme`. |
-| `resolveTheme(preference)` | Resolves `'system'` to `'light'`/`'dark'`, passes any other value through unchanged. |
-| `readStoredPreference()` / `writeStoredPreference(preference)` | Read/write the persisted theme preference. |
-| `isValidCssDuration(duration)` / `parseCssDuration(duration)` | Validate/parse a CSS duration string like `'400ms'`. |
+|                                                                |                                                                                                                                                                                                                                                                         |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `resolveOptions(eventOrOpts)`                                  | Normalizes a `MouseEvent` or `TransitionOptions` into `TransitionOptions`, deriving `origin` from the event. What every adapter's `toggleTheme`/`setTheme` calls under the hood.                                                                                        |
+| `resolveThemeEffects(options?)`                                | Merges variant overrides into a full per-effect option set (`{ spread, fade, wipe, none }`).                                                                                                                                                                            |
+| `defaultThemeEffects`                                          | The built-in default option set for every effect.                                                                                                                                                                                                                       |
+| `DEFAULT_VARIANT`                                              | The default transition variant (`'fade'`).                                                                                                                                                                                                                              |
+| `buildThemeTransitionCss(effects?)`                            | Generates the `::view-transition-*` CSS for a given effect set. What the Vite plugin and Nuxt module inject.                                                                                                                                                            |
+| `buildConfigInitScript(options)`                               | Generates the script that sets `window.__themeConfig`, so every `getController()` call in the app picks up the same default effect options without repeating them. Prepend it to `buildColorModeInitScript()`'s output for non-Vite bundlers, see Other bundlers below. |
+| `applyThemeClass(value, previous?)`                            | Swaps the theme class on `<html>`.                                                                                                                                                                                                                                      |
+| `getSystemTheme()`                                             | Reads the OS `prefers-color-scheme`.                                                                                                                                                                                                                                    |
+| `resolveTheme(preference)`                                     | Resolves `'system'` to `'light'`/`'dark'`, passes any other value through unchanged.                                                                                                                                                                                    |
+| `readStoredPreference()` / `writeStoredPreference(preference)` | Read/write the persisted theme preference.                                                                                                                                                                                                                              |
+| `isValidCssDuration(duration)` / `parseCssDuration(duration)`  | Validate/parse a CSS duration string like `'400ms'`.                                                                                                                                                                                                                    |
 
 ## Vite plugin
 
 Register the anti-flash init script in `vite.config.ts`:
 
 ```ts
-import { defineConfig } from 'vite';
-import { themeTransitions } from '@brustack/theme-transitions-core/vite';
+import { defineConfig } from "vite";
+import { themeTransitions } from "@brustack/theme-transitions-core/vite";
 
 export default defineConfig({
   plugins: [themeTransitions()],
@@ -183,7 +192,9 @@ Not using Vite? The plugin above is a thin wrapper around two functions this pac
 With webpack and `html-webpack-plugin`:
 
 ```js
-const { buildColorModeInitScript } = require('@brustack/theme-transitions-core');
+const {
+  buildColorModeInitScript,
+} = require("@brustack/theme-transitions-core");
 
 new HtmlWebpackPlugin({
   templateParameters: { themeInitScript: buildColorModeInitScript() },
@@ -192,7 +203,9 @@ new HtmlWebpackPlugin({
 
 ```html
 <!-- in the HTML template, inside <head> -->
-<script><%= htmlWebpackPlugin.options.templateParameters.themeInitScript %></script>
+<script>
+  <%= htmlWebpackPlugin.options.templateParameters.themeInitScript %>
+</script>
 ```
 
 The script must run in `<head>`, before the page paints, regardless of where your bundle's own `<script>` tags are injected. To also set app-wide default effect options (the same thing the Vite plugin's argument does), prepend `buildConfigInitScript(options)` (which sets `window.__themeConfig`) to the same string.

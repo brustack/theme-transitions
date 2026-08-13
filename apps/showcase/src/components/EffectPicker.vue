@@ -4,7 +4,10 @@ import {
   defaultThemeEffects,
   isValidCssDuration,
 } from "@brustack/theme-transitions-core";
-import type { ThemeEffect } from "@brustack/theme-transitions-core";
+import type {
+  ThemeEffect,
+  WipeEffectOptions,
+} from "@brustack/theme-transitions-core";
 import IconRotateCcw from "./icons/IconRotateCcw.vue";
 import IconSettings from "./icons/IconSettings.vue";
 import { useClickOutside } from "../composables/useClickOutside";
@@ -13,6 +16,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
+  direction?: WipeEffectOptions["direction"];
 }
 
 const options = defineModel<EffectOptions>({ required: true });
@@ -24,12 +28,27 @@ useClickOutside(rootEl, () => {
   isOpen.value = false;
 });
 
-const variants: ThemeEffect[] = ["spread", "fade", "none"];
+const variants: ThemeEffect[] = ["spread", "fade", "wipe", "none"];
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
+const directions: WipeEffectOptions["direction"][] = [
+  "left",
+  "right",
+  "up",
+  "down",
+  "center-x",
+  "center-y",
+  "diagonal-tl",
+  "diagonal-tr",
+  "diagonal-bl",
+  "diagonal-br",
+];
 
 const variant = ref(options.value.variant);
 const duration = ref(options.value.duration);
 const easingPreset = ref(defaultThemeEffects.fade.easing);
+const direction = ref<WipeEffectOptions["direction"]>(
+  defaultThemeEffects.wipe.direction,
+);
 
 const durationError = computed(() => {
   if (variant.value === "none") return "";
@@ -50,9 +69,15 @@ const applyVariantDefaults = () => {
   const defaults =
     variant.value === "fade"
       ? defaultThemeEffects.fade
+      : variant.value === "wipe"
+      ? defaultThemeEffects.wipe
       : defaultThemeEffects.spread;
   duration.value = defaults.duration;
-  easingPreset.value = defaultThemeEffects.fade.easing;
+  easingPreset.value =
+    variant.value === "wipe"
+      ? defaultThemeEffects.wipe.easing
+      : defaultThemeEffects.fade.easing;
+  direction.value = defaultThemeEffects.wipe.direction;
 };
 
 const resetToDefaults = () => {
@@ -63,7 +88,7 @@ const resetToDefaults = () => {
 watch(variant, applyVariantDefaults);
 
 watch(
-  [variant, duration, easingPreset],
+  [variant, duration, easingPreset, direction],
   () => {
     options.value =
       variant.value === "fade"
@@ -71,6 +96,13 @@ watch(
             variant: variant.value,
             duration: duration.value,
             easing: easingPreset.value,
+          }
+        : variant.value === "wipe"
+        ? {
+            variant: variant.value,
+            duration: duration.value,
+            easing: easingPreset.value,
+            direction: direction.value,
           }
         : { variant: variant.value, duration: duration.value };
   },
@@ -109,6 +141,14 @@ watch(
           </div>
         </div>
         <template v-if="variant !== 'none'">
+          <label v-if="variant === 'wipe'">
+            <span>Direction</span>
+            <select v-model="direction">
+              <option v-for="d in directions" :key="d" :value="d">
+                {{ d }}
+              </option>
+            </select>
+          </label>
           <label>
             <span>Duration</span>
             <input
@@ -121,7 +161,7 @@ watch(
             durationError
           }}</span>
 
-          <label v-if="variant === 'fade'">
+          <label v-if="variant === 'fade' || variant === 'wipe'">
             <span>Easing</span>
             <select v-model="easingPreset">
               <option
@@ -161,6 +201,7 @@ watch(
 
 .pill-group {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
   padding: 0.25rem;
   border: 1px solid var(--border);
@@ -225,7 +266,7 @@ watch(
   position: absolute;
   top: calc(100% + 0.6rem);
   right: 0;
-  width: 15rem;
+  width: 19rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 0.75rem;

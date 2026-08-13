@@ -68,6 +68,13 @@ export const runThemeTransition = async (
 		root.style.setProperty('--theme-radius', radius);
 	}
 
+	if ('direction' in effectOptions) {
+		root.style.setProperty(
+			'--theme-wipe-direction',
+			`theme-wipe-reveal-${effectOptions.direction}`,
+		);
+	}
+
 	const cleanup = () => {
 		delete root.dataset.themeEffect;
 		root.style.removeProperty('--theme-origin-x');
@@ -75,6 +82,7 @@ export const runThemeTransition = async (
 		root.style.removeProperty('--theme-duration');
 		root.style.removeProperty('--theme-easing');
 		root.style.removeProperty('--theme-radius');
+		root.style.removeProperty('--theme-wipe-direction');
 	};
 
 	const prefersReducedMotion = window.matchMedia(
