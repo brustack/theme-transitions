@@ -14,7 +14,17 @@ export interface EffectOverrides {
 	duration?: string;
 	easing?: string;
 	radius?: string;
-	direction?: 'left' | 'right' | 'up' | 'down';
+	direction?:
+		| 'left'
+		| 'right'
+		| 'up'
+		| 'down'
+		| 'center-x'
+		| 'center-y'
+		| 'diagonal-tl'
+		| 'diagonal-tr'
+		| 'diagonal-bl'
+		| 'diagonal-br';
 }
 
 export interface TransitionOptions extends EffectOverrides {
@@ -35,7 +45,17 @@ export interface FadeEffectOptions {
 export interface WipeEffectOptions {
 	duration: string;
 	easing: string;
-	direction: 'left' | 'right' | 'up' | 'down';
+	direction:
+		| 'left'
+		| 'right'
+		| 'up'
+		| 'down'
+		| 'center-x'
+		| 'center-y'
+		| 'diagonal-tl'
+		| 'diagonal-tr'
+		| 'diagonal-bl'
+		| 'diagonal-br';
 }
 
 export type NoneEffectOptions = Record<string, never>;

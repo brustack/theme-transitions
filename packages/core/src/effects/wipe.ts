@@ -72,6 +72,36 @@ export const wipeEffect: EffectDefinition<WipeEffectOptions> = {
 			'inset(100% 0 0 0)',
 			'inset(0% 0 0 0)',
 		)}
+      ${wipeKeyframe(
+			'theme-wipe-reveal-center-x',
+			'inset(0 50% 0 50%)',
+			'inset(0 0% 0 0%)',
+		)}
+      ${wipeKeyframe(
+			'theme-wipe-reveal-center-y',
+			'inset(50% 0 50% 0)',
+			'inset(0% 0 0% 0)',
+		)}
+      ${wipeKeyframe(
+			'theme-wipe-reveal-diagonal-tl',
+			'polygon(0% 0%, 0% 0%, 0% 0%)',
+			'polygon(0% 0%, 200% 0%, 0% 200%)',
+		)}
+      ${wipeKeyframe(
+			'theme-wipe-reveal-diagonal-tr',
+			'polygon(100% 0%, 100% 0%, 100% 0%)',
+			'polygon(100% 0%, -100% 0%, 100% 200%)',
+		)}
+      ${wipeKeyframe(
+			'theme-wipe-reveal-diagonal-bl',
+			'polygon(0% 100%, 0% 100%, 0% 100%)',
+			'polygon(0% 100%, 200% 100%, 0% -100%)',
+		)}
+      ${wipeKeyframe(
+			'theme-wipe-reveal-diagonal-br',
+			'polygon(100% 100%, 100% 100%, 100% 100%)',
+			'polygon(100% 100%, -100% 100%, 100% -100%)',
+		)}
     `;
 	},
 	getSkipAfterMs: options => parseCssDuration(options.duration),

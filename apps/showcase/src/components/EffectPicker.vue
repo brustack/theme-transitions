@@ -35,6 +35,12 @@ const directions: WipeEffectOptions["direction"][] = [
   "right",
   "up",
   "down",
+  "center-x",
+  "center-y",
+  "diagonal-tl",
+  "diagonal-tr",
+  "diagonal-bl",
+  "diagonal-br",
 ];
 
 const variant = ref(options.value.variant);
@@ -135,20 +141,14 @@ watch(
           </div>
         </div>
         <template v-if="variant !== 'none'">
-          <div v-if="variant === 'wipe'" class="field-block">
-            <span class="field-label">Direction</span>
-            <div class="pill-group" role="group" aria-label="Wipe direction">
-              <button
-                v-for="d in directions"
-                :key="d"
-                type="button"
-                :aria-pressed="direction === d"
-                @click="direction = d"
-              >
+          <label v-if="variant === 'wipe'">
+            <span>Direction</span>
+            <select v-model="direction">
+              <option v-for="d in directions" :key="d" :value="d">
                 {{ d }}
-              </button>
-            </div>
-          </div>
+              </option>
+            </select>
+          </label>
           <label>
             <span>Duration</span>
             <input
