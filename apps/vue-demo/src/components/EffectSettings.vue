@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { defaultThemeEffects, isValidCssDuration } from "@brustack/theme-transitions-core";
-import type { ThemeEffect } from "@brustack/theme-transitions-core";
+import {
+  defaultThemeEffects,
+  isValidCssDuration,
+} from "@brustack/theme-transitions-core";
+import type {
+  ThemeEffect,
+  WipeEffectOptions,
+} from "@brustack/theme-transitions-core";
 import IconRotateCcw from "./icons/IconRotateCcw.vue";
 import IconSettings from "./icons/IconSettings.vue";
 
@@ -9,6 +15,7 @@ export interface EffectOptions {
   variant: ThemeEffect;
   duration: string;
   easing?: string;
+  direction?: WipeEffectOptions["direction"];
 }
 
 const options = defineModel<EffectOptions>({ required: true });
@@ -17,10 +24,32 @@ const valid = defineModel<boolean>("valid", { required: true });
 const isOpen = ref(false);
 
 const easingPresets = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
+const directions: WipeEffectOptions["direction"][] = [
+  "left",
+  "right",
+  "up",
+  "down",
+  "center-x",
+  "center-y",
+  "diagonal-tl",
+  "diagonal-tr",
+  "diagonal-bl",
+  "diagonal-br",
+];
 
 const variant = ref<ThemeEffect>(options.value.variant);
 const duration = ref(options.value.duration);
 const easingPreset = ref(defaultThemeEffects.fade.easing);
+const direction = ref<WipeEffectOptions["direction"]>(
+  defaultThemeEffects.wipe.direction,
+);
+
+const defaultsFor = (v: ThemeEffect) =>
+  v === "fade"
+    ? defaultThemeEffects.fade
+    : v === "wipe"
+    ? defaultThemeEffects.wipe
+    : defaultThemeEffects.spread;
 
 const durationError = computed(() => {
   if (variant.value === "none") return "";
@@ -32,34 +61,46 @@ const durationError = computed(() => {
 const isModified = computed(() => {
   if (variant.value === "none") return false;
 
-  const defaults =
-    variant.value === "fade"
-      ? defaultThemeEffects.fade
-      : defaultThemeEffects.spread;
+  const defaults = defaultsFor(variant.value);
 
   if (duration.value !== defaults.duration) return true;
+  if (variant.value === "wipe") {
+    return (
+      easingPreset.value !== defaults.easing ||
+      direction.value !== defaultThemeEffects.wipe.direction
+    );
+  }
 
   return variant.value === "fade" && easingPreset.value !== defaults.easing;
 });
 
 const resetToDefaults = () => {
-  const defaults =
-    variant.value === "fade"
-      ? defaultThemeEffects.fade
-      : defaultThemeEffects.spread;
+  const defaults = defaultsFor(variant.value);
 
   duration.value = defaults.duration;
   easingPreset.value = defaultThemeEffects.fade.easing;
+  direction.value = defaultThemeEffects.wipe.direction;
 };
 
 watch(variant, resetToDefaults);
 
 watch(
-  [variant, duration, easingPreset],
+  [variant, duration, easingPreset, direction],
   () => {
     options.value =
       variant.value === "fade"
-        ? { variant: variant.value, duration: duration.value, easing: easingPreset.value }
+        ? {
+            variant: variant.value,
+            duration: duration.value,
+            easing: easingPreset.value,
+          }
+        : variant.value === "wipe"
+        ? {
+            variant: variant.value,
+            duration: duration.value,
+            easing: easingPreset.value,
+            direction: direction.value,
+          }
         : { variant: variant.value, duration: duration.value };
   },
   { immediate: true },
@@ -114,11 +155,21 @@ watch(
             <select v-model="variant">
               <option value="spread">spread</option>
               <option value="fade">fade</option>
+              <option value="wipe">wipe</option>
               <option value="none">none</option>
             </select>
           </label>
 
           <template v-if="variant !== 'none'">
+            <label v-if="variant === 'wipe'">
+              <span class="label-text">Direction</span>
+              <select v-model="direction">
+                <option v-for="d in directions" :key="d" :value="d">
+                  {{ d }}
+                </option>
+              </select>
+            </label>
+
             <label>
               <span class="label-text">Duration</span>
               <input
@@ -132,7 +183,7 @@ watch(
               }}</span>
             </label>
 
-            <label v-if="variant === 'fade'">
+            <label v-if="variant === 'fade' || variant === 'wipe'">
               <span class="label-text">Easing</span>
               <select v-model="easingPreset">
                 <option
@@ -176,9 +227,7 @@ watch(
   height: 1.8rem;
   color: var(--text-muted);
   border-radius: 999px;
-  transition:
-    background-color 0.15s,
-    color 0.15s;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 .settings-trigger:hover,
