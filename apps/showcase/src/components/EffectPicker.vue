@@ -197,6 +197,7 @@ watch(
 
 .pill-group {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
   padding: 0.25rem;
   border: 1px solid var(--border);
@@ -261,7 +262,7 @@ watch(
   position: absolute;
   top: calc(100% + 0.6rem);
   right: 0;
-  width: 15rem;
+  width: 19rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 0.75rem;
