@@ -106,6 +106,21 @@ const webpackConfigCode = `<span class="tok-kw">const</span> { buildColorModeIni
 const webpackTemplateCode = `<span class="tok-com">&lt;!-- inside &lt;head&gt;, before your bundle's own scripts --&gt;</span>
 <span class="tok-kw">&lt;script&gt;</span>&lt;%= htmlWebpackPlugin.options.templateParameters.themeInitScript %&gt;<span class="tok-kw">&lt;/script&gt;</span>`;
 
+const angularAssetsCode = `{
+  <span class="tok-prop">"assets"</span>: [
+    {
+      <span class="tok-prop">"glob"</span>: <span class="tok-str">"theme-init.js"</span>,
+      <span class="tok-prop">"input"</span>: <span class="tok-str">"node_modules/@brustack/theme-transitions-core/dist"</span>,
+      <span class="tok-prop">"output"</span>: <span class="tok-str">"/"</span>
+    }
+  ]
+}`;
+
+const angularIndexHtmlCode = `<span class="tok-kw">&lt;head&gt;</span>
+  ...
+  <span class="tok-kw">&lt;script</span> src=<span class="tok-str">"theme-init.js"</span><span class="tok-kw">&gt;&lt;/script&gt;</span>
+<span class="tok-kw">&lt;/head&gt;</span>`;
+
 export const DOCS_SECTIONS: DocSectionDef[] = [
 	{
 		id: 'install',
@@ -236,7 +251,7 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 		eyebrow: '05 · API',
 		title: 'The shape every adapter returns',
 		description:
-      'React\'s hook, Vue\'s composable, Nuxt\'s auto-import, and Alpine\'s <code>x-data</code> all expose the same fields.',
+      'React\'s hook, Vue\'s composable, Nuxt\'s auto-import, Alpine\'s <code>x-data</code>, and Angular\'s injectable service all expose the same fields.',
 		blocks: () => [
 			{
 				kind: 'table',
@@ -272,27 +287,50 @@ export const DOCS_SECTIONS: DocSectionDef[] = [
 		title: 'The anti-flash script, wired into your build',
 		description:
       'Using Vite, register the plugin once. Anything else, the plugin is just a thin wrapper around two exported functions, call them directly.',
-		blocks: () => [
-			{
-				kind: 'code',
-				entries: [{ file: 'vite.config.ts', code: viteConfigCode }],
-			},
-			{
-				kind: 'callout',
-				html: 'Pass default effect options, e.g. <code>themeTransitions({ variant: \'spread\' })</code>, so every <code>getController()</code> call in the app picks them up without repeating them.',
-			},
-			{
-				kind: 'code',
-				spaced: true,
-				entries: [
-					{ file: 'webpack.config.js', code: webpackConfigCode },
-					{ file: 'index.html', code: webpackTemplateCode },
-				],
-			},
-			{
-				kind: 'callout',
-				html: 'Zero-build or CDN consumers can\'t call <code>buildColorModeInitScript()</code> themselves. The core package also ships <code>dist/theme-init.js</code>, a prebuilt copy of the same script, loadable with a plain <code>&lt;script src="...theme-init.js"&gt;</code> tag in <code>&lt;head&gt;</code>.',
-			},
-		],
+		blocks: (framework) => {
+			if (framework === 'Angular') {
+				return [
+					{
+						kind: 'callout',
+						html: 'Angular\'s <code>index.html</code> isn\'t processed by a bundler config the way Vite or webpack is, so the anti-flash script loads as a plain <code>&lt;script&gt;</code> tag instead. Copy the core package\'s prebuilt <code>dist/theme-init.js</code> into your build output via <code>angular.json</code>\'s <code>assets</code>:',
+					},
+					{
+						kind: 'code',
+						entries: [{ file: 'angular.json', code: angularAssetsCode }],
+					},
+					{
+						kind: 'code',
+						entries: [{ file: 'src/index.html', code: angularIndexHtmlCode }],
+					},
+					{
+						kind: 'callout',
+						html: 'The script must run in <code>&lt;head&gt;</code>, before the page paints. To also set app-wide default effect options, register <code>provideThemeTransitions(options)</code> in your app\'s root providers instead.',
+					},
+				];
+			}
+
+			return [
+				{
+					kind: 'code',
+					entries: [{ file: 'vite.config.ts', code: viteConfigCode }],
+				},
+				{
+					kind: 'callout',
+					html: 'Pass default effect options, e.g. <code>themeTransitions({ variant: \'spread\' })</code>, so every <code>getController()</code> call in the app picks them up without repeating them.',
+				},
+				{
+					kind: 'code',
+					spaced: true,
+					entries: [
+						{ file: 'webpack.config.js', code: webpackConfigCode },
+						{ file: 'index.html', code: webpackTemplateCode },
+					],
+				},
+				{
+					kind: 'callout',
+					html: 'Zero-build or CDN consumers can\'t call <code>buildColorModeInitScript()</code> themselves. The core package also ships <code>dist/theme-init.js</code>, a prebuilt copy of the same script, loadable with a plain <code>&lt;script src="...theme-init.js"&gt;</code> tag in <code>&lt;head&gt;</code>.',
+				},
+			];
+		},
 	},
 ];

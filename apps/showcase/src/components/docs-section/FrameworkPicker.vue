@@ -5,6 +5,7 @@ import IconReact from "../icons/IconReact.vue";
 import IconNext from "../icons/IconNext.vue";
 import IconNuxt from "../icons/IconNuxt.vue";
 import IconAlpine from "../icons/IconAlpine.vue";
+import IconAngular from "../icons/IconAngular.vue";
 import IconJs from "../icons/IconJs.vue";
 
 const model = defineModel<Framework>({ required: true });
@@ -15,6 +16,7 @@ const ICONS: Record<Framework, unknown> = {
   "Next.js": IconNext,
   Nuxt: IconNuxt,
   Alpine: IconAlpine,
+  Angular: IconAngular,
   Vanilla: IconJs,
 };
 </script>

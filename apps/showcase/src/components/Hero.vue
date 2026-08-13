@@ -5,6 +5,7 @@ import IconReact from "./icons/IconReact.vue";
 import IconNext from "./icons/IconNext.vue";
 import IconNuxt from "./icons/IconNuxt.vue";
 import IconAlpine from "./icons/IconAlpine.vue";
+import IconAngular from "./icons/IconAngular.vue";
 import IconJs from "./icons/IconJs.vue";
 </script>
 
@@ -20,7 +21,7 @@ import IconJs from "./icons/IconJs.vue";
       <a class="cta" href="#get-started" @click.stop> Get started </a>
       <div
         class="frameworks-line"
-        aria-label="Works with Vue, React, Next.js, Nuxt, Alpine, and Vanilla JS"
+        aria-label="Works with Vue, React, Next.js, Nuxt, Alpine, Angular, and Vanilla JS"
         @click.stop
       >
         <IconVue aria-hidden="true" />
@@ -28,6 +29,7 @@ import IconJs from "./icons/IconJs.vue";
         <IconNext aria-hidden="true" />
         <IconNuxt aria-hidden="true" />
         <IconAlpine aria-hidden="true" />
+        <IconAngular aria-hidden="true" />
         <IconJs aria-hidden="true" />
       </div>
     </div>

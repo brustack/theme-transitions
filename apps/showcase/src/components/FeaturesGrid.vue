@@ -31,9 +31,9 @@ const features: Feature[] = [
     icon: '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
   },
   {
-    title: "One core, six adapters",
+    title: "One core, seven adapters",
     description:
-      "A framework-agnostic core with thin, idiomatic adapters for Vue, React, Next.js, Nuxt, and Alpine.",
+      "A framework-agnostic core with thin, idiomatic adapters for Vue, React, Next.js, Nuxt, Alpine, and Angular.",
     icon: '<rect x="7" y="7" width="10" height="10" rx="2"/><rect x="3" y="3" width="18" height="18" rx="3"/>',
   },
   {

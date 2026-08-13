@@ -6,6 +6,7 @@ import IconReact from "./icons/IconReact.vue";
 import IconNext from "./icons/IconNext.vue";
 import IconNuxt from "./icons/IconNuxt.vue";
 import IconAlpine from "./icons/IconAlpine.vue";
+import IconAngular from "./icons/IconAngular.vue";
 import IconJs from "./icons/IconJs.vue";
 
 const packages = [
@@ -14,6 +15,7 @@ const packages = [
   { name: "Next.js", slug: "next-theme-transitions", icon: IconNext },
   { name: "Nuxt", slug: "nuxt-theme-transitions", icon: IconNuxt },
   { name: "Alpine", slug: "alpine-theme-transitions", icon: IconAlpine },
+  { name: "Angular", slug: "angular-theme-transitions", icon: IconAngular },
   { name: "Vanilla / Core", slug: "theme-transitions-core", icon: IconJs },
 ];
 </script>
@@ -47,7 +49,7 @@ const packages = [
             <span>@brustack/theme-transitions</span>
           </a>
           <p class="footer-tagline">
-            Animated theme transitions for six frameworks, sharing one
+            Animated theme transitions for seven frameworks, sharing one
             framework-agnostic core. Zero dependencies.
           </p>
         </div>

@@ -4,6 +4,7 @@ export const FRAMEWORKS = [
 	'Next.js',
 	'Nuxt',
 	'Alpine',
+	'Angular',
 	'Vanilla',
 ] as const;
 
@@ -15,6 +16,7 @@ export const PACKAGE_SLUGS: Record<Framework, string> = {
 	'Next.js': 'next-theme-transitions',
 	'Nuxt': 'nuxt-theme-transitions',
 	'Alpine': 'alpine-theme-transitions',
+	'Angular': 'angular-theme-transitions',
 	'Vanilla': 'theme-transitions-core',
 };
 
@@ -24,6 +26,7 @@ export const PACKAGE_DIRS: Record<Framework, string> = {
 	'Next.js': 'next',
 	'Nuxt': 'nuxt',
 	'Alpine': 'alpine',
+	'Angular': 'angular',
 	'Vanilla': 'core',
 };
 
@@ -61,6 +64,12 @@ export const installSnippets: Record<Framework, CodeBlockData[]> = {
 		{
 			file: 'terminal',
 			code: `npm install <span class="tok-fn">@brustack/alpine-theme-transitions</span>`,
+		},
+	],
+	'Angular': [
+		{
+			file: 'terminal',
+			code: `npm install <span class="tok-fn">@brustack/angular-theme-transitions</span>`,
 		},
 	],
 	'Vanilla': [
@@ -161,6 +170,27 @@ export const usageSnippets: Record<Framework, CodeBlockData[]> = {
 			code: `<span class="tok-kw">&lt;div</span> x-data=<span class="tok-str">"themeTransition()"</span><span class="tok-kw">&gt;</span>
   <span class="tok-kw">&lt;button</span> @click=<span class="tok-str">"toggleTheme"</span> x-text=<span class="tok-str">"theme"</span><span class="tok-kw">&gt;&lt;/button&gt;</span>
 <span class="tok-kw">&lt;/div&gt;</span>`,
+		},
+	],
+	'Angular': [
+		{
+			file: 'src/app/theme-toggle.component.ts',
+			code: `<span class="tok-kw">import</span> { Component, inject } <span class="tok-kw">from</span> <span class="tok-str">'@angular/core'</span>;
+<span class="tok-kw">import</span> { ThemeTransitionService } <span class="tok-kw">from</span> <span class="tok-str">'@brustack/angular-theme-transitions'</span>;
+<span class="tok-kw">import</span> <span class="tok-str">'@brustack/theme-transitions-core/style.css'</span>;
+
+@<span class="tok-fn">Component</span>({
+  selector: <span class="tok-str">'app-theme-toggle'</span>,
+  standalone: <span class="tok-kw">true</span>,
+  template: \`
+    <span class="tok-kw">&lt;button</span> [disabled]=<span class="tok-str">"theme.isAnimating()"</span> (click)=<span class="tok-str">"theme.toggleTheme($event)"</span><span class="tok-kw">&gt;</span>
+      {{ theme.theme() }}
+    <span class="tok-kw">&lt;/button&gt;</span>
+  \`,
+})
+<span class="tok-kw">export class</span> <span class="tok-fn">ThemeToggleComponent</span> {
+  <span class="tok-kw">protected readonly</span> theme = <span class="tok-fn">inject</span>(ThemeTransitionService);
+}`,
 		},
 	],
 	'Vanilla': [
