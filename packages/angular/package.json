@@ -6,6 +6,16 @@
 	"license": "MIT",
 	"type": "module",
 	"sideEffects": false,
+	"module": "dist/fesm2022/brustack-angular-theme-transitions.mjs",
+	"exports": {
+		"./package.json": {
+			"default": "./package.json"
+		},
+		".": {
+			"types": "./dist/types/brustack-angular-theme-transitions.d.ts",
+			"default": "./dist/fesm2022/brustack-angular-theme-transitions.mjs"
+		}
+	},
 	"files": [
 		"dist"
 	],

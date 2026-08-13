@@ -5,7 +5,12 @@ import { provideThemeTransitions } from './theme-transition.providers';
 
 const controllerMock = vi.hoisted(() => {
 	const listeners = new Set<() => void>();
-	let state: { theme: string; mode: string; isAnimating: boolean; themes: string[] } = {
+	let state: {
+		theme: string;
+		mode: string;
+		isAnimating: boolean;
+		themes: string[];
+	} = {
 		theme: 'light',
 		mode: 'light',
 		isAnimating: false,
@@ -34,7 +39,9 @@ const controllerMock = vi.hoisted(() => {
 const getControllerMock = vi.hoisted(() => vi.fn(() => controllerMock));
 
 vi.mock('@brustack/theme-transitions-core', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('@brustack/theme-transitions-core')>();
+	const actual = await importOriginal<
+    typeof import('@brustack/theme-transitions-core')
+	>();
 
 	return {
 		...actual,
@@ -44,7 +51,12 @@ vi.mock('@brustack/theme-transitions-core', async (importOriginal) => {
 
 beforeEach(() => {
 	controllerMock.clearListeners();
-	controllerMock.setState({ theme: 'light', mode: 'light', isAnimating: false, themes: ['light', 'dark', 'system'] });
+	controllerMock.setState({
+		theme: 'light',
+		mode: 'light',
+		isAnimating: false,
+		themes: ['light', 'dark', 'system'],
+	});
 	vi.clearAllMocks();
 	TestBed.resetTestingModule();
 });
@@ -98,7 +110,9 @@ describe('ThemeTransitionService', () => {
 
 		await service.toggleTheme(syntheticEvent as never);
 
-		expect(controllerMock.toggleTheme).toHaveBeenCalledWith({ origin: { x: 10, y: 20 } });
+		expect(controllerMock.toggleTheme).toHaveBeenCalledWith({
+			origin: { x: 10, y: 20 },
+		});
 	});
 
 	it('accepts a custom theme name in setTheme', async () => {
@@ -118,7 +132,9 @@ describe('ThemeTransitionService', () => {
 
 	it('forwards options from provideThemeTransitions to getController', () => {
 		const options = { variant: 'spread' as const, themes: ['sepia'] };
-		TestBed.configureTestingModule({ providers: [provideThemeTransitions(options)] });
+		TestBed.configureTestingModule({
+			providers: [provideThemeTransitions(options)],
+		});
 
 		TestBed.inject(ThemeTransitionService);
 

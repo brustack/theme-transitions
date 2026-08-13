@@ -12,13 +12,19 @@ import { THEME_TRANSITION_OPTIONS } from './theme-transition.providers';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeTransitionService {
-	private readonly options = inject(THEME_TRANSITION_OPTIONS, { optional: true });
+	private readonly options = inject(THEME_TRANSITION_OPTIONS, {
+		optional: true,
+	});
+
 	private readonly controller = getController(this.options ?? undefined);
 	private readonly state = signal(this.controller.getState());
 
 	readonly theme: Signal<ThemeName> = computed(() => this.state().theme);
 	readonly mode: Signal<ThemeName> = computed(() => this.state().mode);
-	readonly isAnimating: Signal<boolean> = computed(() => this.state().isAnimating);
+	readonly isAnimating: Signal<boolean> = computed(
+		() => this.state().isAnimating,
+	);
+
 	readonly themes: Signal<string[]> = computed(() => this.state().themes);
 
 	constructor() {
@@ -29,7 +35,10 @@ export class ThemeTransitionService {
 		return this.controller.toggleTheme(resolveOptions(eventOrOpts));
 	}
 
-	setTheme(mode: ThemeName, eventOrOpts?: MouseEvent | TransitionOptions): Promise<void> {
+	setTheme(
+		mode: ThemeName,
+		eventOrOpts?: MouseEvent | TransitionOptions,
+	): Promise<void> {
 		return this.controller.setTheme(mode, resolveOptions(eventOrOpts));
 	}
 }
