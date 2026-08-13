@@ -103,18 +103,26 @@ module.exports = {
 
 ## Configuration (optional)
 
-| Variant          | `duration` |             `easing`             | `direction` |
-| ---------------- | :--------: | :------------------------------: | :---------: |
-| `spread`         |   `'1s'`   |                ❌                |     ❌      |
-| `fade` (default) | `'400ms'`  |             `'ease'`             |     ❌      |
-| `wipe`           |  `'1s'`    |           `'ease-out'`           |  `'left'`   |
-| `none`           |     ❌     |                ❌                |     ❌      |
+| Variant          | `duration` |   `easing`   | `direction` |
+| ---------------- | :--------: | :----------: | :---------: |
+| `spread`         |   `'1s'`   |      ❌      |     ❌      |
+| `fade` (default) | `'400ms'`  |   `'ease'`   |     ❌      |
+| `wipe`           |   `'1s'`   | `'ease-out'` |  `'left'`   |
+| `none`           |     ❌     |      ❌      |     ❌      |
 
 ```ts
 getController({ variant: "spread", duration: "1s" });
 ```
 
 The first call in a process sets the shared default; `createController(options)` creates an independent instance instead. `toggleTheme`/`setTheme` accept a `TransitionOptions` object (same shape, plus `origin`, required for `spread`, derive it with `originFromEvent(event)` or `originFromElement(el)`) to override just that one call.
+
+### Wipe directions
+
+| Value                                                                 | Enters from                     |
+| --------------------------------------------------------------------- | ------------------------------- |
+| `'left'` / `'right'` / `'up'` / `'down'`                              | that edge                       |
+| `'center-x'` / `'center-y'`                                           | center, growing along that axis |
+| `'diagonal-tl'` / `'diagonal-tr'` / `'diagonal-bl'` / `'diagonal-br'` | that corner                     |
 
 ### Custom themes
 
