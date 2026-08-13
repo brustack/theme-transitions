@@ -138,20 +138,14 @@ watch(
 
     <div id="settings-panel" class="settings-panel" :class="{ open: isOpen }">
       <div class="settings-inner">
-        <div class="field-block">
-          <span class="field-label">Effect</span>
-          <div class="pill-group" role="group" aria-label="Transition variant">
-            <button
-              v-for="option in variants"
-              :key="option"
-              type="button"
-              :aria-pressed="variant === option"
-              @click="variant = option"
-            >
+        <label>
+          <span>Effect</span>
+          <select v-model="variant" aria-label="Transition variant">
+            <option v-for="option in variants" :key="option" :value="option">
               {{ option }}
-            </button>
-          </div>
-        </div>
+            </option>
+          </select>
+        </label>
         <template v-if="variant !== 'none'">
           <label v-if="variant === 'wipe' || variant === 'flip'">
             <span>Direction</span>
@@ -221,35 +215,6 @@ watch(
   position: relative;
 }
 
-.pill-group {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-}
-
-.pill-group button {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
-}
-
-.pill-group button[aria-pressed="true"] {
-  background: var(--text);
-  color: var(--bg);
-}
-
-.pill-group button:focus-visible,
 .gear-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -365,24 +330,14 @@ watch(
   color: var(--text-muted);
 }
 
-.field-block {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.field-label {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
 @media (max-width: 68.75rem) {
   .settings-panel {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    max-width: calc(100vw - 2rem);
+    position: fixed;
+    top: calc(var(--topbar-height, 4rem) + 0.6rem);
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    max-width: none;
   }
 }
 </style>
