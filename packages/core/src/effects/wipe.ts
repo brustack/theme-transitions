@@ -1,6 +1,5 @@
 import type { EffectDefinition, WipeEffectOptions } from '../types';
 import { parseCssDuration } from '../time';
-import { SKIP_SAFETY_BUFFER_MS } from './constants';
 
 const vtSelector = (layer: 'old' | 'new') =>
 	`html[data-theme-effect="wipe"]::view-transition-${layer}(root)`;
@@ -75,6 +74,5 @@ export const wipeEffect: EffectDefinition<WipeEffectOptions> = {
 		)}
     `;
 	},
-	getSkipAfterMs: options =>
-		parseCssDuration(options.duration) + SKIP_SAFETY_BUFFER_MS,
+	getSkipAfterMs: options => parseCssDuration(options.duration),
 };

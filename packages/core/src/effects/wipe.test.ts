@@ -50,6 +50,6 @@ describe('wipeEffect', () => {
 	});
 
 	it('estimates the skip time from the configured duration', () => {
-		expect(wipeEffect.getSkipAfterMs(defaultWipeOptions, null)).toBe(11000);
+		expect(wipeEffect.getSkipAfterMs(defaultWipeOptions, null)).toBe(1000);
 	});
 });
