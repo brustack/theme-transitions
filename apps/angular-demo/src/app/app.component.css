@@ -1,0 +1,101 @@
+:host {
+	display: contents;
+}
+
+.page {
+	width: 20rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.25rem;
+}
+
+.page-header {
+	text-align: center;
+}
+
+.page-header h1 {
+	margin: 0 0 0.25rem;
+	font-size: 1.125rem;
+}
+
+.page-header p {
+	margin: 0;
+	font-size: 0.8125rem;
+	color: var(--text-muted);
+}
+
+.pattern {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.pattern-title {
+	align-self: flex-start;
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.pattern-code {
+	align-self: flex-start;
+	margin: -0.4rem 0 0;
+	font-size: 0.6875rem;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	color: var(--text-muted);
+}
+
+.divider {
+	width: 100%;
+	border-top: 1px dashed var(--border);
+}
+
+.mode-row {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	row-gap: 0.1rem;
+}
+
+.hint {
+	flex-basis: 100%;
+	margin: 0.3rem 0 0;
+	font-size: 0.6875rem;
+	color: var(--text-muted);
+}
+
+.hint strong {
+	color: var(--text);
+	font-weight: 600;
+}
+
+.hint.invisible {
+	visibility: hidden;
+}
+
+.simple-toggle {
+	font: inherit;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--text);
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 0.65rem;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.simple-toggle:hover:not(:disabled) {
+	background: var(--border);
+}
+
+.simple-toggle:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}

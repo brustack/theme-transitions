@@ -1,0 +1,68 @@
+{
+	"name": "@brustack/angular-theme-transitions",
+	"version": "0.1.0",
+	"description": "Angular service for animated theme transitions using the View Transitions API",
+	"author": "Bruno Neckel",
+	"license": "MIT",
+	"type": "module",
+	"sideEffects": false,
+	"module": "dist/fesm2022/brustack-angular-theme-transitions.mjs",
+	"exports": {
+		"./package.json": {
+			"default": "./package.json"
+		},
+		".": {
+			"types": "./dist/types/brustack-angular-theme-transitions.d.ts",
+			"default": "./dist/fesm2022/brustack-angular-theme-transitions.mjs"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/brustack/theme-transitions.git",
+		"directory": "packages/angular"
+	},
+	"publishConfig": {
+		"access": "public",
+		"directory": "dist"
+	},
+	"peerDependencies": {
+		"@angular/core": ">=17.0.0",
+		"@angular/common": ">=17.0.0"
+	},
+	"dependencies": {
+		"@brustack/theme-transitions-core": "^3.1.0"
+	},
+	"devDependencies": {
+		"@angular/common": "22.1.1",
+		"@angular/compiler-cli": "22.1.1",
+		"@angular/core": "22.1.1",
+		"@angular/platform-browser": "22.1.1",
+		"happy-dom": "^20.11.1",
+		"ng-packagr": "22.1.1",
+		"typescript": "6.0.3"
+	},
+	"scripts": {
+		"build": "ng-packagr -p ng-package.json",
+		"prepublishOnly": "npm run build",
+		"typecheck": "tsc --noEmit -p tsconfig.json"
+	},
+	"keywords": [
+		"angular",
+		"angular-service",
+		"theme",
+		"theme-toggle",
+		"theme-switcher",
+		"dark-mode",
+		"dark-theme",
+		"view-transitions",
+		"view-transitions-api",
+		"spread",
+		"fade",
+		"transition",
+		"animation",
+		"custom-themes"
+	]
+}

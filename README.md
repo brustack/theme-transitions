@@ -9,6 +9,7 @@
 ![Vue](https://img.shields.io/badge/Vue-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white)
 ![Nuxt](https://img.shields.io/badge/Nuxt-00DC82?style=for-the-badge&logo=nuxt&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpinedotjs&logoColor=black)
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 
 Animated theme transitions for the web, powered by the [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API). A framework-agnostic core with a thin adapter per framework.
 
@@ -16,7 +17,7 @@ Animated theme transitions for the web, powered by the [View Transitions API](ht
 - ✅ Zero flash of the wrong theme on load
 - ✅ Syncs automatically with OS `prefers-color-scheme`
 - ✅ Custom themes beyond light/dark
-- ✅ Vue, React, Nuxt, Next.js, and Alpine.js adapters, all built on the same framework-agnostic core
+- ✅ Vue, React, Nuxt, Next.js, Alpine.js, and Angular adapters, all built on the same framework-agnostic core
 
 <br>
 
@@ -39,10 +40,11 @@ Animated theme transitions for the web, powered by the [View Transitions API](ht
 | [`@brustack/nuxt-theme-transitions`](packages/nuxt)   | [![npm](https://img.shields.io/npm/v/@brustack/nuxt-theme-transitions.svg)](https://www.npmjs.com/package/@brustack/nuxt-theme-transitions)   | Nuxt module built on the core.                                                                              |
 | [`@brustack/next-theme-transitions`](packages/next)   | [![npm](https://img.shields.io/npm/v/@brustack/next-theme-transitions.svg)](https://www.npmjs.com/package/@brustack/next-theme-transitions)   | Next.js App Router hook and anti-flash script component built on the core.                                  |
 | [`@brustack/alpine-theme-transitions`](packages/alpine) | [![npm](https://img.shields.io/npm/v/@brustack/alpine-theme-transitions.svg)](https://www.npmjs.com/package/@brustack/alpine-theme-transitions) | Alpine.js plugin built on the core, with a self-registering CDN build. |
+| [`@brustack/angular-theme-transitions`](packages/angular) | [![npm](https://img.shields.io/npm/v/@brustack/angular-theme-transitions.svg)](https://www.npmjs.com/package/@brustack/angular-theme-transitions) | Angular injectable service built on the core. |
 
 ## Development
 
-This section is for working on the packages themselves, not for using them. Run every command from the repo root. The demo apps (`apps/react-demo`, `apps/vue-demo`, `apps/next-demo`, `apps/nuxt-demo`, `apps/alpine-demo`, `apps/showcase`) are npm workspaces symlinked to the local, in-progress source, not the published npm packages, so they only run correctly from inside this repo. They aren't standalone starter templates you can copy elsewhere.
+This section is for working on the packages themselves, not for using them. Run every command from the repo root. The demo apps (`apps/react-demo`, `apps/vue-demo`, `apps/next-demo`, `apps/nuxt-demo`, `apps/alpine-demo`, `apps/angular-demo`, `apps/showcase`) are npm workspaces symlinked to the local, in-progress source, not the published npm packages, so they only run correctly from inside this repo. They aren't standalone starter templates you can copy elsewhere.
 
 Try a demo:
 
@@ -53,6 +55,7 @@ npm run dev:react-demo
 npm run dev:next-demo
 npm run dev:nuxt-demo
 npm run dev:alpine-demo
+npm run dev:angular-demo
 npm run dev:showcase
 ```
 

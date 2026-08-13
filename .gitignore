@@ -5,6 +5,8 @@ next-env.d.ts
 .nuxt
 .output
 packages/core/style.css
+apps/angular-demo/public
+.angular
 docs
 .worktrees
 .claude

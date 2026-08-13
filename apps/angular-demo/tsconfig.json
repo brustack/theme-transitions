@@ -1,0 +1,16 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "preserve",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"skipLibCheck": true,
+		"experimentalDecorators": true,
+		"useDefineForClassFields": false,
+		"esModuleInterop": true
+	},
+	"angularCompilerOptions": {
+		"strictTemplates": true
+	}
+}

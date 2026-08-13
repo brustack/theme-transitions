@@ -1,0 +1,36 @@
+<div class="page">
+	<header class="page-header">
+		<h1>Theme Transitions</h1>
+		<p>An Angular demo of animated theme switching.</p>
+	</header>
+
+	<section class="pattern">
+		<p class="pattern-title">Simple toggle</p>
+		<p class="pattern-code">toggleTheme($event)</p>
+		<button
+			class="simple-toggle"
+			[disabled]="themeService.isAnimating()"
+			(click)="themeService.toggleTheme($event)"
+		>
+			{{ themeService.theme() }}
+		</button>
+	</section>
+
+	<div class="divider"></div>
+
+	<section class="pattern">
+		<p class="pattern-title">Mode switch</p>
+		<p class="pattern-code">ThemeModeSwitch</p>
+		<div class="mode-row">
+			<app-theme-mode-switch
+				[mode]="themeService.mode()"
+				[disabled]="themeService.isAnimating() || !isValid()"
+				(modeSelect)="handleSetMode($event.mode, $event.event)"
+			/>
+			<app-effect-settings (effectChange)="handleEffectChange($event.options, $event.valid)" />
+			<p class="hint" [class.invisible]="themeService.mode() !== 'system'">
+				Following system, currently <strong>{{ themeService.theme() }}</strong>.
+			</p>
+		</div>
+	</section>
+</div>

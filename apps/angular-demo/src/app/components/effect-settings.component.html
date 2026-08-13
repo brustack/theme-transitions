@@ -1,0 +1,70 @@
+<button
+	type="button"
+	class="icon-btn settings-trigger"
+	[attr.aria-expanded]="isOpen()"
+	aria-controls="settings-panel"
+	aria-label="Effect settings"
+	(click)="toggleOpen()"
+>
+	<app-icon-settings [size]="16" />
+	@if (isModified()) {
+		<span class="modified-dot" aria-hidden="true"></span>
+	}
+</button>
+
+<div id="settings-panel" class="settings-collapse" [class.open]="isOpen()">
+	<div class="settings-collapse-inner">
+		<div class="panel-header">
+			<span class="panel-title">Settings</span>
+			@if (isModified()) {
+				<button
+					type="button"
+					class="icon-btn reset"
+					aria-label="Reset to defaults"
+					title="Reset to defaults"
+					(click)="resetToDefaults()"
+				>
+					<app-icon-rotate-ccw [size]="14" />
+				</button>
+			}
+		</div>
+
+		<div class="controls">
+			<label>
+				<span class="label-text">Variant</span>
+				<select [value]="variant()" (change)="onVariantChange($event)">
+					<option value="spread">spread</option>
+					<option value="fade">fade</option>
+					<option value="none">none</option>
+				</select>
+			</label>
+
+			@if (variant() !== 'none') {
+				<label>
+					<span class="label-text">Duration</span>
+					<input
+						[value]="duration()"
+						(input)="onDurationChange($event)"
+						type="text"
+						placeholder="1s"
+						[class.invalid]="durationError()"
+					/>
+					@if (durationError()) {
+						<span class="error">{{ durationError() }}</span>
+					}
+				</label>
+
+				@if (variant() === 'fade') {
+					<label>
+						<span class="label-text">Easing</span>
+						<select [value]="easingPreset()" (change)="onEasingChange($event)">
+							@for (preset of easingPresets; track preset) {
+								<option [value]="preset">{{ preset }}</option>
+							}
+						</select>
+					</label>
+				}
+			}
+		</div>
+	</div>
+</div>
