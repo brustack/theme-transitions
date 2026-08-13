@@ -1,5 +1,21 @@
 # @brustack/theme-transitions-core
 
+## 3.2.0
+
+### Minor Changes
+
+- 99dc933: Add a `wipe` transition variant that reveals the new theme by animating `clip-path` across the viewport, configurable via the `direction` option alongside the existing `duration` and `easing` overrides.
+
+  `direction` accepts:
+
+  - **Edges**: `left`, `right`, `up`, `down`
+  - **Center**: `center-x`, `center-y`
+  - **Corners**: `diagonal-tl`, `diagonal-tr`, `diagonal-bl`, `diagonal-br`
+
+### Patch Changes
+
+- 0e6847c: Remove the spread effect's 10-second safety-net buffer added on top of the configured duration before force-finishing a transition. It now skips at exactly the configured duration, matching every other effect.
+
 ## 3.1.0
 
 ### Minor Changes
