@@ -67,7 +67,10 @@ const applyVariantDefaults = () => {
       ? defaultThemeEffects.wipe
       : defaultThemeEffects.spread;
   duration.value = defaults.duration;
-  easingPreset.value = defaultThemeEffects.fade.easing;
+  easingPreset.value =
+    variant.value === "wipe"
+      ? defaultThemeEffects.wipe.easing
+      : defaultThemeEffects.fade.easing;
   direction.value = defaultThemeEffects.wipe.direction;
 };
 
@@ -92,6 +95,7 @@ watch(
         ? {
             variant: variant.value,
             duration: duration.value,
+            easing: easingPreset.value,
             direction: direction.value,
           }
         : { variant: variant.value, duration: duration.value };
@@ -157,7 +161,7 @@ watch(
             durationError
           }}</span>
 
-          <label v-if="variant === 'fade'">
+          <label v-if="variant === 'fade' || variant === 'wipe'">
             <span>Easing</span>
             <select v-model="easingPreset">
               <option

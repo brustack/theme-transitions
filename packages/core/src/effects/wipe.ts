@@ -9,8 +9,8 @@ const vtGroup = () =>
 	`html[data-theme-effect="wipe"]::view-transition-group(root)`;
 
 export const defaultWipeOptions: WipeEffectOptions = {
-	duration: '500ms',
-	easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+	duration: '1s',
+	easing: 'ease-out',
 	direction: 'left',
 };
 
